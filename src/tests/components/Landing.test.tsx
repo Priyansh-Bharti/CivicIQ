@@ -36,7 +36,7 @@ describe('Landing Page', () => {
       </BrowserRouter>
     );
     expect(screen.getByText(/Interactive timeline/i)).toBeInTheDocument();
-    expect(screen.getByText(/Ask CivicIQ/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Ask CivicIQ/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/Civic readiness/i)).toBeInTheDocument();
   });
 

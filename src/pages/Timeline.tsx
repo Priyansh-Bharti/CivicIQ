@@ -3,11 +3,14 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Share2, ArrowLeft } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { TimelinePanel } from '../components/timeline/TimelinePanel';
+import { ChatPanel } from '../components/chat/ChatPanel';
+import { useChatStore } from '../store/chatStore';
 
 export const Timeline = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const initialPhaseId = searchParams.get('phase') || undefined;
+  const { setIsOpen, setActiveContext } = useChatStore();
 
   const handleShare = () => {
     const url = window.location.href;
@@ -54,9 +57,14 @@ export const Timeline = () => {
         </div>
 
         <TimelinePanel 
-          onAskCivicIQ={(ctx) => console.log('Ask AI about:', ctx)} 
+          onAskCivicIQ={(ctx) => {
+            setActiveContext(ctx);
+            setIsOpen(true);
+          }} 
           initialPhaseId={initialPhaseId}
         />
+
+        <ChatPanel />
       </main>
     </div>
   );

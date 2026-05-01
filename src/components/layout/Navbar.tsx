@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, LogOut, User as UserIcon, ChevronDown } from 'lucide-react';
+import { Menu, X, LogOut, User as UserIcon, ChevronDown, MessageSquare } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { useChatStore } from '../../store/chatStore';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -22,6 +23,7 @@ const Logo = () => (
 
 export const Navbar = () => {
   const { user, signInWithGoogle, signOut, isAuthenticated } = useAuth();
+  const { setIsOpen } = useChatStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
@@ -45,6 +47,13 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link to="/timeline" className="text-white/80 hover:text-white transition-colors font-medium">Timeline</Link>
             <Link to="/checklist" className="text-white/80 hover:text-white transition-colors font-medium">Checklist</Link>
+            <button 
+              onClick={() => setIsOpen(true)}
+              className="flex items-center gap-2 bg-amber text-navy px-4 py-2 rounded-lg font-bold hover:scale-105 transition-transform"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Ask CivicIQ
+            </button>
             
             {isAuthenticated ? (
               <div className="relative">
@@ -125,6 +134,13 @@ export const Navbar = () => {
               >
                 Checklist
               </Link>
+              <button 
+                onClick={() => { setIsOpen(true); setIsMobileMenuOpen(false); }}
+                className="w-full flex items-center gap-3 bg-amber text-navy px-4 py-3 rounded-lg font-bold"
+              >
+                <MessageSquare className="w-5 h-5" />
+                Ask CivicIQ
+              </button>
               <div className="pt-4 border-t border-white/10">
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-4">
