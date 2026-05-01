@@ -3,6 +3,7 @@ import { TimelineNode } from './TimelineNode';
 import { PhaseDetail } from './PhaseDetail';
 import { useTimeline } from '../../hooks/useTimeline';
 import { getPhaseById } from '../../lib/timelineEngine';
+import { trackEvent } from '../../lib/analytics';
 
 interface TimelinePanelProps {
   onAskCivicIQ: (context: string) => void;
@@ -19,6 +20,15 @@ export const TimelinePanel = ({ onAskCivicIQ, initialPhaseId }: TimelinePanelPro
   }, [initialPhaseId]);
 
   const selectedPhase = getPhaseById(activePhaseId || '1', phases) || phases[0];
+
+  useEffect(() => {
+    if (selectedPhase) {
+      trackEvent('phase_viewed', { 
+        phase_id: selectedPhase.id, 
+        phase_name: selectedPhase.name 
+      });
+    }
+  }, [selectedPhase?.id]);
 
   return (
     <div className="grid lg:grid-cols-[1fr_450px] gap-12 items-start">

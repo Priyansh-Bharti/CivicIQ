@@ -89,6 +89,51 @@ export const ELECTION_PHASES: ElectionPhase[] = [
       'The President-elect takes the oath of office at the U.S. Capitol',
       'The new President delivers the inaugural address'
     ],
-    status: 'pending'
+  }
+];
+
+export const CIVIC_CHECKLIST = [
+  {
+    id: '1',
+    title: 'Register to vote',
+    description: 'Check if you are registered at your current address. Requirements vary by country and region.',
+    link: 'https://vote.gov',
+    completed: false
+  },
+  {
+    id: '2',
+    title: 'Understand voter ID requirements',
+    description: 'Learn what identification you may need to bring to your polling station.',
+    completed: false
+  },
+  {
+    id: '3',
+    title: 'Find your polling station',
+    description: 'Locate your assigned polling place and note the opening hours.',
+    completed: false
+  },
+  {
+    id: '4',
+    title: 'Know your ballot',
+    description: 'Research what offices and measures will appear on your ballot before election day.',
+    completed: false
+  },
+  {
+    id: '5',
+    title: 'Understand how votes are counted',
+    description: 'Learn the counting process in your area — hand count, machine count, or a combination.',
+    completed: false
+  },
+  {
+    id: '6',
+    title: 'Plan your voting day',
+    description: 'Decide when you will vote, arrange transport if needed, and factor in expected wait times.',
+    completed: false
+  },
+  {
+    id: '7',
+    title: 'Verify your registration is active',
+    description: 'Confirm your registration has not been removed and your details are correct.',
+    completed: false
   }
 ];

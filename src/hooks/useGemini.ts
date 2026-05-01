@@ -9,6 +9,7 @@ import {
 import { useChatStore } from '../store/chatStore';
 import { useAuth } from './useAuth';
 import { ChatMessage } from '../types/election';
+import { trackEvent } from '../lib/analytics';
 
 export const useGemini = () => {
   const { user } = useAuth();
@@ -40,6 +41,12 @@ export const useGemini = () => {
       setError(validation.reason || 'Invalid prompt');
       return;
     }
+
+    trackEvent('question_asked', {
+      phase_id: activeContext || 'none',
+      question_length: content.length,
+      has_phase_context: !!activeContext
+    });
 
     setError(null);
     setIsLoading(true);

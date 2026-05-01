@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { Landing } from './pages/Landing';
 import { Timeline } from './pages/Timeline';
-const Checklist = () => <div className="p-20">Checklist Page Stub</div>;
+import { Checklist } from './pages/Checklist';
+
 const NotFound = () => <div className="p-20 text-center text-3xl">404 - Not Found</div>;
 
 function App() {

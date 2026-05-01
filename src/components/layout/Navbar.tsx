@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, LogOut, User as UserIcon, ChevronDown, MessageSquare } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useChatStore } from '../../store/chatStore';
+import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -45,6 +46,7 @@ export const Navbar = () => {
 
           {/* Right Desktop */}
           <div className="hidden md:flex items-center gap-8">
+            <LanguageSwitcher />
             <Link to="/timeline" className="text-white/80 hover:text-white transition-colors font-medium">Timeline</Link>
             <Link to="/checklist" className="text-white/80 hover:text-white transition-colors font-medium">Checklist</Link>
             <button 
