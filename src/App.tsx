@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Landing } from './pages/Landing';
-
-// Stubs for other pages
-const Timeline = () => <div className="p-20">Timeline Page Stub</div>;
+import { Timeline } from './pages/Timeline';
 const Checklist = () => <div className="p-20">Checklist Page Stub</div>;
 const NotFound = () => <div className="p-20 text-center text-3xl">404 - Not Found</div>;
 
