@@ -30,10 +30,24 @@ export const TimelinePanel = ({ onAskCivicIQ, initialPhaseId }: TimelinePanelPro
     }
   }, [selectedPhase?.id]);
 
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextPhase = phases[Math.min(index + 1, phases.length - 1)];
+      setActivePhase(nextPhase.id);
+      document.getElementById(`node-${nextPhase.id}`)?.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevPhase = phases[Math.max(index - 1, 0)];
+      setActivePhase(prevPhase.id);
+      document.getElementById(`node-${prevPhase.id}`)?.focus();
+    }
+  };
+
   return (
     <div className="grid lg:grid-cols-[1fr_450px] gap-12 items-start">
       {/* Timeline List */}
-      <div className="space-y-2">
+      <div className="space-y-2" role="list" data-testid="timeline-nodes">
         {phases.map((phase, idx) => (
           <TimelineNode
             key={phase.id}
@@ -42,6 +56,7 @@ export const TimelinePanel = ({ onAskCivicIQ, initialPhaseId }: TimelinePanelPro
             isActive={activePhaseId === phase.id}
             isCompleted={!!progress[phase.id]}
             onClick={setActivePhase}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
           />
         ))}
       </div>

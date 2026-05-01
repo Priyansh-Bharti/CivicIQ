@@ -40,8 +40,9 @@ export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your election question..."
-          aria-label="Type your election question"
+          placeholder="Ask CivicIQ your election question..."
+          aria-label="Message CivicIQ"
+          maxLength={500}
           className="w-full bg-transparent border-none focus:ring-0 text-sm resize-none py-2 px-2 max-h-[120px] custom-scrollbar"
           rows={1}
           disabled={isLoading}
@@ -63,6 +64,7 @@ export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
               onClick={handleSend}
               disabled={isLoading || !content.trim() || content.length > 500}
               aria-disabled={isLoading || !content.trim() || content.length > 500}
+              aria-label="Send message"
               className={clsx(
                 "p-2 rounded-lg transition-all",
                 content.trim() && !isLoading 
@@ -70,7 +72,7 @@ export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
                   : "bg-gray-200 text-gray-400"
               )}
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
         </div>

@@ -14,13 +14,15 @@ interface TimelineNodeProps {
   isActive: boolean;
   isCompleted: boolean;
   onClick: (id: string) => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
-export const TimelineNode = ({ phase, index, isActive, isCompleted, onClick }: TimelineNodeProps) => {
+export const TimelineNode = ({ phase, index, isActive, isCompleted, onClick, onKeyDown }: TimelineNodeProps) => {
   return (
     <div 
+      id={`node-${phase.id}`}
       className="relative flex gap-6 pb-12 last:pb-0 group"
-      role="button"
+      role="listitem"
       tabIndex={0}
       onClick={() => onClick(phase.id)}
       onKeyDown={(e) => {
@@ -28,6 +30,7 @@ export const TimelineNode = ({ phase, index, isActive, isCompleted, onClick }: T
           e.preventDefault();
           onClick(phase.id);
         }
+        if (onKeyDown) onKeyDown(e);
       }}
       aria-label={`Phase ${index + 1}: ${phase.name}, ${isCompleted ? 'Completed' : isActive ? 'Active' : 'Pending'}`}
       aria-current={isActive ? 'step' : undefined}

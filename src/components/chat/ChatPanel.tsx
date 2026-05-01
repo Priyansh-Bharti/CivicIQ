@@ -11,11 +11,19 @@ export const ChatPanel = () => {
   const { messages, sendMessage, isLoading, clearChat, error } = useGemini();
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    if (isOpen && closeBtnRef.current) {
+      closeBtnRef.current.focus();
+    }
+  }, [isOpen]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -31,6 +39,8 @@ export const ChatPanel = () => {
           exit={{ x: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="fixed top-0 right-0 w-full md:w-[450px] h-full bg-white shadow-2xl z-[100] flex flex-col"
+          role="dialog"
+          aria-label="Ask CivicIQ Chat"
         >
           {/* Header */}
           <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-navy text-white">
@@ -41,16 +51,18 @@ export const ChatPanel = () => {
             <div className="flex items-center gap-2">
               <button 
                 onClick={clearChat}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                title="Clear Chat"
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
+                aria-label="Clear chat"
               >
-                <RotateCcw className="w-5 h-5" />
+                <RotateCcw className="w-5 h-5" aria-hidden="true" />
               </button>
               <button 
+                ref={closeBtnRef}
                 onClick={handleClose}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
+                aria-label="Close chat"
               >
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -58,7 +70,7 @@ export const ChatPanel = () => {
           {/* Phase Context Banner */}
           {activeContext && (
             <div className="bg-amber/10 border-b border-amber/20 p-3 px-6 flex items-center gap-3">
-              <ShieldCheck className="w-4 h-4 text-amber" />
+              <ShieldCheck className="w-4 h-4 text-amber" aria-hidden="true" />
               <p className="text-xs text-navy font-medium">
                 Asking about: <span className="font-bold">{activeContext}</span>
               </p>
@@ -69,6 +81,8 @@ export const ChatPanel = () => {
           <div 
             ref={scrollRef}
             className="flex-grow overflow-y-auto p-6 custom-scrollbar bg-gray-50/50"
+            role="log"
+            aria-live="polite"
           >
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-8">
@@ -100,7 +114,7 @@ export const ChatPanel = () => {
           {/* Footer / Input */}
           <div className="flex flex-col">
             <p className="text-[10px] text-gray-400 text-center py-2 bg-gray-50 border-t border-gray-100">
-              CivicIQ answers questions about the election process only.
+              AI can make mistakes. CivicIQ only covers election processes.
             </p>
             <ChatInput onSendMessage={sendMessage} isLoading={isLoading} />
           </div>

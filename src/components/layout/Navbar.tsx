@@ -61,11 +61,13 @@ export const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  aria-expanded={isProfileOpen}
+                  aria-label="User menu"
                   className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
                 >
                   <img src={user?.photoURL || ''} alt="" className="w-8 h-8 rounded-full border border-white/20" />
                   <span className="font-medium">{user?.displayName?.split(' ')[0]}</span>
-                  <ChevronDown className={cn("w-4 h-4 transition-transform", isProfileOpen && "rotate-180")} />
+                  <ChevronDown aria-hidden="true" className={cn("w-4 h-4 transition-transform", isProfileOpen && "rotate-180")} />
                 </button>
                 
                 <AnimatePresence>

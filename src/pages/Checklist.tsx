@@ -17,7 +17,7 @@ export const Checklist = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main id="main-content" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-12">
           <div className="p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 bg-navy text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />

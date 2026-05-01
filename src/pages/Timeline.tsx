@@ -22,14 +22,15 @@ export const Timeline = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-3xl">
             <button 
               onClick={() => navigate('/')}
-              className="flex items-center gap-2 text-indigo font-bold mb-6 hover:translate-x-[-4px] transition-transform"
+              className="flex items-center gap-2 text-indigo font-bold mb-6 hover:translate-x-[-4px] transition-transform focus:outline-none focus:ring-2 focus:ring-indigo"
+              aria-label="Go back to home page"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to home
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Back to home
             </button>
             
             <div className="flex items-center gap-4 mb-4">
