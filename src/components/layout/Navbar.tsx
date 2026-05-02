@@ -49,6 +49,7 @@ export const Navbar = () => {
             <LanguageSwitcher />
             <Link to="/timeline" className="text-white/80 hover:text-white transition-colors font-medium">Timeline</Link>
             <Link to="/checklist" className="text-white/80 hover:text-white transition-colors font-medium">Checklist</Link>
+            <Link to="/about" className="text-white/80 hover:text-white transition-colors font-medium">About</Link>
             <button 
               onClick={() => setIsOpen(true)}
               className="flex items-center gap-2 bg-amber text-navy px-4 py-2 rounded-lg font-bold hover:scale-105 transition-transform"
@@ -65,7 +66,7 @@ export const Navbar = () => {
                   aria-label="User menu"
                   className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
                 >
-                  <img src={user?.photoURL || ''} alt="" className="w-8 h-8 rounded-full border border-white/20" />
+                  <img src={user?.photoURL || undefined} alt="" className="w-8 h-8 rounded-full border border-white/20" />
                   <span className="font-medium">{user?.displayName?.split(' ')[0]}</span>
                   <ChevronDown aria-hidden="true" className={cn("w-4 h-4 transition-transform", isProfileOpen && "rotate-180")} />
                 </button>
@@ -138,6 +139,13 @@ export const Navbar = () => {
               >
                 Checklist
               </Link>
+              <Link 
+                to="/about" 
+                className="block text-white/80 py-2 text-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About
+              </Link>
               <button 
                 onClick={() => { setIsOpen(true); setIsMobileMenuOpen(false); }}
                 className="w-full flex items-center gap-3 bg-amber text-navy px-4 py-3 rounded-lg font-bold"
@@ -149,7 +157,7 @@ export const Navbar = () => {
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-3 text-white">
-                      <img src={user?.photoURL || ''} alt="" className="w-10 h-10 rounded-full" />
+                      <img src={user?.photoURL || undefined} alt="" className="w-10 h-10 rounded-full" />
                       <span className="font-medium text-lg">{user?.displayName}</span>
                     </div>
                     <button 

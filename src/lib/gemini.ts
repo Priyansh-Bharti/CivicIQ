@@ -1,10 +1,9 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, ChatSession, Content } from '@google/generative-ai';
 import { ElectionPhase, ChatMessage } from '../types/election';
 import { db } from './firebase';
-import { collection, addDoc, query, orderBy, getDocs, where, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
 const SYSTEM_PROMPT = `You are CivicIQ, an election education assistant. You ONLY answer questions about:
 - Election processes, timelines, and procedures
@@ -22,6 +21,14 @@ You NEVER:
 If asked something outside your scope, respond: 'I'm here to help with election process questions. Could you ask me something about how elections work?'
 
 Always be neutral, factual, and educational. Cite general civic principles, not specific partisan sources.`;
+
+// Pre-configured model with system instructions
+const getModel = () => {
+  return genAI.getGenerativeModel({ 
+    model: 'gemini-2.5-flash', 
+    systemInstruction: SYSTEM_PROMPT 
+  });
+};
 
 export const validatePrompt = (prompt: string): { safe: boolean; reason?: string } => {
   const blockedTerms = [
@@ -43,25 +50,29 @@ export const validatePrompt = (prompt: string): { safe: boolean; reason?: string
 };
 
 export async function* streamCivicAnswer(prompt: string, history: ChatMessage[], phaseContext?: string) {
+  const model = getModel();
+  
+  // Format history for Gemini SDK
+  const contents: Content[] = history.map(msg => ({
+    role: msg.role === 'user' ? 'user' : 'model',
+    parts: [{ text: msg.content }]
+  }));
+
+  const chat = model.startChat({
+    history: contents,
+    generationConfig: {
+      maxOutputTokens: 1000,
+      temperature: 0.7,
+    }
+  });
+
   const fullPrompt = phaseContext 
     ? `Context: We are discussing the "${phaseContext}" phase of the election.\nQuestion: ${prompt}`
     : prompt;
 
   try {
-    const historyParts = history.map(msg => ({
-      role: msg.role === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.content }]
-    }));
-
-    const result = await model.generateContentStream({
-      contents: [
-        { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
-        { role: 'model', parts: [{ text: "Understood. I will act as CivicIQ and adhere strictly to these guardrails." }] },
-        ...historyParts,
-        { role: 'user', parts: [{ text: fullPrompt }] }
-      ],
-    });
-
+    const result = await chat.sendMessageStream(fullPrompt);
+    
     for await (const chunk of result.stream) {
       const chunkText = chunk.text();
       yield chunkText;

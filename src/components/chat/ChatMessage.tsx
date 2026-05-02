@@ -40,7 +40,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         <CivicIQLogo />
       ) : (
         <img 
-          src={user?.photoURL || ''} 
+          src={user?.photoURL || undefined} 
           alt="" 
           className="w-8 h-8 rounded-full border border-gray-200 shrink-0" 
         />

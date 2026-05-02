@@ -73,7 +73,9 @@ export const useGemini = () => {
 
     try {
       let fullResponse = '';
-      const stream = streamCivicAnswer(content, messages, activeContext || undefined);
+      // Use fresh state from store to avoid stale closures
+      const currentMessages = useChatStore.getState().messages.slice(0, -2); // Exclude current user message and empty AI message
+      const stream = streamCivicAnswer(content, currentMessages, activeContext || undefined);
       
       for await (const chunk of stream) {
         fullResponse += chunk;
