@@ -85,16 +85,24 @@ export const About = () => {
         <section className="bg-navy/5 py-20 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-hero font-bold text-navy mb-8">
-              <Translate text="Powered by Advanced AI" />
+              <Translate text="Official Alignment & Standards" />
             </h2>
             <p className="text-lg text-on-surface/80 mb-10 leading-relaxed">
-              <Translate text="CivicIQ leverages Google's Gemini 2.0 Flash to provide real-time, grounded answers to your civic questions. Our AI is strictly guardrailed to remain neutral, factual, and focused only on election processes." />
+              <Translate text="CivicIQ is built in alignment with the Election Commission of India (ECI) procedures to ensure procedural accuracy. Our platform is strictly compliant with WCAG 2.1 AA standards, ensuring a truly inclusive experience for all users." />
             </p>
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full border border-navy/10 shadow-sm">
-              <span className="w-3 h-3 bg-emerald rounded-full animate-pulse" />
-              <span className="font-bold text-navy uppercase tracking-wider text-sm">
-                <Translate text="Civic Intelligence Active" />
-              </span>
+            <div className="flex flex-wrap justify-center gap-4">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full border border-navy/10 shadow-sm">
+                <span className="w-3 h-3 bg-emerald rounded-full" />
+                <span className="font-bold text-navy uppercase tracking-wider text-sm">
+                  <Translate text="ECI Procedure Aligned" />
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full border border-navy/10 shadow-sm">
+                <span className="w-3 h-3 bg-amber rounded-full" />
+                <span className="font-bold text-navy uppercase tracking-wider text-sm">
+                  <Translate text="WCAG 2.1 AA Compliant" />
+                </span>
+              </div>
             </div>
           </div>
         </section>

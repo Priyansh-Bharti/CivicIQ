@@ -142,17 +142,17 @@ export const Landing = () => {
       {/* Trust Bar */}
       <section aria-label="Technologies used" className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="flex items-center gap-2 font-bold text-gray-600">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-100 transition-all duration-500">
+            <div className="flex items-center gap-2 font-bold text-gray-900">
               <Zap className="w-5 h-5" aria-hidden="true" /> Gemini AI
             </div>
-            <div className="flex items-center gap-2 font-bold text-gray-600">
+            <div className="flex items-center gap-2 font-bold text-gray-900">
               <Cloud className="w-5 h-5" aria-hidden="true" /> Firebase
             </div>
-            <div className="flex items-center gap-2 font-bold text-gray-600">
+            <div className="flex items-center gap-2 font-bold text-gray-900">
               <Shield className="w-5 h-5" aria-hidden="true" /> Google Cloud Run
             </div>
-            <div className="flex items-center gap-2 font-bold text-gray-600">
+            <div className="flex items-center gap-2 font-bold text-gray-900">
               <Shield className="w-5 h-5" aria-hidden="true" /> WCAG 2.1 AA
             </div>
           </div>
@@ -198,7 +198,7 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
     <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
       {icon}
     </div>
-    <h4 className="text-2xl font-bold text-navy mb-4">{title}</h4>
+    <h2 className="text-2xl font-bold text-navy mb-4">{title}</h2>
     <p className="text-on-surface/70 leading-relaxed font-body">
       {description}
     </p>

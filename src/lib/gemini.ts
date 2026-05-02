@@ -50,27 +50,37 @@ export const validatePrompt = (prompt: string): { safe: boolean; reason?: string
 };
 
 export async function* streamCivicAnswer(prompt: string, history: ChatMessage[], phaseContext?: string) {
-  const model = getModel();
-  
-  // Format history for Gemini SDK
-  const contents: Content[] = history.map(msg => ({
-    role: msg.role === 'user' ? 'user' : 'model',
-    parts: [{ text: msg.content }]
-  }));
+  // Security: Sanitize input
+  const sanitizedPrompt = prompt
+    .replace(/<[^>]*>?/gm, '') // Strip HTML
+    .trim()
+    .substring(0, 500); // Limit length
 
-  const chat = model.startChat({
-    history: contents,
-    generationConfig: {
-      maxOutputTokens: 1000,
-      temperature: 0.7,
-    }
-  });
-
-  const fullPrompt = phaseContext 
-    ? `Context: We are discussing the "${phaseContext}" phase of the election.\nQuestion: ${prompt}`
-    : prompt;
+  if (!sanitizedPrompt) {
+    throw new Error('Please provide a valid question.');
+  }
 
   try {
+    const model = getModel();
+    
+    // Format history for Gemini SDK
+    const contents: Content[] = history.map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }]
+    }));
+
+    const chat = model.startChat({
+      history: contents,
+      generationConfig: {
+        maxOutputTokens: 1000,
+        temperature: 0.7,
+      }
+    });
+
+    const fullPrompt = phaseContext 
+      ? `Context: We are discussing the "${phaseContext}" phase of the election.\nQuestion: ${sanitizedPrompt}`
+      : sanitizedPrompt;
+
     const result = await chat.sendMessageStream(fullPrompt);
     
     for await (const chunk of result.stream) {
@@ -78,8 +88,9 @@ export async function* streamCivicAnswer(prompt: string, history: ChatMessage[],
       yield chunkText;
     }
   } catch (error) {
-    console.error('Gemini streaming error:', error);
-    throw error;
+    // Security: Never expose internal error details or stack traces to the UI
+    console.error('Gemini error:', error);
+    throw new Error('CivicIQ is temporarily unavailable. Please try again in a moment.');
   }
 }
 

@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { auth, db, onAuthStateChanged, signInWithGoogle as firebaseSignIn, signOut as firebaseSignOut, handleRedirectResult } from '../lib/firebase';
 import { useAuthStore } from '../store/authStore';
+import { useRateLimit } from './useSecurity';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 export const useAuth = () => {
   const { user, loading, setUser, clearUser, setLoading } = useAuthStore();
+  const { checkLimit } = useRateLimit();
 
   useEffect(() => {
     // Handle redirect results on mount
@@ -50,6 +52,13 @@ export const useAuth = () => {
   }, [setUser, clearUser, setLoading]);
 
   const signIn = async () => {
+    // Security: Check Rate Limit (Auth tier)
+    const limit = checkLimit('auth');
+    if (!limit.allowed) {
+      alert('Too many sign-in attempts. Please try again in 15 minutes.');
+      return;
+    }
+
     setLoading(true);
     try {
       await firebaseSignIn();
@@ -57,15 +66,13 @@ export const useAuth = () => {
       setLoading(false);
       console.error('Sign in error:', error);
       
-      // Provide user feedback for common errors
+      // Security: Use generic error messages
       if (error.code === 'auth/unauthorized-domain') {
-        alert('This domain is not authorized for Firebase Auth. Please add it to your Firebase Console.');
-      } else if (error.code === 'auth/operation-not-allowed') {
-        alert('Google Sign-In is not enabled in your Firebase Console.');
+        alert('Authentication error: This domain is not authorized. Please check your configuration.');
       } else if (error.code === 'auth/popup-blocked') {
-        alert('Popup blocked. The app will now try to redirect you.');
+        alert('Authentication error: Popup blocked. Please enable popups or try again.');
       } else {
-        alert(`Sign in failed: ${error.message || 'Unknown error'}`);
+        alert('Sign-in failed. Please ensure you are using a valid account and try again.');
       }
       
       throw error;

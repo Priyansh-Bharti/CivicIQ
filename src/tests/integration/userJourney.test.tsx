@@ -1,6 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 import { Landing } from '../../../src/pages/Landing';
 import { Timeline } from '../../../src/pages/Timeline';
 import { Checklist } from '../../../src/pages/Checklist';
@@ -72,6 +75,12 @@ describe('User Journey Integration', () => {
   it('Landing: main landmark exists', () => {
     renderPage(Landing, '/');
     expect(screen.getByRole('main')).toBeInTheDocument();
+  });
+
+  it('Landing: has no accessibility violations', async () => {
+    const { container } = renderPage(Landing, '/');
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
   it('Landing: Navbar is rendered', () => {

@@ -102,11 +102,11 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle navigation menu"
               className="text-white p-2 focus:outline-none focus:ring-2 focus:ring-amber rounded-md"
             >
               {isMobileMenuOpen ? <X /> : <Menu />}

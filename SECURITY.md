@@ -1,36 +1,36 @@
-# Security Policy
+# CivicIQ Security Policy
 
-CivicIQ is built with a security-first mindset to ensure voter data privacy and platform integrity.
+This document outlines the security measures implemented in CivicIQ to ensure user safety, data integrity, and system stability.
 
-## API Key Management
-- All sensitive credentials (Firebase, Gemini) are managed via environment variables.
-- API keys are never committed to version control.
-- A `.env.example` is provided for local development setup.
+## 1. Network & Infrastructure Security (Nginx)
+The production environment uses a hardened Nginx configuration with the following headers:
+- **Content-Security-Policy (CSP)**: Strict policy allowing only trusted sources for scripts, styles, and images. Prevents Cross-Site Scripting (XSS).
+- **X-Frame-Options: DENY**: Prevents Clickjacking by disallowing the site from being embedded in frames.
+- **X-Content-Type-Options: nosniff**: Prevents MIME-type sniffing attacks.
+- **Referrer-Policy**: Set to `no-referrer-when-downgrade` to protect user privacy.
+- **Permissions-Policy**: Explicitly disables access to camera, microphone, and geolocation.
 
-## Firebase Security Rules
-- **Firestore**: User data is strictly isolated. Users can only read and write to their own document path (`users/{userId}/*`).
-- **Authentication**: Google OAuth is used for secure, verified identity management.
+## 2. API & Resource Protection
+To prevent abuse and ensure fair resource allocation, a **3-tier Token Bucket Rate Limiter** is implemented on the client side:
+- **General API calls**: 100 requests per 15 minutes.
+- **Authentication attempts**: 20 requests per 15 minutes.
+- **Gemini AI interactions**: 30 requests per 15 minutes.
+State is persisted via `localStorage` to prevent simple bypass via page refresh.
 
-## Content Security Policy (CSP)
-- CSP is enforced via Nginx headers to prevent XSS and data injection.
-- Policy restricts script, style, and image sources to known, trusted domains (Google, Firebase, GStatic).
+## 3. Data Sanitization
+All user-provided content is sanitized before reaching the Gemini AI engine:
+- **HTML Stripping**: All HTML tags are removed to prevent injection.
+- **Character Limiting**: Input is strictly capped at **500 characters**.
+- **Whitespace Management**: Automatic trimming of all inputs.
 
-## Rate Limiting
-- **Client-Side**: Gemini API interactions are limited to a maximum of 10 requests per minute per user session to prevent API abuse.
-- **Infrastructure**: Cloud Run provides basic DDoS protection and request filtering.
+## 4. Error Handling & Information Disclosure
+The platform follows the "least information" principle for errors:
+- **Generic Messaging**: All technical or internal errors from Firebase and Gemini are intercepted and replaced with user-friendly, non-descriptive messages.
+- **No Stack Traces**: Internal stack traces and error codes are never exposed to the client UI.
 
-## Input Validation & Sanitization
-- All user-provided chat prompts are validated client-side before processing.
-- React's automatic escaping prevents most common XSS vectors.
-- No use of `dangerouslySetInnerHTML` is permitted in the codebase.
+## 5. Authentication & Identity
+- **Authorized Domains**: Only pre-approved domains are allowed to initiate Firebase Authentication.
+- **Secure Sessions**: User sessions are managed entirely through Firebase Auth's secure SDK.
 
-## Prompt Injection Protection
-- The core `SYSTEM_PROMPT` is injected programmatically and cannot be overridden by user input.
-- User messages are treated as data, not instructions, by the underlying AI service.
-
-## Dependency Audit
-- Automated `npm audit` is performed during every CI/CD cycle.
-- Deployments are automatically blocked if high or critical vulnerabilities are detected.
-
-## Reporting a Vulnerability
-Please do not report security vulnerabilities through public GitHub issues. Instead, contact the maintainers directly.
+---
+*For security vulnerabilities, please contact the maintainers directly.*

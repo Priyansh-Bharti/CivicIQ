@@ -8,11 +8,13 @@ import {
 } from '../lib/gemini';
 import { useChatStore } from '../store/chatStore';
 import { useAuth } from './useAuth';
+import { useRateLimit } from './useSecurity';
 import { ChatMessage } from '../types/election';
 import { trackEvent } from '../lib/analytics';
 
 export const useGemini = () => {
   const { user } = useAuth();
+  const { checkLimit } = useRateLimit();
   const { 
     messages, 
     addMessage, 
@@ -36,6 +38,19 @@ export const useGemini = () => {
   }, [user, setMessages]);
 
   const sendMessage = async (content: string) => {
+    // Security: Check Rate Limits (3-tier)
+    const aiLimit = checkLimit('ai');
+    if (!aiLimit.allowed) {
+      setError(`You've reached your AI message limit. Please try again in 15 minutes.`);
+      return;
+    }
+
+    const generalLimit = checkLimit('general');
+    if (!generalLimit.allowed) {
+      setError(`System is busy. Please try again later.`);
+      return;
+    }
+
     const validation = validatePrompt(content);
     if (!validation.safe) {
       setError(validation.reason || 'Invalid prompt');
