@@ -1,5 +1,5 @@
 node_modules/
-.env
+# .env removed to allow build-time inclusion
 .git/
 tests/
 dist/
