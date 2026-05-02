@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageStore } from '../../store/languageStore';
 import { Globe } from 'lucide-react';
+import { SUPPORTED_LANGUAGES } from '../../lib/constants';
 
-const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+const GROUPS = [
+  { label: "South Asia", codes: ['hi', 'bn', 'ur', 'pa', 'te', 'ta', 'mr'] },
+  { label: "Europe", codes: ['en', 'es', 'fr', 'de', 'pt', 'ru', 'tr', 'it'] },
+  { label: "East Asia", codes: ['zh', 'ja', 'ko', 'vi', 'id'] },
+  { label: "Middle East & Africa", codes: ['ar', 'sw'] },
 ];
 
 export const LanguageSwitcher = () => {
   const { currentLanguage, setLanguage } = useLanguageStore();
   const [isOpen, setIsOpen] = useState(false);
 
-  const current = LANGUAGES.find(l => l.code === currentLanguage) || LANGUAGES[0];
+  const current = SUPPORTED_LANGUAGES.find(l => l.code === currentLanguage) || SUPPORTED_LANGUAGES[0];
+
+  useEffect(() => {
+    const applyLanguage = (lang: typeof SUPPORTED_LANGUAGES[number]) => {
+      document.documentElement.setAttribute('lang', lang.code);
+      document.documentElement.setAttribute('dir', lang.dir);
+    };
+    applyLanguage(current);
+  }, [current]);
 
   return (
     <div className="relative">
@@ -34,24 +42,39 @@ export const LanguageSwitcher = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+            className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 max-h-[80vh] overflow-y-auto"
           >
-            {LANGUAGES.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => {
-                  setLanguage(lang.code);
-                  setIsOpen(false);
-                }}
-                className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
-                  currentLanguage === lang.code 
-                    ? 'bg-indigo/5 text-indigo font-bold' 
-                    : 'text-on-surface hover:bg-gray-50'
-                }`}
-              >
-                <span>{lang.flag}</span>
-                {lang.name}
-              </button>
+            {GROUPS.map((group) => (
+              <div key={group.label} className="border-b border-gray-100 last:border-0">
+                <div className="px-4 py-2 bg-gray-50 text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                  {group.label}
+                </div>
+                {group.codes.map((code) => {
+                  const lang = SUPPORTED_LANGUAGES.find(l => l.code === code);
+                  if (!lang) return null;
+                  
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setLanguage(lang.code);
+                        setIsOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
+                        currentLanguage === lang.code 
+                          ? 'bg-indigo/5 text-indigo font-bold' 
+                          : 'text-on-surface hover:bg-gray-50'
+                      }`}
+                    >
+                      <span className="text-xl">{lang.flag}</span>
+                      <div className="flex flex-col items-start text-left">
+                        <span className="font-medium leading-none">{lang.nativeName}</span>
+                        <span className="text-[10px] text-gray-400 mt-1">{lang.name}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             ))}
           </motion.div>
         )}

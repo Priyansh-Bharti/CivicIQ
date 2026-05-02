@@ -25,7 +25,9 @@ CivicIQ has been manually tested using:
 - **Keyboard-only** interaction testing
 
 ## Language Accessibility
-- Multilingual support for 5 languages: English, Spanish, French, Hindi, and Arabic.
+- Multilingual support for 22 global languages, categorized by region for easy access.
+- Full RTL (Right-to-Left) support for Arabic and Urdu, ensuring a native browsing experience.
+- Dynamic `lang` and `dir` attributes are automatically applied to the document root for assistive technology compatibility.
 - Powered by Google Cloud Translate for accurate, real-time localized education.
 
 ## Known Limitations

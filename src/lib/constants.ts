@@ -138,3 +138,31 @@ export const CIVIC_CHECKLIST = [
     completed: false
   }
 ];
+
+export const SUPPORTED_LANGUAGES = [
+  { code: 'en', name: 'English',     nativeName: 'English',          flag: '🇬🇧', dir: 'ltr' },
+  { code: 'hi', name: 'Hindi',       nativeName: 'हिन्दी',            flag: '🇮🇳', dir: 'ltr' },
+  { code: 'zh', name: 'Chinese',     nativeName: '中文',              flag: '🇨🇳', dir: 'ltr' },
+  { code: 'es', name: 'Spanish',     nativeName: 'Español',          flag: '🇪🇸', dir: 'ltr' },
+  { code: 'ar', name: 'Arabic',      nativeName: 'العربية',          flag: '🇸🇦', dir: 'rtl' },
+  { code: 'bn', name: 'Bengali',     nativeName: 'বাংলা',            flag: '🇧🇩', dir: 'ltr' },
+  { code: 'pt', name: 'Portuguese',  nativeName: 'Português',        flag: '🇧🇷', dir: 'ltr' },
+  { code: 'ru', name: 'Russian',     nativeName: 'Русский',          flag: '🇷🇺', dir: 'ltr' },
+  { code: 'ur', name: 'Urdu',        nativeName: 'اردو',             flag: '🇵🇰', dir: 'rtl' },
+  { code: 'fr', name: 'French',      nativeName: 'Français',         flag: '🇫🇷', dir: 'ltr' },
+  { code: 'de', name: 'German',      nativeName: 'Deutsch',          flag: '🇩🇪', dir: 'ltr' },
+  { code: 'mr', name: 'Marathi',     nativeName: 'मराठी',            flag: '🇮🇳', dir: 'ltr' },
+  { code: 'te', name: 'Telugu',      nativeName: 'తెలుగు',           flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ta', name: 'Tamil',       nativeName: 'தமிழ்',            flag: '🇮🇳', dir: 'ltr' },
+  { code: 'pa', name: 'Punjabi',     nativeName: 'ਪੰਜਾਬੀ',           flag: '🇮🇳', dir: 'ltr' },
+  { code: 'ja', name: 'Japanese',    nativeName: '日本語',            flag: '🇯🇵', dir: 'ltr' },
+  { code: 'id', name: 'Indonesian',  nativeName: 'Bahasa Indonesia', flag: '🇮🇩', dir: 'ltr' },
+  { code: 'ko', name: 'Korean',      nativeName: '한국어',            flag: '🇰🇷', dir: 'ltr' },
+  { code: 'tr', name: 'Turkish',     nativeName: 'Türkçe',           flag: '🇹🇷', dir: 'ltr' },
+  { code: 'vi', name: 'Vietnamese',  nativeName: 'Tiếng Việt',       flag: '🇻🇳', dir: 'ltr' },
+  { code: 'it', name: 'Italian',     nativeName: 'Italiano',         flag: '🇮🇹', dir: 'ltr' },
+  { code: 'sw', name: 'Swahili',     nativeName: 'Kiswahili',        flag: '🇰🇪', dir: 'ltr' },
+] as const;
+
+export type LanguageCode = typeof SUPPORTED_LANGUAGES[number]['code'];
+export type LanguageDir = 'ltr' | 'rtl';

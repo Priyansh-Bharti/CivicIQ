@@ -153,6 +153,9 @@ export const Navbar = () => {
                 <MessageSquare className="w-5 h-5" />
                 Ask CivicIQ
               </button>
+              <div className="pt-2">
+                <LanguageSwitcher />
+              </div>
               <div className="pt-4 border-t border-white/10">
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-4">

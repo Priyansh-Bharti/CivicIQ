@@ -6,7 +6,7 @@
 ![Firebase](https://img.shields.io/badge/Auth%20%26%20DB-Firebase-FFCA28?logo=firebase)
 ![Gemini](https://img.shields.io/badge/AI-Gemini_2.5_Flash-8E75B2?logo=google-gemini)
 ![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success)
-![Tests](https://img.shields.io/badge/Tests-150%2B-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-166-brightgreen)
 
 ## Problem Statement
 "Many citizens feel overwhelmed by the complexity of election cycles, leading to voter apathy or accidental disenfranchisement due to misunderstood procedures, deadlines, and requirements."
@@ -47,14 +47,14 @@ Finally, CivicIQ prioritizes inclusivity. With full WCAG 2.1 AA compliance and n
 1. **Gemini 2.5 Flash**: Grounded, guardrailed AI education assistant.
 2. **Firebase Auth**: Secure Google OAuth identity management.
 3. **Cloud Firestore**: Real-time persistence for user phase progress and chat history.
-4. **Cloud Translate**: Dynamic localization for 5 global languages.
+4. **Cloud Translate**: Dynamic localization for 22 global languages with RTL support.
 5. **BigQuery**: Advanced behavioral analytics via Firebase Export.
 6. **Cloud Run / Build**: Serverless container orchestration and automated deployment.
 
 ## Evaluation Criteria
 | Criterion | How We Meet It |
 |---|---|
-| **Technical Excellence** | 100% Type safety, 150+ tests, 95+ Lighthouse scores. |
+| **Technical Excellence** | 100% Type safety, 166 tests, 95+ Lighthouse scores. |
 | **User Experience** | Stitch Design System (M3), fluid animations, glassmorphism. |
 | **Accessibility** | Full WCAG 2.1 AA compliance, ARIA-enabled, keyboard-first. |
 | **Impact** | Direct reduction in procedural voter friction. |
