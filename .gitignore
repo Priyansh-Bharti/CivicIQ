@@ -25,3 +25,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build Artifacts & Coverage
+test_output.txt
+tsconfig.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+coverage/
+dist/
+*.tsbuildinfo
