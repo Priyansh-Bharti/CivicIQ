@@ -89,6 +89,7 @@ export const ELECTION_PHASES: ElectionPhase[] = [
       'The President-elect takes the oath of office at the U.S. Capitol',
       'The new President delivers the inaugural address'
     ],
+    status: 'pending'
   }
 ];
 

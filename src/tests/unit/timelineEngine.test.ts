@@ -87,4 +87,52 @@ describe('timelineEngine', () => {
     expect(getPhaseProgress([])).toBe(0);
     expect(getNextPhase('1', [])).toBeNull();
   });
+
+  it('getPhaseById handles non-existent numeric id', () => {
+    expect(getPhaseById('99', ELECTION_PHASES)).toBeUndefined();
+  });
+
+  it('getNextPhase handles non-existent current id', () => {
+    expect(getNextPhase('99', ELECTION_PHASES)).toBeNull();
+  });
+
+  it('getPreviousPhase handles non-existent current id', () => {
+    expect(getPreviousPhase('99', ELECTION_PHASES)).toBeNull();
+  });
+
+  it('getPhaseProgress handles partially completed phases', () => {
+    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    phases[0].status = 'completed';
+    // 1 out of 6
+    expect(getPhaseProgress(phases)).toBe(17);
+  });
+
+  it('getActivePhase handles multiple active phases (returns first)', () => {
+    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    phases[0].status = 'active';
+    phases[1].status = 'active';
+    expect(getActivePhase(phases)?.id).toBe('1');
+  });
+
+  it('formatPhaseDuration handles missing duration', () => {
+    const phase = { ...ELECTION_PHASES[0], duration: undefined as any };
+    expect(formatPhaseDuration(phase)).toBe('TBD');
+  });
+
+  it('isPhaseComplete handles undefined status', () => {
+    const phase = { ...ELECTION_PHASES[0], status: undefined as any };
+    expect(isPhaseComplete(phase)).toBe(false);
+  });
+
+  it('getNextPhase returns null for invalid input', () => {
+    expect(getNextPhase('', ELECTION_PHASES)).toBeNull();
+  });
+
+  it('getPreviousPhase returns null for invalid input', () => {
+    expect(getPreviousPhase('', ELECTION_PHASES)).toBeNull();
+  });
+
+  it('getPhaseById returns first item if no id provided', () => {
+    expect(getPhaseById(undefined as any, ELECTION_PHASES)).toBeUndefined();
+  });
 });

@@ -73,7 +73,7 @@ export const useGemini = () => {
 
     try {
       let fullResponse = '';
-      const stream = streamCivicAnswer(content, activeContext || undefined);
+      const stream = streamCivicAnswer(content, messages, activeContext || undefined);
       
       for await (const chunk of stream) {
         fullResponse += chunk;

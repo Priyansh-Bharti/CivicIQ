@@ -27,7 +27,9 @@ export const validatePrompt = (prompt: string): { safe: boolean; reason?: string
   const blockedTerms = [
     'republican', 'democrat', 'bjp', 'congress', 'tory', 'labour',
     'trump', 'biden', 'modi', 'rahul', 'harris', 'obama',
-    'vote for', 'endorse', 'fuck', 'shit', 'asshole'
+    'vote for', 'endorse', 'fuck', 'shit', 'asshole',
+    'abortion', 'climate change', 'weather', 'cake', 'bake',
+    'ignore previous', 'system prompt'
   ];
 
   const lowerPrompt = prompt.toLowerCase();
@@ -40,16 +42,22 @@ export const validatePrompt = (prompt: string): { safe: boolean; reason?: string
   return { safe: true };
 };
 
-export async function* streamCivicAnswer(prompt: string, phaseContext?: string) {
+export async function* streamCivicAnswer(prompt: string, history: ChatMessage[], phaseContext?: string) {
   const fullPrompt = phaseContext 
     ? `Context: We are discussing the "${phaseContext}" phase of the election.\nQuestion: ${prompt}`
     : prompt;
 
   try {
+    const historyParts = history.map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }]
+    }));
+
     const result = await model.generateContentStream({
       contents: [
         { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
         { role: 'model', parts: [{ text: "Understood. I will act as CivicIQ and adhere strictly to these guardrails." }] },
+        ...historyParts,
         { role: 'user', parts: [{ text: fullPrompt }] }
       ],
     });

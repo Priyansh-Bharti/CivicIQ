@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import { Navbar } from '../../../src/components/layout/Navbar';
@@ -42,16 +42,43 @@ describe('Navbar Component', () => {
   });
 
   it('has aria-label on nav element', () => {
-    (useAuth as any).mockReturnValue({
-      user: null,
-      isAuthenticated: false,
-    });
-
-    render(
-      <BrowserRouter>
-        <Navbar />
-      </BrowserRouter>
-    );
+    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByRole('navigation')).toHaveAttribute('aria-label', 'Main Navigation');
+  });
+
+  it('renders the CivicIQ logo', () => {
+    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    render(<BrowserRouter><Navbar /></BrowserRouter>);
+    expect(screen.getByText('CivicIQ')).toBeInTheDocument();
+  });
+
+  it('shows navigation links', () => {
+    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    render(<BrowserRouter><Navbar /></BrowserRouter>);
+    expect(screen.getByText('Timeline')).toBeInTheDocument();
+    expect(screen.getByText('Checklist')).toBeInTheDocument();
+  });
+
+  it('shows logout button when authenticated', () => {
+    (useAuth as any).mockReturnValue({ 
+      user: { displayName: 'John', photoURL: '' }, 
+      isAuthenticated: true,
+      signOut: vi.fn()
+    });
+    render(<BrowserRouter><Navbar /></BrowserRouter>);
+    
+    // Open profile menu
+    const menuButton = screen.getByLabelText(/User menu/i);
+    fireEvent.click(menuButton);
+    
+    expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
+  });
+
+  it('nav links have correct hrefs', () => {
+    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    render(<BrowserRouter><Navbar /></BrowserRouter>);
+    expect(screen.getByText('Timeline').closest('a')).toHaveAttribute('href', '/timeline');
+    expect(screen.getByText('Checklist').closest('a')).toHaveAttribute('href', '/checklist');
   });
 });

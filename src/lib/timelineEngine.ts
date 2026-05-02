@@ -27,7 +27,7 @@ export const getPreviousPhase = (currentId: string, phases: ElectionPhase[]): El
 };
 
 export const formatPhaseDuration = (phase: ElectionPhase): string => {
-  return phase.duration;
+  return phase.duration || 'TBD';
 };
 
 export const isPhaseComplete = (phase: ElectionPhase): boolean => {
