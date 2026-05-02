@@ -4,7 +4,7 @@
 
 ![Cloud Run](https://img.shields.io/badge/Hosted-Google_Cloud_Run-4285F4?logo=google-cloud)
 ![Firebase](https://img.shields.io/badge/Auth%20%26%20DB-Firebase-FFCA28?logo=firebase)
-![Gemini](https://img.shields.io/badge/AI-Gemini_2.0_Flash-8E75B2?logo=google-gemini)
+![Gemini](https://img.shields.io/badge/AI-Gemini_2.5_Flash-8E75B2?logo=google-gemini)
 ![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success)
 ![Tests](https://img.shields.io/badge/Tests-150%2B-brightgreen)
 
@@ -14,7 +14,7 @@
 ## How CivicIQ Solves It
 CivicIQ transforms complex election data into a personalized, interactive journey. By breaking down the election cycle into six digestible phases, users can track their progress from registration to certification without being overwhelmed by technical jargon.
 
-The platform integrates a grounded AI assistant, **CivicIQ**, which uses Gemini 2.0 Flash to answer specific procedural questions while adhering to strict neutrality guardrails. This ensures users get factual, non-partisan information exactly when they need it.
+The platform integrates a grounded AI assistant, **CivicIQ**, which uses Gemini 2.5 Flash to answer specific procedural questions while adhering to strict neutrality guardrails. This ensures users get factual, non-partisan information exactly when they need it.
 
 Finally, CivicIQ prioritizes inclusivity. With full WCAG 2.1 AA compliance and native multilingual support, we ensure that every citizen—regardless of ability or primary language—has equal access to the education required to participate in their democracy.
 
@@ -25,7 +25,7 @@ Finally, CivicIQ prioritizes inclusivity. With full WCAG 2.1 AA compliance and n
                         |
             [ Google Cloud Run (Hosting) ]
                         |
-            [ Gemini 2.0 Flash (Education) ]
+            [ Gemini 2.5 Flash (Education) ]
                         |
             [ Cloud Translate (Localization) ]
 ```
@@ -34,7 +34,7 @@ Finally, CivicIQ prioritizes inclusivity. With full WCAG 2.1 AA compliance and n
 | Category | Technology |
 |---|---|
 | **Frontend** | React, TypeScript, Vite, Tailwind CSS, Framer Motion |
-| **AI / NLP** | Gemini 2.0 Flash (@google/generative-ai) |
+| **AI / NLP** | Gemini 2.5 Flash (@google/generative-ai) |
 | **Auth** | Firebase Authentication (Google OAuth) |
 | **Database** | Cloud Firestore |
 | **Analytics** | Firebase Analytics → BigQuery |
@@ -44,7 +44,7 @@ Finally, CivicIQ prioritizes inclusivity. With full WCAG 2.1 AA compliance and n
 | **CI/CD** | Google Cloud Build |
 
 ## Google Services Used
-1. **Gemini 2.0 Flash**: Grounded, guardrailed AI education assistant.
+1. **Gemini 2.5 Flash**: Grounded, guardrailed AI education assistant.
 2. **Firebase Auth**: Secure Google OAuth identity management.
 3. **Cloud Firestore**: Real-time persistence for user phase progress and chat history.
 4. **Cloud Translate**: Dynamic localization for 5 global languages.

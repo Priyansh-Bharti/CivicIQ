@@ -25,7 +25,7 @@ CivicIQ has been manually tested using:
 - **Keyboard-only** interaction testing
 
 ## Language Accessibility
-- Multilingual support for 5 languages: English, Spanish, French, German, and Vietnamese.
+- Multilingual support for 5 languages: English, Spanish, French, Hindi, and Arabic.
 - Powered by Google Cloud Translate for accurate, real-time localized education.
 
 ## Known Limitations
