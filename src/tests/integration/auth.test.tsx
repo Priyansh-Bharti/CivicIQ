@@ -5,12 +5,35 @@ import { Navbar } from '../../../src/components/layout/Navbar';
 import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('../../../src/lib/firebase', () => ({
-  auth: { 
-    onAuthStateChanged: vi.fn(),
-    signOut: vi.fn()
-  },
-  db: {}
-}));
+  auth: { currentUser: null },
+  db: {},
+  app: {},
+  signInWithGoogle: vi.fn().mockResolvedValue({
+    uid: 'test-uid',
+    displayName: 'Test User',
+    email: 'test@example.com',
+    photoURL: null,
+  }),
+  signOut: vi.fn().mockResolvedValue(undefined),
+  onAuthStateChanged: vi.fn((_auth: unknown, callback: (user: null) => void) => {
+    callback(null);
+    return vi.fn();
+  }),
+  doc: vi.fn(() => ({ id: 'mock-doc' })),
+  getDoc: vi.fn().mockResolvedValue({ exists: () => false, data: () => ({}) }),
+  setDoc: vi.fn().mockResolvedValue(undefined),
+  updateDoc: vi.fn().mockResolvedValue(undefined),
+  collection: vi.fn(() => ({ id: 'mock-collection' })),
+  onSnapshot: vi.fn(() => vi.fn()),
+  query: vi.fn(),
+  orderBy: vi.fn(),
+  limit: vi.fn(),
+  serverTimestamp: vi.fn(() => new Date()),
+  deleteDoc: vi.fn().mockResolvedValue(undefined),
+  addDoc: vi.fn().mockResolvedValue({ id: 'mock-added-doc' }),
+  getDocs: vi.fn().mockResolvedValue({ docs: [], forEach: vi.fn() }),
+  where: vi.fn(),
+}))
 
 vi.mock('../../../src/hooks/useTranslation', () => ({
   useTranslation: (text: string) => text

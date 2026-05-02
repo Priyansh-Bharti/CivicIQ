@@ -15,12 +15,15 @@ vi.mock('firebase/firestore', () => ({
 vi.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: vi.fn(() => ({
     getGenerativeModel: vi.fn(() => ({
-      generateContentStream: vi.fn().mockResolvedValue({
-        stream: (async function* () {
-          yield { text: () => "Mocked response part 1 " };
-          yield { text: () => "Mocked response part 2" };
-        })()
-      })
+      startChat: vi.fn(() => ({
+        sendMessageStream: vi.fn().mockResolvedValue({
+          stream: (async function* () {
+            yield { text: () => "Mocked response part 1 " };
+            yield { text: () => "Mocked response part 2" };
+          })()
+        })
+      })),
+      generateContentStream: vi.fn()
     }))
   }))
 }));

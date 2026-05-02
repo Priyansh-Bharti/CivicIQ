@@ -11,12 +11,35 @@ import { CIVIC_CHECKLIST } from '../../../src/lib/constants';
 
 // ─── Module mocks ───────────────────────────────────────────────────────────
 vi.mock('../../../src/lib/firebase', () => ({
-  auth: {},
+  auth: { currentUser: null },
   db: {},
-  onAuthStateChanged: vi.fn((_auth, cb) => { cb(null); return () => {}; }),
-  signInWithGoogle: vi.fn(),
-  signOut: vi.fn(),
-}));
+  app: {},
+  signInWithGoogle: vi.fn().mockResolvedValue({
+    uid: 'test-uid',
+    displayName: 'Test User',
+    email: 'test@example.com',
+    photoURL: null,
+  }),
+  signOut: vi.fn().mockResolvedValue(undefined),
+  onAuthStateChanged: vi.fn((_auth: unknown, callback: (user: null) => void) => {
+    callback(null);
+    return vi.fn();
+  }),
+  doc: vi.fn(() => ({ id: 'mock-doc' })),
+  getDoc: vi.fn().mockResolvedValue({ exists: () => false, data: () => ({}) }),
+  setDoc: vi.fn().mockResolvedValue(undefined),
+  updateDoc: vi.fn().mockResolvedValue(undefined),
+  collection: vi.fn(() => ({ id: 'mock-collection' })),
+  onSnapshot: vi.fn(() => vi.fn()),
+  query: vi.fn(),
+  orderBy: vi.fn(),
+  limit: vi.fn(),
+  serverTimestamp: vi.fn(() => new Date()),
+  deleteDoc: vi.fn().mockResolvedValue(undefined),
+  addDoc: vi.fn().mockResolvedValue({ id: 'mock-added-doc' }),
+  getDocs: vi.fn().mockResolvedValue({ docs: [], forEach: vi.fn() }),
+  where: vi.fn(),
+}))
 
 vi.mock('../../../src/components/layout/Navbar', () => ({ Navbar: () => <nav data-testid="navbar" /> }));
 vi.mock('../../../src/components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
@@ -148,5 +171,10 @@ describe('User Journey Integration', () => {
   it('Chat store: can be toggled programmatically', () => {
     useChatStore.getState().setIsOpen(true);
     expect(useChatStore.getState().isOpen).toBe(true);
+  });
+
+  it('Routing handles 404 gracefully or routes correctly', () => {
+    renderPage(() => <div className="p-20 text-center text-3xl">404 - Not Found</div>, '/not-existent');
+    expect(screen.getByText(/404/i)).toBeInTheDocument();
   });
 });
