@@ -19,6 +19,7 @@ import { FeatureCard } from '../components/landing/FeatureCard';
 import { JourneySection } from '../components/landing/JourneySection';
 import { Footer } from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
+import { useTranslation } from '../hooks/useTranslation';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -34,6 +35,7 @@ const containerVariants = {
  */
 export const Landing: React.FC = (): React.JSX.Element => {
   const { isAuthenticated, signInWithGoogle } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -54,20 +56,20 @@ export const Landing: React.FC = (): React.JSX.Element => {
             >
               <FeatureCard 
                 icon={<CalendarDays className="w-10 h-10 text-indigo" aria-hidden="true" />}
-                title="Interactive timeline"
-                description="Follow every election phase step by step, with plain-language explanations."
+                title={t('feature.timeline.title')}
+                description={t('feature.timeline.desc')}
                 delay={0}
               />
               <FeatureCard 
                 icon={<MessageSquare className="w-10 h-10 text-indigo" aria-hidden="true" />}
-                title="Ask CivicIQ"
-                description="Get instant answers about any part of the process, powered by Gemini AI."
+                title={t('feature.chat.title')}
+                description={t('feature.chat.desc')}
                 delay={0.1}
               />
               <FeatureCard 
                 icon={<CheckSquare className="w-10 h-10 text-indigo" aria-hidden="true" />}
-                title="Civic readiness"
-                description="Track your personal checklist so you are fully prepared on election day."
+                title={t('feature.checklist.title')}
+                description={t('feature.checklist.desc')}
                 delay={0.2}
               />
             </motion.div>

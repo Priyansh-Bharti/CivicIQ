@@ -3,9 +3,10 @@
  * Renders the primary landing page hero area with mission statement and primary call-to-actions.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface HeroSectionProps {
   /** Authentication status. */
@@ -16,25 +17,9 @@ interface HeroSectionProps {
   onStartJourney?: () => void;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 }
-  }
-};
-
 /**
  * Renders the main hero area of the landing page.
+ * Respects prefers-reduced-motion for accessibility.
  * @returns {React.JSX.Element} The rendered hero section.
  */
 export const HeroSection: React.FC<HeroSectionProps> = ({ 
@@ -43,6 +28,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onStartJourney 
 }): React.JSX.Element => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  // Respect user's OS-level animation preference (defensive for SSR/test environments)
+  const prefersReducedMotion = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false,
+    []
+  );
+
+  const containerVariants = useMemo(() => ({
+    hidden: { opacity: prefersReducedMotion ? 1 : 0 },
+    visible: {
+      opacity: 1,
+      transition: prefersReducedMotion ? { duration: 0 } : { staggerChildren: 0.1 }
+    }
+  }), [prefersReducedMotion]);
+
+  const itemVariants = useMemo(() => ({
+    hidden: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0 : 0.5 }
+    }
+  }), [prefersReducedMotion]);
 
   const handleAction = () => {
     if (isAuthenticated) {
@@ -68,15 +79,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             variants={itemVariants}
             className="text-5xl md:text-7xl font-hero text-white leading-tight"
           >
-            Democracy starts with <br />
-            <span className="text-amber">understanding.</span>
+            {t('hero.title').split('understanding').length > 1 ? (
+              <>
+                Democracy starts with <br />
+                <span className="text-amber">understanding.</span>
+              </>
+            ) : t('hero.title')}
           </motion.h1>
           
           <motion.p 
             variants={itemVariants}
             className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto font-body"
           >
-            CivicIQ guides you through every step of the election process — from voter registration to final results.
+            {t('hero.subtitle')}
           </motion.p>
           
           <motion.div 
@@ -87,13 +102,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               onClick={handleAction}
               className="bg-amber text-navy px-8 py-4 rounded-md font-bold text-lg hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber"
             >
-              Explore the process
+              {t('hero.cta.explore')}
             </button>
             <button 
-              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })}
               className="border border-white text-white px-8 py-4 rounded-md font-bold text-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
             >
-              How it works
+              {t('hero.cta.howItWorks')}
             </button>
           </motion.div>
         </motion.div>

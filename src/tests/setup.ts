@@ -21,6 +21,18 @@ class IntersectionObserverMock {
 
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
+// Mock window.matchMedia (not available in jsdom)
+vi.stubGlobal('matchMedia', (query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+}));
+
 // Mock Framer Motion to avoid animation-related test hangs and handle all motion tags
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');

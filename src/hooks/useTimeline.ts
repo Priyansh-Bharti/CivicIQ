@@ -3,7 +3,7 @@
  * Manages the state and persistence of the user's progress through election phases.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { db, auth } from '../lib/firebase';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useTimelineStore } from '../store/timelineStore';
@@ -61,7 +61,7 @@ export const useTimeline = (): TimelineHookResult => {
    * Marks a specific election phase as viewed/complete.
    * @param {string} phaseId The identifier of the phase.
    */
-  const markPhaseViewed = async (phaseId: string): Promise<void> => {
+  const markPhaseViewed = useCallback(async (phaseId: string): Promise<void> => {
     markPhaseComplete(phaseId);
 
     if (user) {
@@ -74,19 +74,27 @@ export const useTimeline = (): TimelineHookResult => {
         logger.error('Error updating progress:', error);
       }
     }
-  };
+  }, [user, markPhaseComplete]);
 
   /**
    * Updates the active phase and marks it as viewed.
    * @param {string} phaseId The identifier of the phase to activate.
    */
-  const setActivePhase = (phaseId: string): void => {
+  const setActivePhase = useCallback((phaseId: string): void => {
     setActivePhaseId(phaseId);
     void markPhaseViewed(phaseId);
-  };
+  }, [setActivePhaseId, markPhaseViewed]);
 
-  const completionPercentage = TimelineEngine.calculateCompletion(phases, progress);
-  const nextPhase = TimelineEngine.getNextPhase(phases, progress);
+  // Memoized derived values — recompute only when phases or progress change
+  const completionPercentage = useMemo(
+    () => TimelineEngine.calculateCompletion(phases, progress),
+    [phases, progress]
+  );
+
+  const nextPhase = useMemo(
+    () => TimelineEngine.getNextPhase(phases, progress),
+    [phases, progress]
+  );
 
   return {
     phases,

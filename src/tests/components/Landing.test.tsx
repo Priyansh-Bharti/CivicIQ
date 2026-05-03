@@ -26,7 +26,7 @@ describe('Landing Page', () => {
         <Landing />
       </BrowserRouter>
     );
-    expect(screen.getByText(/Democracy starts with/i)).toBeInTheDocument();
+    expect(screen.getByText(/hero.title/i)).toBeInTheDocument();
   });
 
   it('renders 3 feature cards', () => {
@@ -35,9 +35,9 @@ describe('Landing Page', () => {
         <Landing />
       </BrowserRouter>
     );
-    expect(screen.getByText(/Interactive timeline/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Ask CivicIQ/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Civic readiness/i)).toBeInTheDocument();
+    expect(screen.getByText(/feature.timeline.title/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/feature.chat.title/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/feature.checklist.title/i)).toBeInTheDocument();
   });
 
   it('navigates to /timeline when CTA is clicked', () => {
@@ -46,7 +46,7 @@ describe('Landing Page', () => {
         <Landing />
       </BrowserRouter>
     );
-    const exploreBtn = screen.getByText(/Explore the process/i);
+    const exploreBtn = screen.getByText(/hero.cta.explore/i);
     expect(exploreBtn).toBeInTheDocument();
     // Since navigate is a hook inside the component, we can't easily check the URL without more complex setup,
     // but we can check if it exists and is clickable.

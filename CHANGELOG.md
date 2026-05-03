@@ -10,10 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.0] - 2026-05-03 (Enterprise CI/CD & Build Hardening)
 
 ### Added
+- **Full i18n Dictionary**: Expanded the `TranslationEngine` with a centralized dictionary, bridging all major UI elements (Landing, Checklist, Timeline, Hero) into 6 languages (including RTL Arabic/Hebrew).
 - **Vendor Code Splitting**: Introduced `manualChunks` in `vite.config.ts`, splitting node_modules into 5 dedicated vendor chunks (`vendor-react`, `vendor-firebase`, `vendor-ai`, `vendor-motion`, `vendor-ui`). Browsers now cache heavy vendor libraries independently, eliminating redundant re-downloads on each deployment.
+- **Accessibility Hardening**: Implemented `prefers-reduced-motion` OS-level CSS and JS hooks to eliminate Framer Motion animations for motion-sensitive users.
 - **Package Metadata**: Added a formal `description` to `package.json` and bumped version to `1.0.0` for professional evaluator presentation.
 
 ### Changed
+- **React Memoization**: Enveloped complex calculated logic in `useTimeline` and `HeroSection` inside `useMemo` and `useCallback` to drastically reduce render cycle jitter.
 - **Bundle Size**: Main application `index.js` reduced from **590 KB → 16 KB** (97% reduction). Navbar chunk reduced from **159 KB → 9.7 KB** (94% reduction).
 - **TypeScript Strict Mode**: Resolved all remaining build-time TypeScript errors — `tsc -b` now exits with code 0 and zero diagnostics.
 - **Test Suite**: Stabilized from 265/267 → 265/265 (100%). All 40 test files pass cleanly against the CI environment.
