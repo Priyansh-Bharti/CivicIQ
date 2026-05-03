@@ -13,6 +13,8 @@ interface FeatureCardProps {
   title: string;
   /** Detailed description of the feature. */
   description: string;
+  /** Animation delay for stagger effects. */
+  delay?: number;
 }
 
 const itemVariants = {

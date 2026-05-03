@@ -117,7 +117,7 @@ describe('timelineEngine', () => {
 
   it('formatPhaseDuration handles missing duration', () => {
     const phase = { ...ELECTION_PHASES[0], duration: undefined };
-    expect(formatPhaseDuration(phase as ElectionPhase)).toBe('TBD');
+    expect(formatPhaseDuration(phase as unknown as ElectionPhase)).toBe('TBD');
   });
 
   it('isPhaseComplete handles undefined status', () => {

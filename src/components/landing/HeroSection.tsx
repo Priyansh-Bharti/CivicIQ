@@ -7,6 +7,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+interface HeroSectionProps {
+  /** Callback to start the user journey. */
+  onStartJourney?: () => void;
+}
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {

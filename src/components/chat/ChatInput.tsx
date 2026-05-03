@@ -55,6 +55,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }
 
   return (
     <div className="p-4 bg-white border-t border-gray-100">
+      <div className="flex justify-center mb-3">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-navy/5 text-navy/60 rounded-full text-[10px] font-bold uppercase tracking-widest border border-navy/10">
+          <span className="w-1.5 h-1.5 bg-emerald rounded-full animate-pulse" />
+          🛡️ Non-partisan · Factual only
+        </span>
+      </div>
       <div className="relative bg-gray-50 rounded-xl border border-gray-200 focus-within:border-indigo transition-colors p-2">
         <textarea
           ref={textareaRef}

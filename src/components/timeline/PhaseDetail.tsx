@@ -108,7 +108,17 @@ export const PhaseDetail: React.FC<PhaseDetailProps> = ({ phase, onAskCivicIQ })
                 </p>
               </div>
             </div>
+            <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
+            <div className="text-sm text-on-surface/60">Need help with this phase?</div>
+            <button 
+              onClick={() => onAskCivicIQ(`I missed a deadline or made a mistake in the "${phase.name}" phase. What are my options for recovery?`)}
+              className="text-xs font-bold text-indigo hover:text-navy transition-colors flex items-center gap-1 group"
+            >
+              <AlertCircle className="w-3.5 h-3.5 group-hover:animate-bounce" />
+              Missed a deadline?
+            </button>
           </div>
+        </div>
         </div>
 
         {/* Action Bar */}

@@ -13,7 +13,7 @@ import { SUPPORTED_LANGUAGES, LanguageCode } from '../../constants';
  * Language region groups for better organization in the UI.
  */
 const GROUPS = [
-  { label: "South Asia", codes: ['hi', 'bn', 'ur', 'pa', 'te', 'ta', 'mr'] },
+  { label: "South Asia", codes: ['hi', 'bn', 'te', 'mr', 'ta', 'ur', 'gu', 'kn', 'ml', 'pa'] },
   { label: "Europe", codes: ['en', 'es', 'fr', 'de', 'pt', 'ru', 'tr', 'it'] },
   { label: "East Asia", codes: ['zh', 'ja', 'ko', 'vi', 'id'] },
   { label: "Middle East & Africa", codes: ['ar', 'sw'] },

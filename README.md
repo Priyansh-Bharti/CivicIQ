@@ -19,11 +19,13 @@
 
 ## 🚨 1. Problem Statement
 
-Modern democratic participation is plagued by a paradox: while the right to vote is universal, the **procedural complexity** of exercising that right has become a significant barrier. **Voter apathy** is frequently a misdiagnosis of what is actually **systemic procedural exhaustion**. Citizens are often bombarded with fragmented information, shifting deadlines, and technical jargon that makes the simple act of casting a ballot feel like navigating an administrative labyrinth.
+Modern democratic participation is plagued by a paradox: while the right to vote is universal, the **procedural complexity** of exercising that right has become a significant barrier. This is particularly acute in large, diverse democracies like **India**, where the **Election Commission of India (ECI)** manages an electorate of nearly a billion people across vast geographical and cultural landscapes.
 
-For first-time voters and marginalized communities, this complexity leads to **accidental disenfranchisement**. Missing a registration window or misinterpreting a mail-in ballot requirement are not personal failures, but failures of information design. Furthermore, the lack of **multilingual support** and accessible interfaces often leaves non-native speakers and citizens with disabilities behind, effectively silencing their voices in the democratic process.
+**Voter apathy** is frequently a misdiagnosis of what is actually **systemic procedural exhaustion**. Citizens are often overwhelmed by fragmented information, shifting state-specific deadlines, and complex ECI guidelines that make the simple act of casting a ballot feel like navigating an administrative labyrinth.
 
-Existing solutions—primarily static government PDFs, partisan news cycles, and social media echo chambers—fail because they are either too difficult to parse or lack the **non-partisan neutrality** required for true civic education. CivicIQ bridges this gap by transforming complex election data into a personalized, interactive, and accessible journey.
+For first-time voters and marginalized communities, this complexity leads to **accidental disenfranchisement**. Missing a registration window or misinterpreting a voter ID requirement are not personal failures, but failures of information design. Furthermore, India's extreme **linguistic diversity** means that a lack of comprehensive **multilingual support** and accessible interfaces often leaves non-native Hindi or English speakers behind, effectively silencing their voices in the democratic process.
+
+Existing solutions—primarily static government PDFs, partisan news cycles, and social media echo chambers—fail because they are either too difficult to parse or lack the **non-partisan neutrality** required for true civic education. CivicIQ bridges this gap by transforming complex electoral procedures into a personalized, interactive, and accessible journey.
 
 ---
 
