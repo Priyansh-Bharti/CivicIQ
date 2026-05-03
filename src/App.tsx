@@ -10,6 +10,8 @@ import { Timeline } from './pages/Timeline';
 import { Checklist } from './pages/Checklist';
 import { About } from './pages/About';
 
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+
 /**
  * Fallback component for unmatched routes.
  */
@@ -27,8 +29,22 @@ function App(): React.JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/timeline" element={<Timeline />} />
-      <Route path="/checklist" element={<Checklist />} />
+      <Route 
+        path="/timeline" 
+        element={
+          <ProtectedRoute>
+            <Timeline />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/checklist" 
+        element={
+          <ProtectedRoute>
+            <Checklist />
+          </ProtectedRoute>
+        } 
+      />
       <Route path="/about" element={<About />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

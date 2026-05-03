@@ -9,6 +9,10 @@ import { motion } from 'framer-motion';
 interface ProgressRingProps {
   /** The completion percentage (0-100). */
   percentage: number;
+  /** Diameter of the ring in pixels. */
+  size?: number;
+  /** Thickness of the ring stroke. */
+  strokeWidth?: number;
 }
 
 /**

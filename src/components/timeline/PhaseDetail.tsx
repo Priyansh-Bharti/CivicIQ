@@ -42,7 +42,7 @@ const IconMap: Record<string, LucideIcon> = {
  * @param {PhaseDetailProps} props Component properties.
  * @returns {React.JSX.Element} The rendered phase detail view.
  */
-export const PhaseDetail: React.FC<PhaseDetailProps> = ({ phase, onAskAI }): React.JSX.Element => {
+export const PhaseDetail: React.FC<PhaseDetailProps> = ({ phase, onAskCivicIQ }): React.JSX.Element => {
   const Icon = IconMap[phase.id] || UserCheck;
 
   return (

@@ -9,6 +9,7 @@ import {
   isPhaseComplete 
 } from '../../lib/timelineEngine';
 import { ELECTION_PHASES } from '../../lib/constants';
+import { Phase } from '../../types';
 
 describe('timelineEngine', () => {
   it('getPhaseById returns correct phase', () => {
@@ -20,32 +21,32 @@ describe('timelineEngine', () => {
   });
 
   it('getActivePhase returns active phase', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
     phases[2].status = 'active';
     expect(getActivePhase(phases)?.id).toBe('3');
   });
 
   it('getActivePhase returns null if none active', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
-    phases.forEach((p: any) => p.status = 'pending');
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    phases.forEach((p: Phase) => { p.status = 'pending'; });
     expect(getActivePhase(phases)).toBeNull();
   });
 
   it('getPhaseProgress calculates correctly (0%)', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
-    phases.forEach((p: any) => p.status = 'pending');
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    phases.forEach((p: Phase) => { p.status = 'pending'; });
     expect(getPhaseProgress(phases)).toBe(0);
   });
 
   it('getPhaseProgress calculates correctly (100%)', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
-    const completed = phases.map((p: any) => ({ ...p, status: 'completed' as const }));
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    const completed = phases.map((p: Phase) => ({ ...p, status: 'completed' as const }));
     expect(getPhaseProgress(completed)).toBe(100);
   });
 
   it('getPhaseProgress calculates correctly (~50%)', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
-    phases.forEach((p: any) => p.status = 'pending');
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    phases.forEach((p: Phase) => { p.status = 'pending'; });
     phases[0].status = 'completed';
     phases[1].status = 'completed';
     phases[2].status = 'completed';
@@ -73,12 +74,12 @@ describe('timelineEngine', () => {
   });
 
   it('isPhaseComplete returns true when completed', () => {
-    const p = { ...ELECTION_PHASES[0], status: 'completed' as const };
+    const p: Phase = { ...ELECTION_PHASES[0], status: 'completed' as const };
     expect(isPhaseComplete(p)).toBe(true);
   });
 
   it('isPhaseComplete returns false when pending', () => {
-    const p = { ...ELECTION_PHASES[0], status: 'pending' as const };
+    const p: Phase = { ...ELECTION_PHASES[0], status: 'pending' as const };
     expect(isPhaseComplete(p)).toBe(false);
   });
 
@@ -101,27 +102,27 @@ describe('timelineEngine', () => {
   });
 
   it('getPhaseProgress handles partially completed phases', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
     phases[0].status = 'completed';
     // 1 out of 6
     expect(getPhaseProgress(phases)).toBe(17);
   });
 
   it('getActivePhase handles multiple active phases (returns first)', () => {
-    const phases = JSON.parse(JSON.stringify(ELECTION_PHASES));
+    const phases: Phase[] = JSON.parse(JSON.stringify(ELECTION_PHASES));
     phases[0].status = 'active';
     phases[1].status = 'active';
     expect(getActivePhase(phases)?.id).toBe('1');
   });
 
   it('formatPhaseDuration handles missing duration', () => {
-    const phase = { ...ELECTION_PHASES[0], duration: undefined as any };
-    expect(formatPhaseDuration(phase)).toBe('TBD');
+    const phase = { ...ELECTION_PHASES[0], duration: undefined };
+    expect(formatPhaseDuration(phase as Phase)).toBe('TBD');
   });
 
   it('isPhaseComplete handles undefined status', () => {
-    const phase = { ...ELECTION_PHASES[0], status: undefined as any };
-    expect(isPhaseComplete(phase)).toBe(false);
+    const phase = { ...ELECTION_PHASES[0], status: undefined };
+    expect(isPhaseComplete(phase as unknown as Phase)).toBe(false);
   });
 
   it('getNextPhase returns null for invalid input', () => {
@@ -133,6 +134,7 @@ describe('timelineEngine', () => {
   });
 
   it('getPhaseById returns first item if no id provided', () => {
-    expect(getPhaseById(undefined as any, ELECTION_PHASES)).toBeUndefined();
+    expect(getPhaseById(undefined as unknown as string, ELECTION_PHASES)).toBeUndefined();
   });
+});
 });
