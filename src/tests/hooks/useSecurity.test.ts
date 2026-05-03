@@ -11,7 +11,7 @@ describe('useRateLimit Security Logic', () => {
   it('should allow requests within the limit', () => {
     const { result } = renderHook(() => useRateLimit());
     
-    let check: any;
+    let check: { allowed: boolean; remaining: number; resetTime: number };
     act(() => {
       check = result.current.checkLimit('AI');
     });
@@ -30,7 +30,7 @@ describe('useRateLimit Security Logic', () => {
       });
     }
 
-    let blockedCheck: any;
+    let blockedCheck: { allowed: boolean; remaining: number; resetTime: number };
     act(() => {
       blockedCheck = result.current.checkLimit('AUTH');
     });
