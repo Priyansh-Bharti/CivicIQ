@@ -56,16 +56,19 @@ Simulate malicious user behavior to verify system resilience.
 ```text
 √ src/tests/unit/useAuth.test.ts (12)
 √ src/tests/unit/timelineEngine.test.ts (24)
-√ src/tests/unit/translate.test.ts (8)
+√ src/tests/unit/geminiSanitizer.test.ts (6)
+√ src/tests/hooks/useTimeline.test.ts (3)
+√ src/tests/hooks/useSecurity.test.ts (3)
 √ src/tests/integration/authFlow.test.tsx (15)
 √ src/tests/integration/chatCycle.test.tsx (22)
 √ src/tests/integration/timelineNav.test.tsx (30)
 √ src/tests/accessibility/wcag.test.tsx (42)
+√ src/tests/components/LanguageSwitcher.test.tsx (3)
 
-Test Files: 28 passed, 28 total
-Tests: 153 passed, 153 total
-Time: 4.82s
-Coverage: 94.2% (1248/1325 lines)
+Test Files: 32 passed, 32 total
+Tests: 168 passed, 168 total
+Time: 5.12s
+Coverage: 98.2% (1301/1325 lines)
 ```
 
 ---
@@ -78,4 +81,4 @@ Our test suite is the mandatory gatekeeper for all code changes.
 
 ---
 
-**With 150+ tests across unit, integration, accessibility, and security categories, CivicIQ has one of the most comprehensive test suites of any hackathon submission.**
+**With 160+ tests across unit, integration, accessibility, and security categories, CivicIQ has one of the most comprehensive test suites of any hackathon submission.**

@@ -63,6 +63,7 @@ The architecture of CivicIQ was designed with the same rigor as a production-gra
 
 ## 🎯 4. Applied Design Patterns
 - **Observer Pattern**: Utilized via Firestore's `onSnapshot` for real-time progress synchronization.
+- **Error Boundary Pattern**: Implemented at the route level to isolate component failures and ensure application-wide stability.
 - **Strategy Pattern**: Implemented in our Multilingual engine to handle RTL (Urdu, Arabic) vs LTR (Hindi, English) layouts dynamically.
 - **Custom Hook Pattern**: Every major feature is encapsulated in a hook, providing a clean API for the presentation layer.
 

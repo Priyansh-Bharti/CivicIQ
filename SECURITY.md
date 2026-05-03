@@ -41,23 +41,24 @@ service cloud.firestore {
 ---
 
 ## 🤖 3. AI Safety & Guardrails
-The AI Assistant is protected against common prompt injection and abuse vectors.
-- **Input Sanitization**: All user input is stripped of HTML tags and restricted to 500 characters.
-- **Rate Limiting**: A 3-tier token-bucket pattern restricts AI requests to 30 per 15-minute window per user.
-- **System Instructions**: The `SYSTEM_PROMPT` includes strict non-partisan and factual-only directives that the Gemini model is trained to follow.
+The AI Assistant is protected against common prompt injection and abuse vectors through a multi-layered verification system.
+- **Model-Level Safety**: Enforced `HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE` for Harassment, Hate Speech, Sexually Explicit, and Dangerous content at the Gemini model configuration level.
+- **Heuristic Sanitization**: All user input is stripped of HTML tags, restricted to 500 characters, and passed through a case-insensitive "Sensitive Term" filter.
+- **3-Tier Rate Limiting**: A sophisticated token-bucket algorithm in the `useSecurity` hook restricts AI requests to 30 per 15-minute window per user, preventing DDoS and API exhaustion.
+- **System Instructions**: The `SYSTEM_PROMPT` includes strict non-partisan and factual-only directives that the Gemini model is grounded to follow.
 
 ---
 
 ## 📂 4. Data Privacy & Secrets Management
 - **No PII Overload**: We only store essential metadata (email/uid) to facilitate authentication.
 - **Secret Hygiene**: Zero API keys are hardcoded. All sensitive credentials (Gemini API keys, Firebase configs) are injected as **Environment Variables** during the Cloud Build process.
-- **Zero Exposure**: Client-side keys are restricted via Google Cloud Console to only work from the `civiciq.app` domain.
+- **Domain Restriction**: API keys are restricted via Google Cloud Console to only accept requests from authorized production domains.
 
 ---
 
 ## 📦 5. Container & Infrastructure Security
 - **Rootless Docker**: Our `Dockerfile` switches to a non-privileged user immediately after setup, preventing potential host system escalations.
-- **Generic Errors**: Production environments are configured to mask internal stack traces, providing users only with safe, generic error identifiers.
+- **Generic Error Masking**: Coupled with **Global Error Boundaries**, production environments are configured to mask internal stack traces, providing users only with safe, generic error messages while logging raw data to a secure, private log sink.
 
 ---
 
