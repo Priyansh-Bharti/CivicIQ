@@ -32,6 +32,13 @@ interface MobileNavProps {
  * @param {MobileNavProps} props Component properties.
  * @returns {React.JSX.Element} The rendered mobile navigation.
  */
+export const MobileNav: React.FC<MobileNavProps> = ({ 
+  isOpen, 
+  isAuthenticated, 
+  user, 
+  onSignIn, 
+  onSignOut, 
+  onOpenChat,
   onClose
 }): React.JSX.Element => {
   const navigate = useNavigate();
