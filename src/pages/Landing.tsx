@@ -18,6 +18,7 @@ import { HeroSection } from '../components/landing/HeroSection';
 import { FeatureCard } from '../components/landing/FeatureCard';
 import { JourneySection } from '../components/landing/JourneySection';
 import { Footer } from '../components/layout/Footer';
+import { useAuth } from '../hooks/useAuth';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,12 +33,14 @@ const containerVariants = {
  * @returns {React.JSX.Element} The rendered landing page.
  */
 export const Landing: React.FC = (): React.JSX.Element => {
+  const { isAuthenticated, signInWithGoogle } = useAuth();
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
       
       <main id="main-content" className="flex-grow">
-        <HeroSection />
+        <HeroSection isAuthenticated={isAuthenticated} onSignIn={signInWithGoogle} />
         
         {/* Feature Cards Section */}
         <section id="features" aria-label="Features" className="py-24">
@@ -53,22 +56,25 @@ export const Landing: React.FC = (): React.JSX.Element => {
                 icon={<CalendarDays className="w-10 h-10 text-indigo" aria-hidden="true" />}
                 title="Interactive timeline"
                 description="Follow every election phase step by step, with plain-language explanations."
+                delay={0}
               />
               <FeatureCard 
                 icon={<MessageSquare className="w-10 h-10 text-indigo" aria-hidden="true" />}
                 title="Ask CivicIQ"
                 description="Get instant answers about any part of the process, powered by Gemini AI."
+                delay={0.1}
               />
               <FeatureCard 
                 icon={<CheckSquare className="w-10 h-10 text-indigo" aria-hidden="true" />}
                 title="Civic readiness"
                 description="Track your personal checklist so you are fully prepared on election day."
+                delay={0.2}
               />
             </motion.div>
           </div>
         </section>
 
-        <JourneySection />
+        <JourneySection isAuthenticated={isAuthenticated} onSignIn={signInWithGoogle} />
 
         {/* Tech Stack / Trust Bar */}
         <section aria-label="Technologies used" className="py-12 bg-gray-50 border-b border-gray-100">

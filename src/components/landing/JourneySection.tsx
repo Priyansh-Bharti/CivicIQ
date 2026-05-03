@@ -8,12 +8,32 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { ELECTION_PHASES } from '../../constants';
 
+interface JourneySectionProps {
+  /** Authentication status. */
+  isAuthenticated?: boolean;
+  /** Callback to initiate sign-in. */
+  onSignIn?: () => Promise<void>;
+}
+
 /**
  * Renders a mini-timeline strip highlighting the user's election journey.
  * @returns {React.JSX.Element} The rendered journey section.
  */
-export const JourneySection: React.FC = (): React.JSX.Element => {
+export const JourneySection: React.FC<JourneySectionProps> = ({ 
+  isAuthenticated, 
+  onSignIn 
+}): React.JSX.Element => {
   const navigate = useNavigate();
+
+  const handlePhaseClick = (phaseId: string) => {
+    if (isAuthenticated) {
+      navigate('/timeline', { state: { phaseId } });
+    } else if (onSignIn) {
+      onSignIn();
+    } else {
+      navigate('/timeline');
+    }
+  };
 
   return (
     <section aria-labelledby="journey-heading" className="py-20 bg-white border-y border-gray-100 overflow-hidden">
@@ -27,7 +47,7 @@ export const JourneySection: React.FC = (): React.JSX.Element => {
             {ELECTION_PHASES.map((phase, idx) => (
               <div key={phase.id} className="flex items-center gap-4 shrink-0" role="listitem">
                 <button
-                  onClick={() => navigate('/timeline', { state: { phaseId: phase.id } })}
+                  onClick={() => handlePhaseClick(phase.id)}
                   className="bg-indigo text-white px-6 py-3 rounded-full font-medium shadow-md hover:bg-indigo/90 transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo"
                 >
                   {phase.name}

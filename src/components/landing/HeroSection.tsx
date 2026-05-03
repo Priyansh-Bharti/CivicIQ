@@ -8,6 +8,10 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface HeroSectionProps {
+  /** Authentication status. */
+  isAuthenticated?: boolean;
+  /** Callback to initiate sign-in. */
+  onSignIn?: () => Promise<void>;
   /** Callback to start the user journey. */
   onStartJourney?: () => void;
 }
@@ -33,8 +37,22 @@ const itemVariants = {
  * Renders the main hero area of the landing page.
  * @returns {React.JSX.Element} The rendered hero section.
  */
-export const HeroSection: React.FC<HeroSectionProps> = ({ onStartJourney }): React.JSX.Element => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ 
+  isAuthenticated, 
+  onSignIn, 
+  onStartJourney 
+}): React.JSX.Element => {
   const navigate = useNavigate();
+
+  const handleAction = () => {
+    if (isAuthenticated) {
+      navigate('/timeline');
+    } else if (onSignIn) {
+      onSignIn();
+    } else {
+      navigate('/timeline');
+    }
+  };
 
   return (
     <section aria-labelledby="hero-heading" className="bg-navy min-h-[90vh] flex items-center pt-16">
@@ -66,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onStartJourney }): Rea
             className="flex flex-col sm:flex-row justify-center gap-4 pt-8"
           >
             <button 
-              onClick={() => navigate('/timeline')}
+              onClick={handleAction}
               className="bg-amber text-navy px-8 py-4 rounded-md font-bold text-lg hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber"
             >
               Explore the process
