@@ -34,7 +34,7 @@ describe('Navbar Component', () => {
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
       isAuthenticated: false,
-      isLoading: false,
+      loading: false,
     });
 
     render(
@@ -47,11 +47,11 @@ describe('Navbar Component', () => {
 
   it('renders user name when logged in', () => {
     vi.mocked(useAuth).mockReturnValue({
-      user: { uid: '1', displayName: 'John Doe', photoURL: 'https://example.com/photo.jpg' },
+      user: { uid: '1', displayName: 'John Doe', photoURL: 'https://example.com/photo.jpg' } as any,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
       isAuthenticated: true,
-      isLoading: false,
+      loading: false,
     });
 
     render(
@@ -68,7 +68,7 @@ describe('Navbar Component', () => {
       isAuthenticated: false,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-      isLoading: false,
+      loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByRole('navigation')).toHaveAttribute('aria-label', 'Main Navigation');
@@ -80,7 +80,7 @@ describe('Navbar Component', () => {
       isAuthenticated: false,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-      isLoading: false,
+      loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('CivicIQ')).toBeInTheDocument();
@@ -92,7 +92,7 @@ describe('Navbar Component', () => {
       isAuthenticated: false,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-      isLoading: false,
+      loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('Timeline')).toBeInTheDocument();
@@ -101,11 +101,11 @@ describe('Navbar Component', () => {
 
   it('shows logout button when authenticated', () => {
     vi.mocked(useAuth).mockReturnValue({ 
-      user: { uid: '1', displayName: 'John', photoURL: '' }, 
+      user: { uid: '1', displayName: 'John', photoURL: '' } as any, 
       isAuthenticated: true,
       signOut: vi.fn(),
       signInWithGoogle: vi.fn(),
-      isLoading: false,
+      loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     
@@ -122,7 +122,7 @@ describe('Navbar Component', () => {
       isAuthenticated: false,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
-      isLoading: false,
+      loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('Timeline')).toBeInTheDocument();

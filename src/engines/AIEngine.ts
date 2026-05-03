@@ -42,7 +42,7 @@ export class AIEngine {
     return messages
       .filter(m => m.content !== '...')
       .map(m => ({
-        role: m.role === 'assistant' ? 'model' : m.role,
+        role: m.role,
         parts: [{ text: m.content }]
       }));
   }

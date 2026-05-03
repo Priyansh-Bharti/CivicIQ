@@ -14,7 +14,6 @@ interface EnvConfig {
   GEMINI_API_KEY: string;
 }
 
-import { logger } from './logger';
 
 /**
  * Validates and returns the environment configuration.

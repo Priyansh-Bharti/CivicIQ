@@ -36,7 +36,7 @@ const defaultStoreValue = {
 describe('useTimeline Hook Logic', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (useTimelineStore as ReturnType<typeof vi.fn>).mockReturnValue(defaultStoreValue);
+    (useTimelineStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue(defaultStoreValue);
   });
 
   it('should initialize with empty progress when no data is found', () => {
@@ -60,7 +60,7 @@ describe('useTimeline Hook Logic', () => {
   });
 
   it('should calculate completion percentage correctly', () => {
-    (useTimelineStore as ReturnType<typeof vi.fn>).mockReturnValue({
+    (useTimelineStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       ...defaultStoreValue,
       phases: [{ id: '1', name: 'P1' }, { id: '2', name: 'P2' }] as never,
       progress: { '1': true },

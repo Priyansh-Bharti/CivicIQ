@@ -19,11 +19,11 @@ describe('AIEngine', () => {
   it('should format history correctly for Gemini', () => {
     const messages: ChatMessage[] = [
       { id: '1', role: 'user', content: 'Hi', timestamp: 1 },
-      { id: '2', role: 'assistant', content: 'Hello', timestamp: 2 }
+      { id: '2', role: 'model', content: 'Hello', timestamp: 2 }
     ];
     const history = AIEngine.formatHistory(messages);
     expect(history[0].role).toBe('user');
-    expect(history[1].role).toBe('model'); // assistant should be converted to model
+    expect(history[1].role).toBe('model');
     expect(history[1].parts[0].text).toBe('Hello');
   });
 
