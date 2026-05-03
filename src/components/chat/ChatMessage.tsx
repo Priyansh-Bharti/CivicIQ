@@ -27,7 +27,7 @@ interface ChatMessageProps {
 /**
  * Renders a stylized icon for the CivicIQ assistant.
  */
-const CivicIQLogo: React.FC = (): JSX.Element => (
+const CivicIQLogo: React.FC = (): React.JSX.Element => (
   <div className="w-8 h-8 bg-navy rounded-full flex items-center justify-center text-amber shrink-0">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 17V17.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
