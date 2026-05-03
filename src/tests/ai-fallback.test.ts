@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { streamCivicAnswer } from '../lib/gemini';
-import { ChatHistoryItem } from '../types';
+import { ChatMessage } from '../types';
 
 vi.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: vi.fn().mockImplementation(() => ({
@@ -15,7 +15,7 @@ vi.mock('@google/generative-ai', () => ({
 describe('AI Fallback Tests', () => {
   it('should provide a user-friendly message when Gemini API fails', async () => {
     const prompt = 'How do I register?';
-    const history: ChatHistoryItem[] = [];
+    const history: ChatMessage[] = [];
 
     const gen = streamCivicAnswer(prompt, history);
 
@@ -29,7 +29,7 @@ describe('AI Fallback Tests', () => {
 
   it('should handle empty or whitespace-only prompts gracefully', async () => {
     const prompt = '   ';
-    const history: ChatHistoryItem[] = [];
+    const history: ChatMessage[] = [];
 
     const gen = streamCivicAnswer(prompt, history);
 
