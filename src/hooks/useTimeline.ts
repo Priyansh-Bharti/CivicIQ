@@ -54,7 +54,7 @@ export const useTimeline = (): TimelineHookResult => {
       logger.error('Timeline subscription error:', error);
     });
 
-    return () => unsubscribe();
+    return () => { unsubscribe(); };
   }, [user, setProgress]);
 
   /**

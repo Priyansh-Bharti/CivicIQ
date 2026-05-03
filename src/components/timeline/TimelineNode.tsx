@@ -53,7 +53,7 @@ export const TimelineNode: React.FC<TimelineNodeProps> = ({
       className="relative flex gap-6 pb-12 last:pb-0 group"
       role="listitem"
       tabIndex={0}
-      onClick={() => onClick(phase.id)}
+      onClick={() => { onClick(phase.id); }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();

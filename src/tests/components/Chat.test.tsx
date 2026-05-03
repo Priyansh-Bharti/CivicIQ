@@ -66,7 +66,7 @@ describe('Chat Component', () => {
     const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
     fireEvent.change(input, { target: { value: 'Hello' } });
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-    await waitFor(() => expect(mockSendMessage).toHaveBeenCalledWith('Hello'));
+    await waitFor(() => { expect(mockSendMessage).toHaveBeenCalledWith('Hello'); });
   });
 
   it('Send button disabled when input empty', () => {
@@ -80,7 +80,7 @@ describe('Chat Component', () => {
     const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
     fireEvent.change(input, { target: { value: 'Test message' } });
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-    await waitFor(() => expect(mockSendMessage).toHaveBeenCalledWith('Test message'));
+    await waitFor(() => { expect(mockSendMessage).toHaveBeenCalledWith('Test message'); });
   });
 
   it('Shift+Enter does NOT send message', () => {

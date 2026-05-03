@@ -69,7 +69,7 @@ export const useAuth = (): AuthHookResult => {
     });
 
     // Cleanup subscription on unmount
-    return () => unsubscribe();
+    return () => { unsubscribe(); };
   }, [setUser, clearUser, setLoading]);
 
   /**

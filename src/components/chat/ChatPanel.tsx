@@ -38,7 +38,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
    */
   useEffect(() => {
     if (isOpen && closeBtnRef.current) {
-      setTimeout(() => closeBtnRef.current.focus(), 100);
+      setTimeout(() => { closeBtnRef.current.focus(); }, 100);
     }
   }, [isOpen]);
 
@@ -70,7 +70,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => { document.removeEventListener('keydown', handleKeyDown); };
   }, [isOpen]);
 
   return (

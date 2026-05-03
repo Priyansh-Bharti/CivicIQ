@@ -23,7 +23,7 @@ export class TranslationEngine {
       'chat.placeholder': { en: 'Ask about elections...', hi: 'चुनाव के बारे में पूछें...', es: 'Pregunte sobre...', ar: 'اسأل عن الانتخابات...' },
     };
 
-    return translations[key]?.[lang] || translations[key]?.['en'] || key;
+    return translations[key]?.[lang] || translations[key]?.en || key;
   }
 
   /**
@@ -33,6 +33,6 @@ export class TranslationEngine {
    */
   public static getDirection(lang: LanguageCode): 'rtl' | 'ltr' {
     const language = SUPPORTED_LANGUAGES.find(l => l.code === lang);
-    return (language?.dir as 'rtl' | 'ltr') || 'ltr';
+    return (language?.dir!) || 'ltr';
   }
 }

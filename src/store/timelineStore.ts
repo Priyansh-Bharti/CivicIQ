@@ -40,10 +40,10 @@ export const useTimelineStore = create<TimelineState>((set) => ({
   phases: ELECTION_PHASES,
   activePhaseId: ELECTION_PHASES[0].id,
   progress: {},
-  setPhases: (phases: ElectionPhase[]): void => set({ phases }),
-  setActivePhaseId: (id: string): void => set({ activePhaseId: id }),
-  setProgress: (progress: Record<string, boolean>): void => set({ progress }),
-  markPhaseComplete: (id: string): void => set((state) => ({
+  setPhases: (phases: ElectionPhase[]): void => { set({ phases }); },
+  setActivePhaseId: (id: string): void => { set({ activePhaseId: id }); },
+  setProgress: (progress: Record<string, boolean>): void => { set({ progress }); },
+  markPhaseComplete: (id: string): void => { set((state) => ({
     progress: { ...state.progress, [id]: true }
-  })),
+  })); },
 }));

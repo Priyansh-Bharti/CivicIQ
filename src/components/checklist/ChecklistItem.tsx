@@ -39,7 +39,7 @@ export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }):
         "flex items-start gap-4 p-4 rounded-xl border transition-all duration-300 hover:shadow-sm cursor-pointer",
         item.completed ? "bg-gray-50 border-gray-100 opacity-75" : "bg-white border-gray-200 hover:border-indigo/50"
       )}
-      onClick={() => onToggle(item.id)}
+      onClick={() => { onToggle(item.id); }}
     >
       {/* Custom Checkbox */}
       <div className="relative flex items-center justify-center shrink-0 mt-1">
@@ -47,7 +47,7 @@ export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }):
           type="checkbox"
           id={`check-${item.id}`}
           checked={item.completed}
-          onChange={() => onToggle(item.id)}
+          onChange={() => { onToggle(item.id); }}
           className="sr-only"
           aria-checked={item.completed}
         />
@@ -93,7 +93,7 @@ export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }):
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 p-2 text-indigo hover:bg-indigo/5 rounded-lg transition-colors flex items-center gap-1 text-xs font-bold"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); }}
         >
           <span>Resource</span>
           <ExternalLink className="w-4 h-4" />

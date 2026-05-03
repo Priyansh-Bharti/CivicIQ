@@ -36,11 +36,11 @@ describe('useAuth Hook', () => {
   it('sets user when firebase user is detected', async () => {
     const mockUser = { uid: '123', displayName: 'Test User' } as User;
     (firebase.onAuthStateChanged as Mock).mockImplementation((_auth: Auth, callback: (user: User | null) => void) => {
-      setTimeout(() => callback(mockUser), 0);
+      setTimeout(() => { callback(mockUser); }, 0);
       return vi.fn();
     });
 
-    (getDoc as Mock).mockResolvedValue({ exists: () => true } as DocumentSnapshot);
+    (getDoc as Mock).mockResolvedValue({ exists: () => true });
 
     const { result } = renderHook(() => useAuth());
 
@@ -53,11 +53,11 @@ describe('useAuth Hook', () => {
   it('creates firestore document for new user', async () => {
     const mockUser = { uid: '456', displayName: 'New User', email: 'new@test.com', photoURL: 'url' } as User;
     (firebase.onAuthStateChanged as Mock).mockImplementation((_auth: Auth, callback: (user: User | null) => void) => {
-      setTimeout(() => callback(mockUser), 0);
+      setTimeout(() => { callback(mockUser); }, 0);
       return vi.fn();
     });
 
-    (getDoc as Mock).mockResolvedValue({ exists: () => false } as DocumentSnapshot);
+    (getDoc as Mock).mockResolvedValue({ exists: () => false });
 
     renderHook(() => useAuth());
 
@@ -70,7 +70,7 @@ describe('useAuth Hook', () => {
     useAuthStore.setState({ user: { uid: '123' } as unknown as User, loading: false });
     
     (firebase.onAuthStateChanged as Mock).mockImplementation((_auth: Auth, callback: (user: User | null) => void) => {
-      setTimeout(() => callback(null), 0);
+      setTimeout(() => { callback(null); }, 0);
       return vi.fn();
     });
 

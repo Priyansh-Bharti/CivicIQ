@@ -20,7 +20,7 @@ export const useTranslation = () => {
   }, [lang]);
 
   const t = (key: string) => TranslationEngine.t(key, lang);
-  const changeLanguage = (newLang: LanguageCode) => setLang(newLang);
+  const changeLanguage = (newLang: LanguageCode) => { setLang(newLang); };
 
   return {
     t,

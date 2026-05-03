@@ -110,7 +110,7 @@ export const saveMessageToFirestore = async (userId: string, message: ChatMessag
 export const loadChatHistory = async (userId: string): Promise<ChatMessage[]> => {
   try {
     const q = query(collection(db, 'users', userId, 'chatHistory'), orderBy('timestamp', 'asc'));
-    const snapshot: QuerySnapshot<DocumentData> = await getDocs(q);
+    const snapshot: QuerySnapshot = await getDocs(q);
     return snapshot.docs.map(doc => doc.data() as ChatMessage);
   } catch (error) {
     logger.error('Error loading chat history:', error);

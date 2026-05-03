@@ -48,18 +48,18 @@ export const useChatStore = create<ChatState>((set) => ({
   messages: [],
   isOpen: false,
   activeContext: null,
-  addMessage: (message: ChatMessage): void => set((state) => ({ 
+  addMessage: (message: ChatMessage): void => { set((state) => ({ 
     messages: [...state.messages, message] 
-  })),
-  updateLastMessage: (content: string): void => set((state) => {
+  })); },
+  updateLastMessage: (content: string): void => { set((state) => {
     const newMessages = [...state.messages];
     if (newMessages.length > 0) {
       newMessages[newMessages.length - 1].content = content;
     }
     return { messages: newMessages };
-  }),
-  setMessages: (messages: ChatMessage[]): void => set({ messages }),
-  setIsOpen: (isOpen: boolean): void => set({ isOpen }),
-  setActiveContext: (context: string | null): void => set({ activeContext: context }),
-  clearMessages: (): void => set({ messages: [] }),
+  }); },
+  setMessages: (messages: ChatMessage[]): void => { set({ messages }); },
+  setIsOpen: (isOpen: boolean): void => { set({ isOpen }); },
+  setActiveContext: (context: string | null): void => { set({ activeContext: context }); },
+  clearMessages: (): void => { set({ messages: [] }); },
 }));

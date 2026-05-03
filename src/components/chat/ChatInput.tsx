@@ -65,7 +65,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }
         <textarea
           ref={textareaRef}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => { setContent(e.target.value); }}
           onKeyDown={handleKeyDown}
           placeholder="Ask CivicIQ your election question..."
           aria-label="Message CivicIQ"

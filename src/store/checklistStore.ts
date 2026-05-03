@@ -25,10 +25,10 @@ interface ChecklistState {
  */
 export const useChecklistStore = create<ChecklistState>((set) => ({
   items: [],
-  setItems: (items: ChecklistItem[]): void => set({ items }),
-  toggleItem: (id: string): void => set((state) => ({
+  setItems: (items: ChecklistItem[]): void => { set({ items }); },
+  toggleItem: (id: string): void => { set((state) => ({
     items: state.items.map(item => 
       item.id === id ? { ...item, completed: !item.completed } : item
     )
-  })),
+  })); },
 }));

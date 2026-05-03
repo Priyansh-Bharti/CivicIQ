@@ -50,13 +50,13 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
     <div className="hidden md:flex items-center gap-8">
       <LanguageSwitcher />
       <button 
-        onClick={() => handleProtectedClick('/timeline')}
+        onClick={() => { handleProtectedClick('/timeline'); }}
         className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
       >
         {t('nav.timeline')}
       </button>
       <button 
-        onClick={() => handleProtectedClick('/checklist')}
+        onClick={() => { handleProtectedClick('/checklist'); }}
         className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
       >
         {t('nav.checklist')}

@@ -97,10 +97,10 @@ describe('Auth Integration', () => {
     
     // Open profile menu
     const userMenuBtn = screen.getByRole('button', { name: /User menu/i });
-    act(() => userMenuBtn.click());
+    act(() => { userMenuBtn.click(); });
     
     const signOutBtn = screen.getByRole('button', { name: /Sign out/i });
-    act(() => signOutBtn.click());
+    act(() => { signOutBtn.click(); });
     
     expect(mockSignOut).toHaveBeenCalled();
   });
@@ -118,7 +118,7 @@ describe('Auth Integration', () => {
     renderNavbar();
     
     const signInBtns = screen.getAllByRole('button', { name: /Sign in with Google/i });
-    act(() => signInBtns[0].click());
+    act(() => { signInBtns[0].click(); });
     
     expect(mockSignIn).toHaveBeenCalled();
   });

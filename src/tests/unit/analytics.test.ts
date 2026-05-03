@@ -20,7 +20,7 @@ describe('Analytics module', () => {
   it('does not throw when Firebase is not initialized', () => {
     const loggerSpy = vi.spyOn(logger, 'info').mockImplementation(() => {});
     
-    expect(() => trackEvent('test_event', { foo: 'bar' })).not.toThrow();
+    expect(() => { trackEvent('test_event', { foo: 'bar' }); }).not.toThrow();
     
     expect(loggerSpy).toHaveBeenCalledWith(
       'Analytics event triggered (not initialized): test_event',
@@ -84,7 +84,7 @@ describe('Analytics module', () => {
     });
     
     const loggerSpy = vi.spyOn(logger, 'error').mockImplementation(() => {});
-    expect(() => trackEvent('test_error')).not.toThrow();
+    expect(() => { trackEvent('test_error'); }).not.toThrow();
     expect(loggerSpy).toHaveBeenCalled();
     
     loggerSpy.mockRestore();

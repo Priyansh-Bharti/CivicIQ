@@ -27,8 +27,8 @@ export const Timeline: React.FC = (): React.JSX.Element => {
   const handleShare = (): void => {
     const url = window.location.href;
     navigator.clipboard.writeText(url)
-      .then(() => alert('Link copied to clipboard!'))
-      .catch((err) => console.error('Failed to copy: ', err));
+      .then(() => { alert('Link copied to clipboard!'); })
+      .catch((err) => { console.error('Failed to copy: ', err); });
   };
 
   return (

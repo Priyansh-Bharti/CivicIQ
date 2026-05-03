@@ -35,7 +35,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): Re
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => { setIsOpen(!isOpen); }}
         aria-expanded={isOpen}
         aria-label="User menu"
         className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"

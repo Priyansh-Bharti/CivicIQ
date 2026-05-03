@@ -63,13 +63,13 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         >
           <div className="px-4 pt-2 pb-6 space-y-4">
             <button 
-              onClick={() => handleProtectedClick('/timeline')} 
+              onClick={() => { handleProtectedClick('/timeline'); }} 
               className="block w-full text-left text-white/80 py-2 text-lg"
             >
               Timeline
             </button>
             <button 
-              onClick={() => handleProtectedClick('/checklist')} 
+              onClick={() => { handleProtectedClick('/checklist'); }} 
               className="block w-full text-left text-white/80 py-2 text-lg"
             >
               Checklist

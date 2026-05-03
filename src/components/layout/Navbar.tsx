@@ -53,12 +53,12 @@ export const Navbar: React.FC = (): React.JSX.Element => {
             user={user} 
             onSignIn={signInWithGoogle} 
             onSignOut={signOut} 
-            onOpenChat={() => setIsOpen(true)} 
+            onOpenChat={() => { setIsOpen(true); }} 
           />
 
           <div className="md:hidden flex items-center">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen); }}
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle navigation menu"
               className="text-white p-2 focus:outline-none focus:ring-2 focus:ring-amber rounded-md"
@@ -75,8 +75,8 @@ export const Navbar: React.FC = (): React.JSX.Element => {
         user={user} 
         onSignIn={signInWithGoogle} 
         onSignOut={signOut} 
-        onOpenChat={() => setIsOpen(true)}
-        onClose={() => setIsMobileMenuOpen(false)}
+        onOpenChat={() => { setIsOpen(true); }}
+        onClose={() => { setIsMobileMenuOpen(false); }}
       />
     </motion.nav>
   );

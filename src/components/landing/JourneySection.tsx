@@ -47,7 +47,7 @@ export const JourneySection: React.FC<JourneySectionProps> = ({
             {ELECTION_PHASES.map((phase, idx) => (
               <div key={phase.id} className="flex items-center gap-4 shrink-0" role="listitem">
                 <button
-                  onClick={() => handlePhaseClick(phase.id)}
+                  onClick={() => { handlePhaseClick(phase.id); }}
                   className="bg-indigo text-white px-6 py-3 rounded-full font-medium shadow-md hover:bg-indigo/90 transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo"
                 >
                   {phase.name}

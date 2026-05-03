@@ -73,7 +73,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({ onAskCivicIQ, init
             isActive={activePhaseId === phase.id}
             isCompleted={!!progress[phase.id]}
             onClick={setActivePhase}
-            onKeyDown={(e) => handleKeyDown(e, idx)}
+            onKeyDown={(e) => { handleKeyDown(e, idx); }}
           />
         ))}
       </div>
