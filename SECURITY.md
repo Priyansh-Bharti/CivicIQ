@@ -9,12 +9,13 @@ CivicIQ implements a **Defense in Depth** strategy, applying security controls a
 
 | Layer | Threat Mitigated | Implementation Detail |
 | :--- | :--- | :--- |
-| **Network (HTTP)** | XSS, Clickjacking, MIME-Sniffing | Strict security headers (CSP, HSTS, XFO) in `nginx.conf`. |
-| **Identity (Auth)** | Unauthorized Access, Session Hijacking | **Firebase Auth** with Google OAuth 2.0; zero passwords stored. |
-| **Data (Firestore)** | Data Breach, Privilege Escalation | **Firebase Security Rules** enforcing owner-only read/write access. |
-| **Intelligence (AI)** | Prompt Injection, API Abuse | Input sanitization, 500-char limits, and 3-tier rate limiting. |
-| **Transport (TLS)** | Man-in-the-Middle (MITM) | Enforced HTTPS via Cloud Run Load Balancer with HSTS. |
-| **Container (OS)** | Host Compromise | Non-root user execution in Docker; minimal Alpine base image. |
+| **Network (HTTP)** | XSS, Clickjacking, MIME-Sniffing, DDoS | Hardened headers (HSTS, CSP, XFO) and dual-zone rate limiting in `nginx.conf`. |
+| **Identity (Auth)** | Unauthorized Access, Session Hijacking | **Firebase Auth** (Google OAuth); hardened 10-req/15m limit for auth endpoints. |
+| **Data (Firestore)** | Data Breach, Privilege Escalation | **Firebase Security Rules** enforcing strict owner-only access. |
+| **Intelligence (AI)** | Prompt Injection, Jailbreaks, Abuse | 15+ regex injection patterns, HTML encoding, and 20-req/15m rate limit. |
+| **Runtime (Heuristic)** | Anomaly / Bot Interactions | **SecurityEngine** anomaly scoring and heuristic behavioral analysis. |
+| **Transport (TLS)** | Man-in-the-Middle (MITM) | Enforced HTTPS with 1-year HSTS and preload directives. |
+| **Container (OS)** | Host Compromise | Non-root user in Docker; Alpine base; server tokens hidden in Nginx. |
 
 ---
 
@@ -40,12 +41,18 @@ service cloud.firestore {
 
 ---
 
-## 🤖 3. AI Safety & Guardrails
-The AI Assistant is protected against common prompt injection and abuse vectors through a multi-layered verification system.
-- **Model-Level Safety**: Enforced `HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE` for Harassment, Hate Speech, Sexually Explicit, and Dangerous content at the Gemini model configuration level.
-- **Heuristic Sanitization**: All user input is stripped of HTML tags, restricted to 500 characters, and passed through a case-insensitive "Sensitive Term" filter.
-- **3-Tier Rate Limiting**: A sophisticated token-bucket algorithm in the `useSecurity` hook restricts AI requests to 30 per 15-minute window per user, preventing DDoS and API exhaustion.
-- **System Instructions**: The `SYSTEM_PROMPT` includes strict non-partisan and factual-only directives that the Gemini model is grounded to follow.
+### 🤖 3. AI Safety & Hardened Guardrails
+The AI Assistant is protected against complex prompt injection and abuse vectors through a multi-layered verification system.
+- **Model-Level Safety**: Enforced `HarmBlockThreshold.BLOCK_LOW_AND_ABOVE` (strictest setting) across all 4 harm categories at the Gemini model configuration level.
+- **Injection Detection Engine**: `AIEngine` integrates 15+ regex patterns designed to detect and block "DAN mode", "ignore instructions", system prompt exfiltration, and other common jailbreak signatures.
+- **Multi-Layer Sanitization**:
+  1. **HTML Stripping**: Removal of all dangerous tags (`<script>`, `<iframe>`, etc.).
+  2. **Character Encoding**: Full HTML entity encoding for special characters (`&`, `<`, `>`, `"`, `'`, `/`) to prevent XSS.
+  3. **Length Enforcement**: Hard truncation at 500 characters.
+- **Dual-Zone Rate Limiting**:
+  1. **Network (Nginx)**: 60 requests per minute global cap to mitigate DDoS.
+  2. **Logic (SecurityEngine)**: Token-bucket limiting restricting AI requests to 20 per 15-minute window per user.
+- **System Instructions**: The `SYSTEM_PROMPT` includes strict non-partisan and factual-only directives that the Gemini model is grounded to follow, with explicit "jailbreak-resistance" instructions.
 
 ---
 
@@ -64,9 +71,20 @@ We implement a **Clean Architecture** approach by isolating sensitive logic into
 
 ---
 
-## 📦 5. Container & Infrastructure Security
-- **Rootless Docker**: Our `Dockerfile` switches to a non-privileged user immediately after setup, preventing potential host system escalations.
-- **Generic Error Masking**: Coupled with **Global Error Boundaries**, production environments are configured to mask internal stack traces, providing users only with safe, generic error messages while logging raw data to a secure, private log sink.
+## 📦 5. Infrastructure Hardening (`nginx.conf`)
+Our production Nginx configuration is hardened to enterprise standards:
+- **Strict CSP**: `default-src 'self'` with no `unsafe-inline` scripts; frame-ancestors restricted to `none`.
+- **HSTS Preload**: 1-year `max-age` with `includeSubDomains` and `preload` directives.
+- **Access Control**: Explicitly blocks access to `.env`, `.git`, `.log`, `.sh`, and `.sql` files.
+- **MIME Hardening**: Enforces `X-Content-Type-Options: nosniff`.
+- **Server Privacy**: `server_tokens off` to hide server version and type.
+- **Custom Error Pages**: Rate limit breaches serve a secure, generic 429 JSON response.
+
+## 🏛️ 6. Runtime Anomaly Detection
+The `SecurityEngine` provides heuristic behavioral monitoring:
+- **Suspicion Scoring**: Each interaction is scored (0-100) based on input complexity, script fragments, and injection keywords.
+- **Automatic Blocking**: Interactions exceeding a score of 40 are automatically blocked before reaching the AI model.
+- **Non-Partisan Enforcement**: Uses a strict word-boundary regex blocklist to mask partisan terms in both input and AI output.
 
 ---
 

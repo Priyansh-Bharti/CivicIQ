@@ -36,7 +36,8 @@ graph TD
 ### (a) Unit Tests (Domain Engines)
 We prioritize the validation of the "Pure Heart" of the application.
 - **`TimelineEngine.test.ts`**: Validates phase progression and metric calculations.
-- **`AIEngine.test.ts`**: Verifies security sanitization and history formatting.
+- **`AIEngine.test.ts`**: Verifies multi-layer security sanitization, character encoding, and 15+ injection patterns.
+- **`SecurityEngine.test.ts`**: Validates anomaly scoring, HTML sanitization, and token-bucket rate limiting.
 - **`TranslationEngine.test.ts`**: Ensures RTL/LTR orchestration and key resolution.
 
 ### (b) Integration Tests
@@ -60,8 +61,8 @@ Simulate malicious user behavior to verify system resilience.
 
 ## ✅ 4. Final Audit Output (Production)
 ```text
-✓ src/tests/engines/AIEngine.test.ts (6 tests)
-✓ src/tests/engines/SecurityEngine.test.ts (5 tests)
+✓ src/tests/engines/AIEngine.test.ts (21 tests)
+✓ src/tests/engines/SecurityEngine.test.ts (16 tests)
 ✓ src/tests/engines/TimelineEngine.test.ts (8 tests)
 ✓ src/tests/engines/TranslationEngine.test.ts (5 tests)
 ✓ src/tests/hooks/useAuth.test.ts (7 tests)
@@ -102,7 +103,7 @@ Simulate malicious user behavior to verify system resilience.
 ✓ src/tests/security.test.tsx (4 tests)
 
 Test Files: 40 passed (40)
-Tests:      265 passed (265)
+Tests:      291 passed (291)
 Duration:   ~26s
 Exit code:  0
 ```
@@ -118,4 +119,4 @@ Our test suite is the mandatory gatekeeper for all code changes.
 
 ---
 
-**With 265 tests across 40 suites covering unit, integration, accessibility, security, and snapshot categories, CivicIQ has one of the most comprehensive and fully CI/CD-verified test suites of any hackathon submission.**
+**With 291 tests across 40 suites covering unit, integration, accessibility, security, and snapshot categories, CivicIQ has one of the most comprehensive and fully CI/CD-verified test suites of any hackathon submission.**

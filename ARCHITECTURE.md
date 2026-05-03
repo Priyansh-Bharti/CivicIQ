@@ -37,6 +37,9 @@ The architecture of CivicIQ was designed with the same rigor as a production-gra
 ### (c) Domain Logic Engine Layer (Pure Logic)
 - **Engine**: Stateless Logic Engines (`src/engines`).
 - **Responsibility**: The "Pure Heart" of the application. Handles complex business rules, mathematical calculations, and security sanitization in a test-isolated environment.
+- **SecurityEngine**: Handles anomaly scoring, XSS-safe HTML sanitization, and token-bucket rate limiting logic.
+- **AIEngine**: Orchestrates prompt sanitization, character encoding, and multi-pattern injection detection.
+- **TranslationEngine**: High-performance i18n resolver for millisecond-latency localization.
 - **Why**: Decoupling logic from the React lifecycle ensures 100% testability and stability.
 
 ### (d) Business Logic Layer (Orchestration)
@@ -59,10 +62,12 @@ The architecture of CivicIQ was designed with the same rigor as a production-gra
 
 ### AI Chat Flow
 1. User submits query via `ChatInput`.
-2. `useGemini` hook applies local sanitization and rate-limit checks.
-3. Payload sent to the Cloud Run wrapper.
-4. Gemini 2.0 Flash generates response with enforced `SYSTEM_PROMPT`.
-5. Stream is parsed and appended to the `chatStore` for UI rendering.
+2. `useGemini` hook triggers `AIEngine` for multi-layer sanitization (HTML strip, encoding) and injection detection.
+3. `SecurityEngine` checks rate limits and calculates suspicion scores.
+4. Payload sent to the Cloud Run wrapper.
+5. Gemini 2.0 Flash generates response with enforced `SYSTEM_PROMPT`.
+6. `AIEngine` masks any partisan terms in the response via word-boundary blocklist.
+7. Stream is parsed and appended to the `chatStore` for UI rendering.
 
 ---
 

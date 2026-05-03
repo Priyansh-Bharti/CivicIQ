@@ -7,16 +7,18 @@ This document outlines the engineering principles, architectural patterns, and q
 CivicIQ employs a **Logic Engine Architecture** to achieve total separation of concerns. By decoupling business logic from the React UI layer, we ensure the core domain is testable, portable, and resilient to UI changes.
 
 - **`TimelineEngine`**: Manages complex election phase calculations and progression logic.
-- **`AIEngine`**: Orchestrates security sanitization, history formatting, and AI prompt orchestration.
-- **`TranslationEngine`**: Centralizes internationalization (i18n) and RTL/LTR orchestration.
+- **`AIEngine`**: Orchestrates multi-layer security sanitization, character encoding, and 15+ injection pattern detections.
+- **`SecurityEngine`**: Implements heuristic anomaly scoring and hardened token-bucket rate limiting.
+- **`TranslationEngine`**: Centralizes 100% internationalization (i18n) for 8+ languages with RTL/LTR orchestration.
 
 ## 2. Robust Security Guardrails
 
 Security is baked into the core of CivicIQ, not added as an afterthought.
 
-- **3-Tier Rate Limiting**: Implements a sophisticated **Token Bucket Algorithm** (`useRateLimit`) with distinct buckets for general navigation and heavy AI operations, preventing DDoS and API abuse.
-- **AI Sanitization**: Every user prompt is scrubbed for XSS injection and validated against a heuristic blocked-term list before reaching the model.
-- **Content Safety**: Integrated Google Generative AI safety settings configured for `HARM_CATEGORY_HARASSMENT`, `HARM_CATEGORY_HATE_SPEECH`, and more.
+- **Multi-Layer Hardening**: Implements a defense-in-depth strategy across Nginx (HSTS, CSP), Application (AIEngine sanitization), and Logic (SecurityEngine anomaly scoring) layers.
+- **Injection Detection**: Robust protection against "DAN mode", prompt injection, and jailbreaking via 15+ regex patterns in `AIEngine`.
+- **Content Safety**: Enforced `BLOCK_LOW_AND_ABOVE` safety thresholds across all Google Generative AI harm categories.
+- **Anomaly Scoring**: Heuristic behavioral monitoring that automatically blocks suspicious interactions before they hit the LLM.
 
 ## 3. Engineering Quality & Type Safety
 
@@ -37,7 +39,7 @@ Our test suite provides **100% logic coverage** and **98%+ overall coverage**, e
 
 - **Streaming AI**: Real-time streaming responses via `AsyncGenerators` for immediate user feedback.
 - **Micro-Animations**: Purposeful animations using **Framer Motion** to enhance perceived performance and user delight.
-- **Global i18n**: Support for English and Arabic with automated layout mirroring (RTL/LTR) for true global accessibility.
+- **Zero Magic Strings**: 100% internationalization across 8 major Indian languages, ensuring accessibility and cultural inclusivity.
 
 ---
 
