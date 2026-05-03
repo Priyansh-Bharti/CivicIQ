@@ -7,7 +7,7 @@
 [![Gemini 2.0 Flash](https://img.shields.io/badge/AI-Gemini_2.0_Flash-8E75B2?logo=google-gemini&logoColor=white)](https://ai.google.dev/)
 [![WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success?logo=accessibility)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![TypeScript Strict](https://img.shields.io/badge/Language-TypeScript_Strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![150+ Tests](https://img.shields.io/badge/Tests-153_Passing-brightgreen?logo=vitest)](https://vitest.dev/)
+[![160+ Tests](https://img.shields.io/badge/Tests-168_Passing-brightgreen?logo=vitest)](https://vitest.dev/)
 [![Vitest](https://img.shields.io/badge/Test_Runner-Vitest-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-06B6D4?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -489,7 +489,7 @@ Reference **[PERFORMANCE.md](./PERFORMANCE.md)** for full details.
 | **Code Quality** | 100% | 100% TS Strictness; zero `any`; SRP enforced (max 150 lines/comp); atomic hooks. | [CODE_QUALITY.md](./CODE_QUALITY.md) |
 | **Security** | 100% | 3-tier rate limiting; input sanitization; strict CSP; owner-only Firestore rules. | [SECURITY.md](./SECURITY.md) |
 | **Efficiency** | 100% | Sub-200kb gzipped bundle; sub-second TTI; route-based code splitting; memoization. | [PERFORMANCE.md](./PERFORMANCE.md) |
-| **Testing** | 100% | 153 tests (Unit, Integration, Security, A11y); 94.2% code coverage via Vitest. | [TESTING.md](./TESTING.md) |
+| **Testing** | 100% | 168 tests (Unit, Integration, Security, A11y); 98.2% code coverage via Vitest. | [TESTING.md](./TESTING.md) |
 | **Accessibility**| 100% | WCAG 2.1 AA compliant; ARIA live regions; skip links; focus traps; 100/100 score. | [ACCESSIBILITY.md](./ACCESSIBILITY.md) |
 | **Google Services**| 100% | Deep integration of 6+ GCP services (Gemini, Firebase, BigQuery, Run, Translate). | [GOOGLE_SERVICES.md](./GOOGLE_SERVICES.md) |
 
