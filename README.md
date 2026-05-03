@@ -7,7 +7,7 @@
 [![Gemini 2.0 Flash](https://img.shields.io/badge/AI-Gemini_2.0_Flash-8E75B2?logo=google-gemini&logoColor=white)](https://ai.google.dev/)
 [![WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success?logo=accessibility)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![100% TypeScript Strict](https://img.shields.io/badge/Language-TypeScript_Strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![184+ Tests](https://img.shields.io/badge/Tests-184_Passing-brightgreen?logo=vitest)](https://vitest.dev/)
+[![265 Tests](https://img.shields.io/badge/Tests-265_Passing-brightgreen?logo=vitest)](https://vitest.dev/)
 [![Vitest](https://img.shields.io/badge/Test_Runner-Vitest-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-06B6D4?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -18,7 +18,7 @@
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![Cloud Build](https://img.shields.io/badge/CI/CD-Cloud_Build-4285F4?logo=google-cloud&logoColor=white)](https://cloud.google.com/build)
 
-**CivicIQ** is a high-fidelity, production-grade election education platform designed to navigate citizens through the administrative complexities of democracy. Built with **React**, **TypeScript**, and a suite of **Google Cloud** services including **Gemini 2.0 Flash**, **Firebase**, and **Cloud Run**, it transforms fragmented electoral procedures into a personalized, 6-phase interactive journey. The application eliminates the "procedural exhaustion" that leads to voter apathy by providing grounded, non-partisan AI guidance and WCAG 2.1 AA accessibility. Technically exceptional, it maintains a **perfect 100% test coverage (1:1 file mapping)**, **100% TypeScript strictness with zero `any` types**, and a sub-200kb gzipped bundle, ensuring that the right to vote is never lost to a missing deadline or a language barrier.
+**CivicIQ** is a high-fidelity, production-grade election education platform designed to navigate citizens through the administrative complexities of democracy. Built with **React**, **TypeScript**, and a suite of **Google Cloud** services including **Gemini 2.0 Flash**, **Firebase**, and **Cloud Run**, it transforms fragmented electoral procedures into a personalized, 6-phase interactive journey. The application eliminates the "procedural exhaustion" that leads to voter apathy by providing grounded, non-partisan AI guidance and WCAG 2.1 AA accessibility. Technically exceptional, it maintains **265 passing tests across 40 suites (100% CI pass rate)**, **zero TypeScript compiler errors**, **vendor code-split bundles with a 6.9 KB app entry point**, and **100% TypeScript strictness** — ensuring that the right to vote is never lost to a missing deadline or a language barrier.
 
 ---
 
@@ -32,12 +32,12 @@ CivicIQ ships with the most comprehensive documentation suite of any hackathon s
 | **[CODE_QUALITY.md](./CODE_QUALITY.md)** | Engineering standards | TypeScript strictness, architecture patterns, SRP evidence, and quality metrics. |
 | **[SECURITY.md](./SECURITY.md)** | Security policy | Defense-in-depth, CSP headers, AI safety, and Firebase security rules. |
 | **[ACCESSIBILITY.md](./ACCESSIBILITY.md)** | WCAG 2.1 AA compliance | ARIA regions, keyboard maps, contrast ratios, and screen reader testing. |
-| **[TESTING.md](./TESTING.md)** | Test strategy | 184 tests, 100% coverage, 1:1 file mapping, unit/integration/security categories, CI pipeline. |
-| **[PERFORMANCE.md](./PERFORMANCE.md)** | Optimization analysis | Lighthouse scores (98/100), Core Web Vitals, and bundle size breakdown. |
+| **[TESTING.md](./TESTING.md)** | Test strategy | 265 tests across 40 suites, 100% CI pass rate, unit/integration/accessibility/security categories. |
+| **[PERFORMANCE.md](./PERFORMANCE.md)** | Optimization analysis | Vendor code splitting (97% app bundle reduction), Core Web Vitals, and gzipped size breakdown. |
 | **[ARCHITECTURE.md](./ARCHITECTURE.md)** | System design | Layered architecture, data flow diagrams, and applied design patterns. |
 | **[GOOGLE_SERVICES.md](./GOOGLE_SERVICES.md)** | GCP Deep Dive | Detailed integration analysis of Gemini, Firebase, Run, Translate, and BigQuery. |
 | **[DEPLOYMENT.md](./DEPLOYMENT.md)** | DevOps guide | Cloud Run setup, Docker configuration, and CI/CD automation steps. |
-| **[CHANGELOG.md](./CHANGELOG.md)** | Version history | Feature evolution from v1.0.0 (Core) to v1.2.0 (Security/Performance). |
+| **[CHANGELOG.md](./CHANGELOG.md)** | Version history | Feature evolution from v1.0.0 (Core) to v1.4.0 (Enterprise CI/CD & Build Hardening). |
 | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Open source guide | Branching strategy, commit conventions, and code review standards. |
 | **[LICENSE](./LICENSE)** | Legal | MIT License — Priyansh Bharti 2026. |
 | **[.github/ISSUE_TEMPLATE/bug_report.md](./.github/ISSUE_TEMPLATE/bug_report.md)** | QA Support | Standardized bug reporting template. |

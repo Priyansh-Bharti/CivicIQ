@@ -38,12 +38,26 @@ Expensive component re-renders are prevented using `useMemo` for data transforma
 ---
 
 ## 📦 3. Bundle Analysis (Production)
-| Asset Type | Size (Gzipped) | Status |
+
+### Before Vendor Splitting (v1.3.x)
+| Asset | Raw Size | Issue |
 | :--- | :--- | :--- |
-| **JavaScript (Core)** | 128 kb | ✅ Optimal |
-| **CSS (Tailwind)** | 15 kb | ✅ Purged |
-| **Assets / Icons** | 22 kb | ✅ SVG Optimized |
-| **Total Entry Payload** | **165 kb** | ✅ Ultra-Light |
+| `index.js` (monolith) | 590 KB | ❌ Entire app + all vendors bundled together |
+| `Navbar.js` | 159 KB | ❌ Included i18n + Firebase inline |
+
+### After Vendor Splitting (v1.4.0)
+| Asset | Gzipped | Caching Strategy |
+| :--- | :--- | :--- |
+| **`index.js`** (app code) | **6.9 KB** | ♻️ Re-downloads on every deploy (tiny) |
+| **`vendor-react`** | 74.4 KB | 🔒 Cached until React version changes |
+| **`vendor-firebase`** | 113.8 KB | 🔒 Cached until Firebase version changes |
+| **`vendor-motion`** | 43.3 KB | 🔒 Cached until Framer Motion changes |
+| **`vendor-ai`** | 5.3 KB | 🔒 Cached until SDK changes |
+| **`vendor-ui`** | 8.4 KB | 🔒 Cached until UI libs change |
+| **CSS** | 6.8 KB | ✅ Purged by Tailwind |
+| **Page chunks** (lazy) | 1-5 KB each | ✅ Loaded on-demand |
+
+> **Key insight**: After the first visit, repeat loads only re-download the 6.9 KB app chunk — vendors are served from browser cache with zero network cost.
 
 ---
 
