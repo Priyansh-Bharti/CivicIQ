@@ -13,6 +13,7 @@ const Checklist = lazy(() => import('./pages/Checklist').then(m => ({ default: m
 const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
 
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { ErrorBoundary } from './components/layout/ErrorBoundary';
 
 /**
  * Fallback component for unmatched routes.
@@ -29,35 +30,37 @@ const NotFound: React.FC = (): React.JSX.Element => (
  */
 function App(): React.JSX.Element {
   return (
-    <main id="main-content">
-      <Suspense fallback={
-        <div className="h-screen w-screen flex items-center justify-center bg-navy">
-          <div className="w-12 h-12 border-4 border-amber border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      }>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route 
-            path="/timeline" 
-            element={
-              <ProtectedRoute>
-                <Timeline />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/checklist" 
-            element={
-              <ProtectedRoute>
-                <Checklist />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </main>
+    <ErrorBoundary>
+      <main id="main-content">
+        <Suspense fallback={
+          <div className="h-screen w-screen flex items-center justify-center bg-navy">
+            <div className="w-12 h-12 border-4 border-amber border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route 
+              path="/timeline" 
+              element={
+                <ProtectedRoute>
+                  <Timeline />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/checklist" 
+              element={
+                <ProtectedRoute>
+                  <Checklist />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
+    </ErrorBoundary>
   );
 }
 
