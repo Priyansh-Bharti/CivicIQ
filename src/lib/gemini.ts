@@ -55,10 +55,26 @@ export async function* streamCivicAnswer(
 
   try {
     const model = getModel();
-    const contents: Content[] = history.map(msg => ({
-      role: msg.role === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.content }]
-    }));
+    // Ensure history strictly alternates user/model roles and starts with 'user'
+    const contents: Content[] = [];
+    let lastRole: 'user' | 'model' | null = null;
+
+    for (const msg of history) {
+      const role = msg.role === 'user' ? 'user' : 'model';
+      // Gemini requires alternating roles. Skip if role is same as last.
+      if (role !== lastRole) {
+        contents.push({
+          role,
+          parts: [{ text: msg.content }]
+        });
+        lastRole = role;
+      }
+    }
+
+    // Gemini requires history to end with a 'model' response before sending a new 'user' prompt
+    if (contents.length > 0 && contents[contents.length - 1].role !== 'model') {
+      contents.pop();
+    }
 
     const chat = model.startChat({
       history: contents,
