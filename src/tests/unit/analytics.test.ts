@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { trackEvent, initAnalytics } from '../../lib/analytics';
+import { logger } from '../../utils/logger';
 import * as firebaseAnalytics from 'firebase/analytics';
 
 vi.mock('firebase/analytics', () => ({
@@ -17,16 +18,16 @@ describe('Analytics module', () => {
   });
 
   it('does not throw when Firebase is not initialized', () => {
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const loggerSpy = vi.spyOn(logger, 'info').mockImplementation(() => {});
     
     expect(() => trackEvent('test_event', { foo: 'bar' })).not.toThrow();
     
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'Analytics not initialized. Would have tracked: test_event',
+    expect(loggerSpy).toHaveBeenCalledWith(
+      'Analytics event triggered (not initialized): test_event',
       { foo: 'bar' }
     );
     
-    consoleWarnSpy.mockRestore();
+    loggerSpy.mockRestore();
   });
 
   it('initAnalytics sets up analytics instance', () => {
@@ -82,10 +83,10 @@ describe('Analytics module', () => {
       throw new Error('Analytics error');
     });
     
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const loggerSpy = vi.spyOn(logger, 'error').mockImplementation(() => {});
     expect(() => trackEvent('test_error')).not.toThrow();
-    expect(consoleErrorSpy).toHaveBeenCalled();
+    expect(loggerSpy).toHaveBeenCalled();
     
-    consoleErrorSpy.mockRestore();
+    loggerSpy.mockRestore();
   });
 });

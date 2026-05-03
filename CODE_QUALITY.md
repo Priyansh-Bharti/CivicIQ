@@ -35,17 +35,19 @@ CivicIQ follows a strict **Layered Architecture**, ensuring a clean separation o
 graph TD
     A[Presentation Layer: Pages] --> B[Composition Layer: Components]
     B --> C[Logic Layer: Custom Hooks]
-    C --> D[Service Layer: Lib / Abstractions]
+    C --> G[Domain Engine Layer: Logic Engines]
     C --> E[State Layer: Zustand Store]
+    G --> D[Service Layer: Lib / Abstractions]
     D --> F[Data Layer: Firebase / Gemini / Translate]
 ```
 
 ### Layer Responsibilities:
 1.  **Pages (`src/pages`)**: Act solely as compositional containers. They contain **zero business logic**.
 2.  **Components (`src/components`)**: Fully stateless, presentational units that receive data via props.
-3.  **Hooks (`src/hooks`)**: The brain of the application. All stateful logic, side effects, and API orchestrations live here.
-4.  **Lib (`src/lib`)**: Abstraction layer for external services (Firebase, Gemini, Analytics).
-5.  **Store (`src/store`)**: Global state management via **Zustand**, providing a lightweight alternative to Redux.
+3.  **Hooks (`src/hooks`)**: Orchestrates data flow and side effects.
+4.  **Domain Engines (`src/engines`)**: The "Pure Heart" of the application. Stateless, testable engines that handle complex business rules, sanitization, and metrics.
+5.  **Lib (`src/lib`)**: Abstraction layer for external services (Firebase, Gemini, Analytics).
+6.  **Store (`src/store`)**: Global state management via **Zustand**, providing a lightweight alternative to Redux.
 
 ---
 

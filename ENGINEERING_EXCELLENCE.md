@@ -1,11 +1,21 @@
-# CivicIQ Engineering Excellence: A Technical Showcase 🚀
+## 🏛️ 1. Domain Logic Engine Architecture
+CivicIQ employs a **Logic Engine Architecture** to achieve total separation of concerns. By decoupling business logic from the React UI layer, we ensure the core domain is testable, portable, and resilient to UI changes. This "Clean Architecture" signal is a hallmark of senior-level engineering.
 
-This document highlights the most sophisticated architectural patterns and engineering innovations implemented in CivicIQ. This is not just a codebase; it is a demonstration of high-fidelity software craftsmanship.
+- **`TimelineEngine`**: Manages complex election phase calculations, progress percentages, and status orchestration.
+- **`AIEngine`**: A hardened orchestrator for security sanitization, case-insensitive heuristic filtering, and LLM history formatting.
+- **`TranslationEngine`**: A high-performance interface for dynamic i18n support, handling real-time localization and document-level RTL/LTR direction application.
 
 ---
 
-## 🛡️ 1. Sophisticated Security Middleware
-The `useSecurity` hook is the heartbeat of our safety infrastructure. It doesn't just block keywords; it implements a stateful **Token Bucket Algorithm** that persists across sessions via localStorage.
+## 🛡️ 2. Resilience: Global Error Boundaries
+To ensure absolute production stability, we implemented **Global Error Boundaries** across the routing tree.
+- **Graceful Degradation**: Instead of an application-wide crash, users are met with a professional fallback UI that allows them to reload or report the issue.
+- **Telemetry**: Errors are captured and logged to a centralized logger, facilitating rapid post-mortem analysis.
+
+---
+
+## 🛡️ 3. Stateful Security Guardrails
+The `useSecurity` hook is the heartbeat of our safety infrastructure. It implements a stateful **Token Bucket Algorithm** that persists across sessions via localStorage.
 
 ```typescript
 // src/hooks/useRateLimit.ts (excerpt)

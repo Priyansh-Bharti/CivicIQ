@@ -7,7 +7,8 @@ CivicIQ is a cloud-native platform that leverages the full breadth of the Google
 
 ## 🏗️ 1. Gemini 2.0 Flash: The Reasoning Engine
 *   **Role**: Powers "Ask CivicIQ", providing grounded, non-partisan election guidance.
-*   **Depth**: We utilize **System Instructions** and strict **Safety Settings** to enforce neutrality.
+*   **Depth**: We utilize **System Instructions**, strict **Safety Settings**, and the **`AIEngine`** for heuristic input sanitization.
+*   **Safety**: Integrated with our **`ENV` utility** to ensure secure API key management and validation at application boot.
 *   **Why Chosen**: Lowest latency for streaming responses and superior adherence to procedural guardrails.
 *   **Rejected**: GPT-4o (Higher cost/latency), Claude 3 (Harder GCP integration).
 

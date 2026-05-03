@@ -49,6 +49,11 @@ To assist screen reader and keyboard users, a hidden-by-default link allows bypa
 }
 ```
 
+### Focus Management
+We ensure that focus is handled predictably when opening or closing interactive overlays.
+- **Auto-Focus**: When the Chat Panel opens, focus is automatically moved to the close button (the primary exit action) to prevent "focus loss" for keyboard users.
+- **Focus Trapping**: Modals and dropdowns trap focus within their bounds until dismissed, preventing users from accidentally navigating to the background.
+
 ### Dynamic Live Regions
 AI chat responses are announced immediately to screen readers without interrupting the user's current focus:
 ```tsx

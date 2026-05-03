@@ -37,7 +37,12 @@ vi.mock('../store/languageStore', () => ({
 }));
 
 vi.mock('../hooks/useTranslation', () => ({
-  useTranslation: (text: string) => text
+  useTranslation: () => ({
+    t: (key: string) => key,
+    lang: 'en',
+    changeLanguage: vi.fn(),
+    dir: 'ltr'
+  })
 }));
 
 // Mock Firebase

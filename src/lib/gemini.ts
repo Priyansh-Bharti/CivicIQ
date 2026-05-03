@@ -7,10 +7,13 @@ import { GoogleGenerativeAI, Content, GenerativeModel, HarmCategory, HarmBlockTh
 import { ChatMessage } from '../types/election';
 import { db } from './firebase';
 import { collection, addDoc, query, orderBy, getDocs, deleteDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
-import { SYSTEM_PROMPT, BLOCKED_TERMS, AI_CONFIG } from '../constants';
+import { BLOCKED_TERMS, AI_CONFIG } from '../constants';
+import { SYSTEM_PROMPT } from '../constants/prompts';
+import { AIEngine } from '../engines/AIEngine';
+import { ENV } from '../utils/env';
 import { logger } from '../utils/logger';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
 
 /**
  * Configure standard safety settings for the AI.
@@ -36,18 +39,12 @@ const getModel = (): GenerativeModel => {
 };
 
 /**
- * Validates a user prompt against a list of blocked terms.
+ * Validates a user prompt using the AIEngine.
  * @param {string} prompt The user input to validate.
  * @returns {{ safe: boolean; reason?: string }} Validation result.
  */
 export const validatePrompt = (prompt: string): { safe: boolean; reason?: string } => {
-  const lowerPrompt = prompt.toLowerCase();
-  for (const term of BLOCKED_TERMS) {
-    if (lowerPrompt.includes(term)) {
-      return { safe: false, reason: `The prompt contains sensitive or blocked terms: "${term}".` };
-    }
-  }
-  return { safe: true };
+  return AIEngine.validateAndSanitize(prompt);
 };
 
 /**
@@ -62,31 +59,12 @@ export async function* streamCivicAnswer(
   history: ChatMessage[], 
   phaseContext?: string
 ): AsyncGenerator<string> {
-  const sanitized = prompt.replace(/<[^>]*>?/gm, '').trim().substring(0, AI_CONFIG.PROMPT_LIMIT);
-  if (!sanitized) throw new Error('Please provide a valid question.');
+  const { safe, sanitized, reason } = AIEngine.validateAndSanitize(prompt);
+  if (!safe) throw new Error(reason || 'Invalid input.');
 
   try {
     const model = getModel();
-    // Ensure history strictly alternates user/model roles and starts with 'user'
-    const contents: Content[] = [];
-    let lastRole: 'user' | 'model' | null = null;
-
-    for (const msg of history) {
-      const role = msg.role === 'user' ? 'user' : 'model';
-      // Gemini requires alternating roles. Skip if role is same as last.
-      if (role !== lastRole) {
-        contents.push({
-          role,
-          parts: [{ text: msg.content }]
-        });
-        lastRole = role;
-      }
-    }
-
-    // Gemini requires history to end with a 'model' response before sending a new 'user' prompt
-    if (contents.length > 0 && contents[contents.length - 1].role !== 'model') {
-      contents.pop();
-    }
+    const contents: Content[] = AIEngine.formatHistory(history);
 
     const chat = model.startChat({
       history: contents,

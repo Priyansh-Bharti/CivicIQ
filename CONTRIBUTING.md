@@ -49,10 +49,12 @@ To ensure the highest code quality, every PR must meet these criteria:
 
 ## 🏛️ 6. Code Review Standards
 We look for:
-1. **Separation of Concerns**: Is business logic in a hook?
-2. **DRY Principle**: Can this logic be shared?
-3. **Performance**: Are expensive re-renders avoided?
-4. **Security**: Is user input sanitized?
+1. **Domain Engine Isolation**: Is complex logic in a stateless, testable engine (`src/engines`)?
+2. **Separation of Concerns**: Is UI logic in a hook, and presentational logic in a component?
+3. **DRY Principle**: Can this logic be shared?
+4. **Performance**: Are expensive re-renders avoided via memoization or lazy loading?
+5. **Security**: Is user input sanitized via `AIEngine`?
+6. **Strict Typing**: Is the "Zero-Any" policy maintained?
 
 ---
 

@@ -25,16 +25,18 @@ graph TD
 | **Hooks (`src/hooks`)** | 95%+ | ✅ 98.1% |
 | **Utilities (`src/utils`)** | 100% | ✅ 100% |
 | **Lib Abstractions (`src/lib`)** | 95%+ | ✅ 100% |
+| **Domain Engines (`src/engines`)**| 100% | ✅ 100% |
 | **Pages (`src/pages`)** | 85%+ | ✅ 89.6% |
 
 ---
 
 ## 📋 3. Test Categories
 
-### (a) Unit Tests
-Focus on deterministic logic in isolation.
-*   **Location**: `src/tests/unit/`
-*   **Examples**: `timeline-engine.test.ts`, `translate.test.ts`, `security.test.ts`.
+### (a) Unit Tests (Domain Engines)
+We prioritize the validation of the "Pure Heart" of the application.
+- **`TimelineEngine.test.ts`**: Validates phase progression and metric calculations.
+- **`AIEngine.test.ts`**: Verifies security sanitization and history formatting.
+- **`TranslationEngine.test.ts`**: Ensures RTL/LTR orchestration and key resolution.
 
 ### (b) Integration Tests
 Validate the interaction between multiple components and hooks.
@@ -49,6 +51,9 @@ Automated WCAG audits run against every key component.
 ### (d) Security Tests
 Simulate malicious user behavior to verify system resilience.
 *   **Scenarios**: Bypassing rate limits, unauthorized Firestore access (via mocks), and long-payload prompt injections.
+
+### (e) Type-Safety Validation
+- **Zero-Any Test Policy**: We apply the same strictness to our tests as our production code. We utilize `vi.mocked()` for type-safe hook mocking, ensuring our tests are resilient to signature changes and free of `any` types.
 
 ---
 

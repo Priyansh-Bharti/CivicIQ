@@ -8,6 +8,12 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { ENV } from './utils/env';
+
+// Explicitly access ENV to trigger validation at boot
+if (!ENV) {
+  console.error('Failed to initialize application environment.');
+}
 
 /**
  * Initializes and renders the application root.

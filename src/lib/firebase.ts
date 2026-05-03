@@ -17,32 +17,17 @@ import {
   UserCredential
 } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
+import { ENV } from '../utils/env';
 import { logger } from '../utils/logger';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.firebaseapp.com`,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: ENV.FIREBASE_API_KEY,
+  authDomain: ENV.FIREBASE_AUTH_DOMAIN,
+  projectId: ENV.FIREBASE_PROJECT_ID,
+  storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: ENV.FIREBASE_MESSAGING_SENDER_ID,
+  appId: ENV.FIREBASE_APP_ID,
 };
-
-/**
- * Validates the Firebase configuration and logs missing keys.
- * @returns {void}
- */
-const validateConfig = (): void => {
-  const missingKeys = Object.entries(firebaseConfig)
-    .filter(([_, value]) => !value)
-    .map(([key]) => key);
-
-  if (missingKeys.length > 0) {
-    logger.warn(`Firebase config is missing keys: ${missingKeys.join(', ')}. Check your .env file.`);
-  }
-};
-
-validateConfig();
 
 // Initialize Firebase services
 const app: FirebaseApp = initializeApp(firebaseConfig);

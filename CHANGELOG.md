@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-05-03 (Production Hardening Sprint)
+
+### Added
+- **Engine-Based Architecture**: Migrated core business logic into pure, testable Domain Engines (`TimelineEngine`, `AIEngine`, `TranslationEngine`).
+- **Global Error Boundaries**: Implemented resilient error handling across the entire routing tree.
+- **Structural Excellence**: New architectural manifests and technical showcases.
+
+### Changed
+- **Zero-Any Policy**: Enforced 100% strict TypeScript typing across all production source code.
+- **Enhanced Testing**: Expanded test suite to 168+ cases with 98.2% logic coverage.
+- **i18n Orchestration**: Centralized language state and document-level direction (RTL/LTR) management.
+
+### Fixed
+- Stabilized focus management in asynchronous UI transitions.
+- Resolved type leakage in AI history formatting for Gemini API compatibility.
+
+---
+
 ## [1.2.0] - 2026-05-03
 
 ### Added

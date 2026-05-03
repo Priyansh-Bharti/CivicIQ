@@ -34,6 +34,15 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
   };
 
   /**
+   * Auto-focus the close button when the panel opens for accessibility.
+   */
+  useEffect(() => {
+    if (isOpen && closeBtnRef.current) {
+      setTimeout(() => closeBtnRef.current.focus(), 100);
+    }
+  }, [isOpen]);
+
+  /**
    * Implements a focus trap and escape key handler when the panel is open.
    */
   useEffect(() => {

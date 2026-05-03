@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguageStore } from '../../store/languageStore';
+import { useTranslation } from '../../hooks/useTranslation';
 import { Globe } from 'lucide-react';
 import { SUPPORTED_LANGUAGES, LanguageCode } from '../../constants';
 
@@ -24,22 +24,11 @@ const GROUPS = [
  * @returns {React.JSX.Element} The rendered switcher.
  */
 export const LanguageSwitcher: React.FC = (): React.JSX.Element => {
-  const { currentLanguage, setLanguage } = useLanguageStore();
+  const { lang: currentLanguage, changeLanguage } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const current = SUPPORTED_LANGUAGES.find(l => l.code === currentLanguage) || SUPPORTED_LANGUAGES[0];
 
-  useEffect(() => {
-    /**
-     * Applies language and text direction attributes to the document root.
-     * @param {typeof SUPPORTED_LANGUAGES[number]} lang The language configuration.
-     */
-    const applyLanguage = (lang: typeof SUPPORTED_LANGUAGES[number]): void => {
-      document.documentElement.setAttribute('lang', lang.code);
-      document.documentElement.setAttribute('dir', lang.dir);
-    };
-    applyLanguage(current);
-  }, [current]);
 
   return (
     <div className="relative">
@@ -73,7 +62,7 @@ export const LanguageSwitcher: React.FC = (): React.JSX.Element => {
                     <button
                       key={lang.code}
                       onClick={() => {
-                        setLanguage(lang.code as LanguageCode);
+                        changeLanguage(lang.code as LanguageCode);
                         setIsOpen(false);
                       }}
                       className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${

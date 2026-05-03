@@ -9,6 +9,7 @@ import { MessageSquare } from 'lucide-react';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { ProfileMenu } from './ProfileMenu';
 import { User } from '../../lib/firebase';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface DesktopNavProps {
   /** Authentication status. */
@@ -35,6 +36,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
   onSignOut, 
   onOpenChat 
 }): React.JSX.Element => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   
   const handleProtectedClick = (path: string) => {
@@ -51,13 +53,13 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
         onClick={() => handleProtectedClick('/timeline')}
         className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
       >
-        Timeline
+        {t('nav.timeline')}
       </button>
       <button 
         onClick={() => handleProtectedClick('/checklist')}
         className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
       >
-        Checklist
+        {t('nav.checklist')}
       </button>
       <Link to="/about" className="text-white/80 hover:text-white transition-colors font-medium">About</Link>
       <button 

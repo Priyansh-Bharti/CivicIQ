@@ -34,13 +34,18 @@ The architecture of CivicIQ was designed with the same rigor as a production-gra
 - **Engine**: **Zustand**.
 - **Role**: Manages user authentication state, current election phase, and the local cache of AI conversations. Chosen for its minimal boilerplate and atomic update capabilities.
 
-### (c) Business Logic Layer (Hooks)
-- **Mechanism**: Custom React Hooks (`src/hooks`).
-- **Responsibility**: All non-visual logic—calculating phase completion, handling AI stream parsing, and enforcing rate limits—is strictly contained here.
+### (c) Domain Logic Engine Layer (Pure Logic)
+- **Engine**: Stateless Logic Engines (`src/engines`).
+- **Responsibility**: The "Pure Heart" of the application. Handles complex business rules, mathematical calculations, and security sanitization in a test-isolated environment.
+- **Why**: Decoupling logic from the React lifecycle ensures 100% testability and stability.
 
-### (d) Data Access Layer (Abstractions)
+### (d) Business Logic Layer (Orchestration)
+- **Mechanism**: Custom React Hooks (`src/hooks`).
+- **Responsibility**: Orchestrates data flow between the Engines, the State Layer, and the UI.
+
+### (e) Data Access Layer (Abstractions)
 - **Mechanism**: Service Libs (`src/lib`).
-- **Responsibility**: Wraps external SDKs (Firebase, Gemini). This provides a **Repository Pattern** interface, allowing us to swap underlying services without modifying the UI or Hooks.
+- **Responsibility**: Wraps external SDKs (Firebase, Gemini). Implements the **Repository Pattern** to decouple the application from third-party infrastructure.
 
 ---
 

@@ -52,7 +52,15 @@ The AI Assistant is protected against common prompt injection and abuse vectors 
 ## 📂 4. Data Privacy & Secrets Management
 - **No PII Overload**: We only store essential metadata (email/uid) to facilitate authentication.
 - **Secret Hygiene**: Zero API keys are hardcoded. All sensitive credentials (Gemini API keys, Firebase configs) are injected as **Environment Variables** during the Cloud Build process.
+- **Environment Validation**: Our `ENV` utility (`src/utils/env.ts`) performs a strict validation of all required keys at application startup. If a critical key is missing, the application fails fast with a clear diagnostic, preventing silent failures and security misconfigurations.
 - **Domain Restriction**: API keys are restricted via Google Cloud Console to only accept requests from authorized production domains.
+
+---
+
+## 🏗️ 5. Logic Engine Isolation
+We implement a **Clean Architecture** approach by isolating sensitive logic into dedicated engines.
+- **`AIEngine` Sanitization**: The core sanitization logic is decoupled from React, ensuring it can be tested in isolation and is not subject to UI-related vulnerabilities.
+- **Case-Insensitive Heuristics**: Our heuristic filtering of 50+ sensitive terms is case-insensitive and executes *before* the prompt reaches the LLM service.
 
 ---
 

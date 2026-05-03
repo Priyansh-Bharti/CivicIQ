@@ -10,11 +10,12 @@ vi.mock('../../../src/hooks/useAuth', () => ({
 
 describe('Navbar Component', () => {
   it('renders sign-in button when logged out', () => {
-    (useAuth as any).mockReturnValue({
+    vi.mocked(useAuth).mockReturnValue({
       user: null,
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
       isAuthenticated: false,
+      isLoading: false,
     });
 
     render(
@@ -26,11 +27,12 @@ describe('Navbar Component', () => {
   });
 
   it('renders user name when logged in', () => {
-    (useAuth as any).mockReturnValue({
-      user: { displayName: 'John Doe', photoURL: 'https://example.com/photo.jpg' },
+    vi.mocked(useAuth).mockReturnValue({
+      user: { uid: '1', displayName: 'John Doe', photoURL: 'https://example.com/photo.jpg' },
       signInWithGoogle: vi.fn(),
       signOut: vi.fn(),
       isAuthenticated: true,
+      isLoading: false,
     });
 
     render(
@@ -42,29 +44,49 @@ describe('Navbar Component', () => {
   });
 
   it('has aria-label on nav element', () => {
-    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    vi.mocked(useAuth).mockReturnValue({ 
+      user: null, 
+      isAuthenticated: false,
+      signInWithGoogle: vi.fn(),
+      signOut: vi.fn(),
+      isLoading: false,
+    });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByRole('navigation')).toHaveAttribute('aria-label', 'Main Navigation');
   });
 
   it('renders the CivicIQ logo', () => {
-    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    vi.mocked(useAuth).mockReturnValue({ 
+      user: null, 
+      isAuthenticated: false,
+      signInWithGoogle: vi.fn(),
+      signOut: vi.fn(),
+      isLoading: false,
+    });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('CivicIQ')).toBeInTheDocument();
   });
 
   it('shows navigation links', () => {
-    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    vi.mocked(useAuth).mockReturnValue({ 
+      user: null, 
+      isAuthenticated: false,
+      signInWithGoogle: vi.fn(),
+      signOut: vi.fn(),
+      isLoading: false,
+    });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('Timeline')).toBeInTheDocument();
     expect(screen.getByText('Checklist')).toBeInTheDocument();
   });
 
   it('shows logout button when authenticated', () => {
-    (useAuth as any).mockReturnValue({ 
-      user: { displayName: 'John', photoURL: '' }, 
+    vi.mocked(useAuth).mockReturnValue({ 
+      user: { uid: '1', displayName: 'John', photoURL: '' }, 
       isAuthenticated: true,
-      signOut: vi.fn()
+      signOut: vi.fn(),
+      signInWithGoogle: vi.fn(),
+      isLoading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     
@@ -76,7 +98,13 @@ describe('Navbar Component', () => {
   });
 
   it('nav links have correct hrefs', () => {
-    (useAuth as any).mockReturnValue({ user: null, isAuthenticated: false });
+    vi.mocked(useAuth).mockReturnValue({ 
+      user: null, 
+      isAuthenticated: false,
+      signInWithGoogle: vi.fn(),
+      signOut: vi.fn(),
+      isLoading: false,
+    });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     expect(screen.getByText('Timeline').closest('a')).toHaveAttribute('href', '/timeline');
     expect(screen.getByText('Checklist').closest('a')).toHaveAttribute('href', '/checklist');

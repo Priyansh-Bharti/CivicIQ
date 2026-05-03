@@ -9,11 +9,14 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useTimelineStore } from '../store/timelineStore';
 import { logger } from '../utils/logger';
 import { ElectionPhase } from '../types/election';
+import { TimelineEngine } from '../engines/TimelineEngine';
 
 interface TimelineHookResult {
   phases: ElectionPhase[];
   activePhaseId: string;
   progress: Record<string, boolean>;
+  completionPercentage: number;
+  nextPhase: ElectionPhase | null;
   setActivePhase: (phaseId: string) => void;
   markPhaseViewed: (phaseId: string) => Promise<void>;
 }
@@ -82,10 +85,15 @@ export const useTimeline = (): TimelineHookResult => {
     void markPhaseViewed(phaseId);
   };
 
+  const completionPercentage = TimelineEngine.calculateCompletion(phases, progress);
+  const nextPhase = TimelineEngine.getNextPhase(phases, progress);
+
   return {
     phases,
     activePhaseId,
     progress,
+    completionPercentage,
+    nextPhase,
     setActivePhase,
     markPhaseViewed
   };

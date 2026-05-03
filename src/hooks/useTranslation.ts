@@ -1,49 +1,31 @@
-/**
- * Translation Hook
- * Dynamically translates a given text string based on the current application language.
- */
-
 import { useState, useEffect } from 'react';
-import { useLanguageStore } from '../store/languageStore';
-import { translateText } from '../lib/translate';
-import { logger } from '../utils/logger';
+import { LanguageCode } from '../constants';
+import { TranslationEngine } from '../engines/TranslationEngine';
 
 /**
- * Custom hook for translating text content.
- * @param {string} text The source text to translate.
- * @returns {string} The translated text (or original text as fallback).
+ * useTranslation Hook
+ * Provides translation capabilities and layout direction management.
  */
-export const useTranslation = (text: string): string => {
-  const { currentLanguage } = useLanguageStore();
-  const [translated, setTranslated] = useState<string>(text);
+export const useTranslation = () => {
+  const [lang, setLang] = useState<LanguageCode>(
+    (localStorage.getItem('civiciq_lang') as LanguageCode) || 'en'
+  );
 
   useEffect(() => {
-    let isMounted = true;
-    
-    if (currentLanguage === 'en' || !text) {
-      setTranslated(text);
-      return;
-    }
+    localStorage.setItem('civiciq_lang', lang);
+    // Apply direction to the HTML root for global RTL support
+    const dir = TranslationEngine.getDirection(lang);
+    document.documentElement.dir = dir;
+    document.documentElement.lang = lang;
+  }, [lang]);
 
-    /**
-     * Performs the asynchronous translation request.
-     */
-    const doTranslate = async (): Promise<void> => {
-      try {
-        const result = await translateText(text, currentLanguage);
-        if (isMounted) {
-          setTranslated(result);
-        }
-      } catch (error) {
-        logger.error('Translation error in hook:', error);
-        if (isMounted) setTranslated(text);
-      }
-    };
+  const t = (key: string) => TranslationEngine.t(key, lang);
+  const changeLanguage = (newLang: LanguageCode) => setLang(newLang);
 
-    void doTranslate();
-
-    return () => { isMounted = false; };
-  }, [text, currentLanguage]);
-
-  return translated;
+  return {
+    t,
+    lang,
+    changeLanguage,
+    dir: TranslationEngine.getDirection(lang)
+  };
 };

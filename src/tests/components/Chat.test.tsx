@@ -23,7 +23,12 @@ vi.mock('../../../src/hooks/useGemini', () => ({
 }));
 
 vi.mock('../../../src/hooks/useTranslation', () => ({
-  useTranslation: (text: string) => text,
+  useTranslation: () => ({
+    t: (key: string) => key,
+    lang: 'en',
+    changeLanguage: vi.fn(),
+    dir: 'ltr'
+  }),
 }));
 
 // ─── Suite ───────────────────────────────────────────────────────────────────
@@ -117,10 +122,15 @@ describe('Chat Component', () => {
     expect(useChatStore.getState().isOpen).toBe(false);
   });
 
-  it('Focus management: focus moves to close button on open', () => {
+  it('Focus management: focus moves to close button on open', async () => {
+    vi.useFakeTimers();
     renderChat();
+    act(() => {
+      vi.runAllTimers();
+    });
     const closeBtn = screen.getByRole('button', { name: /Close chat/i });
     expect(document.activeElement).toBe(closeBtn);
+    vi.useRealTimers();
   });
 
   it('ARIA: message list has role="log" and aria-live="polite"', () => {
