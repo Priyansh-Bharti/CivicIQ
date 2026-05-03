@@ -1,7 +1,8 @@
 {
   "name": "civiciq",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "CivicIQ — An AI-powered civic education PWA to guide voters through the election process, with multilingual support and personalized checklists.",
   "type": "module",
   "scripts": {
     "dev": "vite",
