@@ -18,8 +18,13 @@ interface ProtectedRouteProps {
  * @returns {React.JSX.Element} The children or a redirect.
  */
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }): React.JSX.Element => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
+
+  if (loading) {
+    // Show nothing while checking auth status to prevent flicker or premature redirect
+    return <div className="min-h-screen bg-navy flex items-center justify-center text-white">Loading...</div>;
+  }
 
   if (!isAuthenticated) {
     // Redirect to home but save the intended location
