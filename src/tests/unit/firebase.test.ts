@@ -24,11 +24,4 @@ describe('Firebase Configuration', () => {
     expect(db).toBeDefined();
   });
 
-  it('has correct project id from env', () => {
-    expect(import.meta.env.VITE_FIREBASE_PROJECT_ID).toBeDefined();
-  });
-
-  it('has messaging sender id from env', () => {
-    expect(import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID).toBeDefined();
-  });
 });

@@ -28,8 +28,15 @@ vi.mock('framer-motion', async () => {
     {},
     {
       get: (_target, key) => {
-        return ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) =>
-          React.createElement(key as string, props, children);
+        return ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => {
+          const {
+            initial, animate, exit, transition, variants,
+            whileHover, whileTap, whileInView, layout, layoutId,
+            viewport, onViewportEnter, onViewportLeave, style,
+            ...validProps
+          } = props;
+          return React.createElement(key as string, validProps, children);
+        };
       },
     }
   );
