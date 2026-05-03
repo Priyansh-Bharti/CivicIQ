@@ -3,12 +3,14 @@
  * Orchestrates the application's routing and core layout structure.
  */
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Landing } from './pages/Landing';
-import { Timeline } from './pages/Timeline';
-import { Checklist } from './pages/Checklist';
-import { About } from './pages/About';
+
+// Lazy load pages for improved bundle efficiency
+const Landing = lazy(() => import('./pages/Landing').then(m => ({ default: m.Landing })));
+const Timeline = lazy(() => import('./pages/Timeline').then(m => ({ default: m.Timeline })));
+const Checklist = lazy(() => import('./pages/Checklist').then(m => ({ default: m.Checklist })));
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
 
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
@@ -28,27 +30,33 @@ const NotFound: React.FC = (): React.JSX.Element => (
 function App(): React.JSX.Element {
   return (
     <main id="main-content">
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route 
-          path="/timeline" 
-          element={
-            <ProtectedRoute>
-              <Timeline />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/checklist" 
-          element={
-            <ProtectedRoute>
-              <Checklist />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={
+        <div className="h-screen w-screen flex items-center justify-center bg-navy">
+          <div className="w-12 h-12 border-4 border-amber border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      }>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route 
+            path="/timeline" 
+            element={
+              <ProtectedRoute>
+                <Timeline />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/checklist" 
+            element={
+              <ProtectedRoute>
+                <Checklist />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </main>
   );
 }
