@@ -46,13 +46,13 @@ describe('Chat Component', () => {
 
   it('ChatPanel renders', () => {
     renderChat();
-    expect(screen.getByPlaceholderText(/Ask CivicIQ/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('chat.placeholder')).toBeInTheDocument();
   });
 
   it('renders with phase context banner', () => {
     useChatStore.setState({ isOpen: true, activeContext: 'Phase 1 Context', messages: [] });
     renderChat();
-    expect(screen.getByText(/Asking about/i)).toBeInTheDocument();
+    expect(screen.getByText(/chat.panel.context/i)).toBeInTheDocument();
     expect(screen.getByText('Phase 1 Context')).toBeInTheDocument();
   });
 
@@ -63,7 +63,7 @@ describe('Chat Component', () => {
       });
     });
     renderChat();
-    const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
+    const input = screen.getByPlaceholderText('chat.placeholder');
     fireEvent.change(input, { target: { value: 'Hello' } });
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
     await waitFor(() => { expect(mockSendMessage).toHaveBeenCalledWith('Hello'); });
@@ -77,7 +77,7 @@ describe('Chat Component', () => {
 
   it('Enter key sends message', async () => {
     renderChat();
-    const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
+    const input = screen.getByPlaceholderText('chat.placeholder');
     fireEvent.change(input, { target: { value: 'Test message' } });
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
     await waitFor(() => { expect(mockSendMessage).toHaveBeenCalledWith('Test message'); });
@@ -85,7 +85,7 @@ describe('Chat Component', () => {
 
   it('Shift+Enter does NOT send message', () => {
     renderChat();
-    const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
+    const input = screen.getByPlaceholderText('chat.placeholder');
     fireEvent.change(input, { target: { value: 'Line 1' } });
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', shiftKey: true });
     expect(mockSendMessage).not.toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('Chat Component', () => {
 
   it('500 char limit enforced via maxLength attribute', () => {
     renderChat();
-    const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
+    const input = screen.getByPlaceholderText('chat.placeholder');
     expect(input).toHaveAttribute('maxLength', '500');
   });
 
@@ -112,7 +112,7 @@ describe('Chat Component', () => {
 
   it('Disclaimer text present', () => {
     renderChat();
-    expect(screen.getByText(/AI can make mistakes/i)).toBeInTheDocument();
+    expect(screen.getByText('chat.panel.disclaimer')).toBeInTheDocument();
   });
 
   it('Close button closes panel', () => {
@@ -151,7 +151,7 @@ describe('Chat Component', () => {
 
   it('ARIA: Input has aria-label="Message CivicIQ"', () => {
     renderChat();
-    const input = screen.getByPlaceholderText(/Ask CivicIQ/i);
+    const input = screen.getByPlaceholderText('chat.placeholder');
     expect(input).toHaveAttribute('aria-label', 'Message CivicIQ');
   });
 
@@ -162,16 +162,16 @@ describe('Chat Component', () => {
 
   it('Empty state shows prompt text', () => {
     renderChat();
-    expect(screen.getByText(/How can I help you today/i)).toBeInTheDocument();
+    expect(screen.getByText('chat.empty')).toBeInTheDocument();
   });
 
   it('Panel header contains "Ask CivicIQ" title', () => {
     renderChat();
-    expect(screen.getByText('Ask CivicIQ')).toBeInTheDocument();
+    expect(screen.getByText('chat.title')).toBeInTheDocument();
   });
 
   it('Panel sub-header shows "Powered by Gemini 2.0"', () => {
     renderChat();
-    expect(screen.getByText(/Powered by Gemini 2.0/i)).toBeInTheDocument();
+    expect(screen.getByText('chat.disclaimer')).toBeInTheDocument();
   });
 });

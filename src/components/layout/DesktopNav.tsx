@@ -67,7 +67,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
         className="flex items-center gap-2 bg-amber text-navy px-4 py-2 rounded-lg font-bold hover:scale-105 transition-transform"
       >
         <MessageSquare className="w-4 h-4" aria-hidden="true" />
-        Ask CivicIQ
+        {t('nav.askCivicIQ')}
       </button>
       
       {isAuthenticated ? (
@@ -77,7 +77,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
           onClick={onSignIn}
           className="border border-white text-white hover:bg-white/10 px-5 py-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-amber"
         >
-          Sign in with Google
+          {t('nav.signIn')}
         </button>
       )}
     </div>

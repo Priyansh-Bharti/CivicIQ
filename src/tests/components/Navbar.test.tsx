@@ -10,17 +10,7 @@ vi.mock('../../hooks/useAuth', () => ({
 
 vi.mock('../../hooks/useTranslation', () => ({
   useTranslation: () => ({
-    t: (key: string) => {
-      const map: Record<string, string> = {
-        'nav.timeline': 'Timeline',
-        'nav.checklist': 'Checklist',
-        'nav.askCivicIQ': 'Ask CivicIQ',
-        'nav.signIn': 'Sign in with Google',
-        'nav.signOut': 'Sign out',
-        'nav.userMenu': 'User menu',
-      };
-      return map[key] ?? key;
-    },
+    t: (key: string) => key,
     lang: 'en',
     changeLanguage: vi.fn(),
     dir: 'ltr'
@@ -42,7 +32,7 @@ describe('Navbar Component', () => {
         <Navbar />
       </BrowserRouter>
     );
-    expect(screen.getByText(/Sign in with Google/i)).toBeInTheDocument();
+    expect(screen.getByText('nav.signIn')).toBeInTheDocument();
   });
 
   it('renders user name when logged in', () => {
@@ -95,8 +85,8 @@ describe('Navbar Component', () => {
       loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
-    expect(screen.getByText('Timeline')).toBeInTheDocument();
-    expect(screen.getByText('Checklist')).toBeInTheDocument();
+    expect(screen.getByText('nav.timeline')).toBeInTheDocument();
+    expect(screen.getByText('nav.checklist')).toBeInTheDocument();
   });
 
   it('shows logout button when authenticated', () => {
@@ -110,10 +100,10 @@ describe('Navbar Component', () => {
     render(<BrowserRouter><Navbar /></BrowserRouter>);
     
     // Open profile menu
-    const menuButton = screen.getByLabelText(/User menu/i);
+    const menuButton = screen.getByLabelText('nav.userMenu');
     fireEvent.click(menuButton);
     
-    expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
+    expect(screen.getByText('nav.signOut')).toBeInTheDocument();
   });
 
   it('nav links have correct hrefs', () => {
@@ -125,7 +115,7 @@ describe('Navbar Component', () => {
       loading: false,
     });
     render(<BrowserRouter><Navbar /></BrowserRouter>);
-    expect(screen.getByText('Timeline')).toBeInTheDocument();
-    expect(screen.getByText('Checklist')).toBeInTheDocument();
+    expect(screen.getByText('nav.timeline')).toBeInTheDocument();
+    expect(screen.getByText('nav.checklist')).toBeInTheDocument();
   });
 });

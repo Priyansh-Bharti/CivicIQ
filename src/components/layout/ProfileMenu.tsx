@@ -9,6 +9,7 @@ import { LogOut, User as UserIcon, ChevronDown } from 'lucide-react';
 import { User } from '../../lib/firebase';
 import { clsx, ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ProfileMenuProps {
   /** Current user data. */
@@ -31,13 +32,14 @@ const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
  */
 export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): React.JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="relative">
       <button
         onClick={() => { setIsOpen(!isOpen); }}
         aria-expanded={isOpen}
-        aria-label="User menu"
+        aria-label={t('nav.userMenu')}
         className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
       >
         <img src={user?.photoURL || undefined} alt={user?.displayName || "User profile"} className="w-8 h-8 rounded-full border border-white/20" />
@@ -60,7 +62,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): Re
               onClick={onSignOut}
               className="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-error/5 transition-colors border-t border-gray-100"
             >
-              <LogOut className="w-4 h-4" aria-hidden="true" /> Sign out
+              <LogOut className="w-4 h-4" aria-hidden="true" /> {t('nav.signOut')}
             </button>
           </motion.div>
         )}

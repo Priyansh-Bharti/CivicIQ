@@ -11,6 +11,7 @@ import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { useChatStore } from '../../store/chatStore';
 import { useGemini } from '../../hooks/useGemini';
+import { useTranslation } from '../../hooks/useTranslation';
 
 /**
  * Renders the sliding chat panel with the AI assistant.
@@ -21,6 +22,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
   const { messages, sendMessage, isLoading, clearChat, error } = useGemini();
   const scrollRef = useRef<HTMLDivElement>(null!);
   const closeBtnRef = useRef<HTMLButtonElement>(null!);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -91,7 +93,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
             <div className="bg-amber/10 border-b border-amber/20 p-3 px-6 flex items-center gap-3">
               <ShieldCheck className="w-4 h-4 text-amber" aria-hidden="true" />
               <p className="text-xs text-navy font-medium">
-                Asking about: <span className="font-bold">{activeContext}</span>
+                {t('chat.panel.context')} <span className="font-bold">{activeContext}</span>
               </p>
             </div>
           )}
@@ -100,7 +102,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
 
           <div className="flex flex-col">
             <p className="text-[10px] text-gray-400 text-center py-2 bg-gray-50 border-t border-gray-100">
-              AI can make mistakes. CivicIQ only covers election processes.
+              {t('chat.panel.disclaimer')}
             </p>
             <ChatInput onSendMessage={sendMessage} isLoading={isLoading} />
           </div>

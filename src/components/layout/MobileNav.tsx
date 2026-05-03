@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare } from 'lucide-react';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { User } from '../../lib/firebase';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface MobileNavProps {
   /** Visibility state of the mobile menu. */
@@ -42,6 +43,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   onClose
 }): React.JSX.Element => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleProtectedClick = (path: string) => {
     if (isAuthenticated) {
@@ -66,13 +68,13 @@ export const MobileNav: React.FC<MobileNavProps> = ({
               onClick={() => { handleProtectedClick('/timeline'); }} 
               className="block w-full text-left text-white/80 py-2 text-lg"
             >
-              Timeline
+              {t('nav.timeline')}
             </button>
             <button 
               onClick={() => { handleProtectedClick('/checklist'); }} 
               className="block w-full text-left text-white/80 py-2 text-lg"
             >
-              Checklist
+              {t('nav.checklist')}
             </button>
             <Link to="/about" className="block text-white/80 py-2 text-lg" onClick={onClose}>About</Link>
             <button 
@@ -80,7 +82,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
               className="w-full flex items-center gap-3 bg-amber text-navy px-4 py-3 rounded-lg font-bold"
             >
               <MessageSquare className="w-5 h-5" />
-              Ask CivicIQ
+              {t('nav.askCivicIQ')}
             </button>
             <div className="pt-2">
               <LanguageSwitcher />
@@ -93,7 +95,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                     <span className="font-medium text-lg">{user?.displayName}</span>
                   </div>
                   <button onClick={() => { onSignOut(); onClose(); }} className="w-full text-left text-error py-2">
-                    Sign out
+                    {t('nav.signOut')}
                   </button>
                 </div>
               ) : (
@@ -101,7 +103,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                   onClick={() => { onSignIn(); onClose(); }}
                   className="w-full border border-white text-white py-3 rounded-md font-medium"
                 >
-                  Sign in with Google
+                  {t('nav.signIn')}
                 </button>
               )}
             </div>

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { X, RotateCcw } from 'lucide-react';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ChatHeaderProps {
   /** Callback to clear the entire chat history. */
@@ -21,11 +22,12 @@ interface ChatHeaderProps {
  * @returns {React.JSX.Element} The rendered header.
  */
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClear, onClose, closeBtnRef }): React.JSX.Element => {
+  const { t } = useTranslation();
   return (
     <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-navy text-white">
       <div>
-        <h2 className="text-xl font-hero">Ask CivicIQ</h2>
-        <p className="text-[10px] text-white/60 uppercase tracking-widest font-bold">Powered by Gemini 2.0</p>
+        <h2 className="text-xl font-hero">{t('chat.title')}</h2>
+        <p className="text-[10px] text-white/60 uppercase tracking-widest font-bold">{t('chat.disclaimer')}</p>
       </div>
       <div className="flex items-center gap-2">
         <button 

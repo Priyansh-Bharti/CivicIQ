@@ -6,6 +6,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Mic } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ChatInputProps {
   /** Callback function to send the user's message. */
@@ -22,6 +23,7 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }): React.JSX.Element => {
   const [content, setContent] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { t } = useTranslation();
 
   /**
    * Triggers the message sending logic if the content is valid.
@@ -58,7 +60,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }
       <div className="flex justify-center mb-3">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-navy/5 text-navy/60 rounded-full text-[10px] font-bold uppercase tracking-widest border border-navy/10">
           <span className="w-1.5 h-1.5 bg-emerald rounded-full animate-pulse" />
-          🛡️ Non-partisan · Factual only
+          {t('chat.input.disclaimer')}
         </span>
       </div>
       <div className="relative bg-gray-50 rounded-xl border border-gray-200 focus-within:border-indigo transition-colors p-2">
@@ -67,7 +69,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }
           value={content}
           onChange={(e) => { setContent(e.target.value); }}
           onKeyDown={handleKeyDown}
-          placeholder="Ask CivicIQ your election question..."
+          placeholder={t('chat.placeholder')}
           aria-label="Message CivicIQ"
           maxLength={500}
           className="w-full bg-transparent border-none focus:ring-0 text-sm resize-none py-2 px-2 max-h-[120px] custom-scrollbar"

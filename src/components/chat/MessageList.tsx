@@ -7,6 +7,7 @@ import React from 'react';
 import { ShieldCheck } from 'lucide-react';
 import { ChatMessage as MessageComponent } from './ChatMessage';
 import { ChatMessage } from '../../types/election';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface MessageListProps {
   /** Array of messages to display. */
@@ -30,6 +31,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   error, 
   scrollRef 
 }): React.JSX.Element => {
+  const { t } = useTranslation();
   return (
     <div 
       ref={scrollRef}
@@ -47,13 +49,13 @@ export const MessageList: React.FC<MessageListProps> = ({
           <div className="mb-6 bg-white border border-gray-200 px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
             <div className="w-2 h-2 bg-emerald rounded-full animate-pulse" />
             <span className="text-[10px] font-bold text-navy uppercase tracking-wider">
-              Non-Partisan & Factual Information Only
+              {t('chat.input.disclaimer')}
             </span>
           </div>
 
-          <h3 className="text-navy font-hero text-lg mb-2">How can I help you today?</h3>
+          <h3 className="text-navy font-hero text-lg mb-2">{t('chat.empty')}</h3>
           <p className="text-sm text-gray-500">
-            Ask me about voter registration, election timelines, or how ballots are counted.
+            {t('chat.placeholder')}
           </p>
         </div>
       ) : (

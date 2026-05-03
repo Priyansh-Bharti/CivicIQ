@@ -66,7 +66,7 @@ describe('Auth Integration', () => {
 
     renderNavbar();
     // Navbar has desktop and mobile buttons
-    expect(screen.getAllByRole('button', { name: /Sign in with Google/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', { name: /nav.signIn/i }).length).toBeGreaterThan(0);
   });
 
   it('Authenticated user sees user menu/avatar', () => {
@@ -79,7 +79,7 @@ describe('Auth Integration', () => {
     });
 
     renderNavbar();
-    expect(screen.getByRole('button', { name: /User menu/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /nav.userMenu/i })).toBeInTheDocument();
     expect(screen.getByText('John')).toBeInTheDocument(); // Only shows first name
   });
 
@@ -96,10 +96,10 @@ describe('Auth Integration', () => {
     renderNavbar();
     
     // Open profile menu
-    const userMenuBtn = screen.getByRole('button', { name: /User menu/i });
+    const userMenuBtn = screen.getByRole('button', { name: /nav.userMenu/i });
     act(() => { userMenuBtn.click(); });
     
-    const signOutBtn = screen.getByRole('button', { name: /Sign out/i });
+    const signOutBtn = screen.getByRole('button', { name: /nav.signOut/i });
     act(() => { signOutBtn.click(); });
     
     expect(mockSignOut).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('Auth Integration', () => {
 
     renderNavbar();
     
-    const signInBtns = screen.getAllByRole('button', { name: /Sign in with Google/i });
+    const signInBtns = screen.getAllByRole('button', { name: /nav.signIn/i });
     act(() => { signInBtns[0].click(); });
     
     expect(mockSignIn).toHaveBeenCalled();

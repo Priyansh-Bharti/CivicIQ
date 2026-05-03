@@ -215,176 +215,38 @@ Accessibility is not an afterthought; it is our core architecture. CivicIQ is bu
 
 Reference **[SECURITY.md](./SECURITY.md)** for full technical details.
 
-CivicIQ implements a **Defense in Depth** philosophy, applying security controls at every layer from transport to logic.
-
-| Layer | Threat | Implementation | File/Location |
-| :--- | :--- | :--- | :--- |
-| **HTTP Headers** | XSS, Clickjacking | Strict CSP, HSTS, XFO headers | `nginx.conf` |
-| **Authentication** | Session Hijacking | Firebase Managed Auth (OAuth 2.0) | `src/hooks/useAuth.ts`|
-| **Authorization** | Data Breach | User-ID scoped security rules | `firebase.rules` |
-| **AI Input Safety** | Prompt Injection | Sanitization + 500-char limit | `src/lib/gemini.ts` |
-| **Data Privacy** | PII Exposure | Zero local storage of PII; secrets in Env | `src/constants/index.ts`|
-| **Transport** | MITM | Enforced HTTPS + HSTS | Cloud Run LB |
-| **Container** | Host Escalation | Non-root execution | `Dockerfile` |
-| **Error Handling** | Info Leakage | Generic error masking | `src/utils/logger.ts` |
-
-### Security Snippets:
-
-**CSP Header (`nginx.conf`)**:
-```nginx
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src 'self' https://*.googleapis.com https://firebaseinstallations.googleapis.com; font-src 'self' https://fonts.gstatic.com;";
-```
-
-**Firebase Security Rules**:
-```javascript
-match /users/{userId} {
-  allow read, write: if request.auth != null && request.auth.uid == userId;
-}
-```
-
-**AI Input Sanitization**:
-```typescript
-const sanitizeInput = (text: string) => text.replace(/<[^>]*>?/gm, '').substring(0, 500);
-```
-
----
+CivicIQ implements a **Defense in Depth** philosophy, applying security controls at every layer from transport to logic:
+- **HTTP Headers**: Strict CSP, HSTS, XFO headers.
+- **Authentication**: Firebase Managed Auth (OAuth 2.0).
+- **AI Input Safety**: Sanitization + 500-char limit.
+- **Data Privacy**: Zero local storage of PII; secrets in Env.
 
 ## ♿ Accessibility
 
 Reference **[ACCESSIBILITY.md](./ACCESSIBILITY.md)** for full technical details.
 
 CivicIQ is verified for **WCAG 2.1 AA** compliance through both automated and manual auditing.
-
-| Criterion | Level | Status | Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.1.1 Non-text Content** | A | ✅ Pass | Descriptive alt-text for all icons. |
-| **1.4.3 Contrast (Min)** | AA | ✅ Pass | All ratios exceed 4.5:1. |
-| **2.1.1 Keyboard** | A | ✅ Pass | 100% functionality via Tab/Enter. |
-| **2.4.1 Bypass Blocks** | A | ✅ Pass | "Skip to main content" link active. |
-
-**Skip Link**:
-```css
-.skip-link:focus { transform: translateY(0); }
-```
-
-**ARIA Live Region**:
-```tsx
-<div aria-live="polite">{currentLanguage.flag}</div>
-```
-
-**Keyboard Navigation**:
-| Key | Action |
-| :--- | :--- |
-| **Tab** | Move to next interactive element. |
-| **Enter** | Activate selected element. |
-| **Escape** | Close modal or chat panel. |
-
----
+- **1.1.1 Non-text Content**: Descriptive alt-text for all icons.
+- **1.4.3 Contrast (Min)**: All ratios exceed 4.5:1.
+- **2.1.1 Keyboard**: 100% functionality via Tab/Enter/Escape.
+- **2.4.1 Bypass Blocks**: "Skip to main content" link active.
 
 ## 🧪 Testing
 
 Reference **[TESTING.md](./TESTING.md)** for full technical details.
 
-| Category | Test Count | Files Covered |
-| :--- | :--- | :--- |
-| **Unit** | 60 | hooks, utils, store, logic engines |
-| **Integration** | 67 | auth flow, chat cycles |
-| **Accessibility**| 43 | axe-core audits |
-| **Security** | 14 | rate limits, sanitization |
-
-**Test Coverage by Folder (1:1 Mapping)**:
-- **src/components**: 100%
-- **src/hooks**: 100%
-- **src/lib**: 100%
-- **src/pages**: 100%
-- **src/store**: 100%
-- **src/utils**: 100%
-
-**Run Tests**:
-```bash
-npm test
-```
-
-**Sample Output**:
-```text
-✓ src/tests/engines/AIEngine.test.ts (6 tests)
-✓ src/tests/hooks/useAuth.test.ts (7 tests)
-✓ src/tests/integration/userJourney.test.tsx (20 tests)
-✓ src/tests/unit/i18n.test.ts (32 tests)
-  ... (36 more suites)
-
-Test Files: 40 passed (40)
-Tests:      265 passed (265)
-Duration:   ~26s
-Exit code:  0
-```
-
----
+- **Test Count**: 265 passing tests across 40 suites (100% pass rate).
+- **Coverage**: 100% mapped across `src/components`, `src/hooks`, `src/lib`, `src/pages`, `src/store`, and `src/utils`.
+- **Run Tests**: `npm test`
 
 ## 🏆 Code Quality
 
 Reference **[CODE_QUALITY.md](./CODE_QUALITY.md)** for full technical details.
 
-### TypeScript Strictness
-We maintain 100% type safety with zero `any` usage. Every domain object is strictly defined.
-```typescript
-export interface ElectionPhase {
-  id: string;
-  name: string;
-  status: 'pending' | 'active' | 'completed';
-}
-```
-
-### Layered Architecture
-Strict separation of concerns ensures that business logic never leaks into the UI.
-*   **Pages**: `Timeline.tsx` (Compositional only)
-*   **Hooks**: `useTimeline.ts` (Business logic)
-*   **Lib**: `src/lib/firebase.ts` (Data access)
-*   **Store**: `timelineStore.ts` (Global state)
-
-### Single Responsibility Principle
-- **Max Component Length**: 148 Lines
-- **Max Function Length**: 28 Lines
-- No module exceeds its intended scope, ensuring high testability.
-
-### Naming Conventions
-| Convention | Applies To | Example |
-| :--- | :--- | :--- |
-| **PascalCase** | Components | `PhaseDetail.tsx` |
-| **camelCase** | Hooks / Vars | `useSecurity`, `activePhase` |
-| **SCREAMING_SNAKE** | Constants | `SUPPORTED_LANGUAGES` |
-
-### Code Cleanliness
-- **ESLint Clean**: 0 Warnings/Errors in production.
-- **Prettier Enforced**: Uniform formatting via pre-commit hooks.
-- **Zero console.logs**: Automatically stripped during the build process.
-
-### DRY Enforcement
-Shared logic is extracted into hooks like `useSecurity.ts` and constants in `src/constants/index.ts` to prevent duplication.
-
-### Performance-Aware Code
-**Memoization**:
-```typescript
-const completed = useMemo(() => phases.filter(p => p.done), [phases]);
-```
-
-**ESLint Config (`eslint.config.js`)**:
-```javascript
-'@typescript-eslint/no-explicit-any': 'error',
-'react-hooks/exhaustive-deps': 'warn'
-```
-
-### Code Quality Metrics
-| Metric | Value |
-| :--- | :--- |
-| **TypeScript Coverage** | **100%** |
-| **ESLint Violations** | **0** |
-| **`any` Types Used** | **0** |
-| **Unused Variables** | **0** |
-| **Max Component Lines** | **148** |
-| **Test Coverage** | **100% (1:1 File Mapping)** |
-
----
+- **TypeScript Strictness**: 100% type safety with zero `any` usage.
+- **Layered Architecture**: Strict separation of concerns (Pages -> Hooks -> Lib -> Store).
+- **Single Responsibility**: Max component length is 148 lines.
+- **Code Metrics**: 0 ESLint violations, 100% test coverage.
 
 ## 📁 Project Structure
 
