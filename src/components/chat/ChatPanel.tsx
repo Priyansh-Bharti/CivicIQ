@@ -14,13 +14,13 @@ import { useGemini } from '../../hooks/useGemini';
 
 /**
  * Renders the sliding chat panel with the AI assistant.
- * @returns {JSX.Element} The rendered chat panel.
+ * @returns {React.JSX.Element} The rendered chat panel.
  */
-export const ChatPanel: React.FC = (): JSX.Element => {
+export const ChatPanel: React.FC = (): React.JSX.Element => {
   const { isOpen, setIsOpen, activeContext, setActiveContext } = useChatStore();
   const { messages, sendMessage, isLoading, clearChat, error } = useGemini();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null!);
+  const closeBtnRef = useRef<HTMLButtonElement>(null!);
 
   useEffect(() => {
     if (scrollRef.current) {

@@ -21,9 +21,9 @@ const GROUPS = [
 
 /**
  * Renders a stylized language selection dropdown.
- * @returns {JSX.Element} The rendered switcher.
+ * @returns {React.JSX.Element} The rendered switcher.
  */
-export const LanguageSwitcher: React.FC = (): JSX.Element => {
+export const LanguageSwitcher: React.FC = (): React.JSX.Element => {
   const { currentLanguage, setLanguage } = useLanguageStore();
   const [isOpen, setIsOpen] = useState(false);
 

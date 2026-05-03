@@ -13,7 +13,7 @@ import { About } from './pages/About';
 /**
  * Fallback component for unmatched routes.
  */
-const NotFound: React.FC = (): JSX.Element => (
+const NotFound: React.FC = (): React.JSX.Element => (
   <div className="p-20 text-center text-3xl font-hero text-navy">
     404 - Not Found
   </div>
@@ -21,9 +21,9 @@ const NotFound: React.FC = (): JSX.Element => (
 
 /**
  * Main App entry point defining the routing table.
- * @returns {JSX.Element} The rendered application.
+ * @returns {React.JSX.Element} The rendered application.
  */
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />

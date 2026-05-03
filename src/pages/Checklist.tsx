@@ -14,9 +14,9 @@ import { trackEvent } from '../lib/analytics';
 
 /**
  * Renders the civic readiness checklist page.
- * @returns {JSX.Element} The rendered checklist page.
+ * @returns {React.JSX.Element} The rendered checklist page.
  */
-export const Checklist: React.FC = (): JSX.Element => {
+export const Checklist: React.FC = (): React.JSX.Element => {
   const { items, toggleItem, completionPercentage, completedCount, totalCount } = useChecklist();
 
   useEffect(() => {

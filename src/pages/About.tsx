@@ -12,9 +12,9 @@ import { Shield, Users, Lightbulb, CheckCircle } from 'lucide-react';
 
 /**
  * Renders the application's about page.
- * @returns {JSX.Element} The rendered about page.
+ * @returns {React.JSX.Element} The rendered about page.
  */
-export const About: React.FC = (): JSX.Element => {
+export const About: React.FC = (): React.JSX.Element => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />

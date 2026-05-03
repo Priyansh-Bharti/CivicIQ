@@ -37,7 +37,7 @@ interface TimelineNodeProps {
 /**
  * Renders a stylized indicator and label for a timeline phase.
  * @param {TimelineNodeProps} props Component properties.
- * @returns {JSX.Element} The rendered timeline node.
+ * @returns {React.JSX.Element} The rendered timeline node.
  */
 export const TimelineNode: React.FC<TimelineNodeProps> = ({ 
   phase, 
@@ -46,7 +46,7 @@ export const TimelineNode: React.FC<TimelineNodeProps> = ({
   isCompleted, 
   onClick, 
   onKeyDown 
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <div 
       id={`node-${phase.id}`}

@@ -17,9 +17,9 @@ interface ChatInputProps {
 /**
  * Renders an auto-expanding textarea for chat input.
  * @param {ChatInputProps} props Component properties.
- * @returns {JSX.Element} The rendered input area.
+ * @returns {React.JSX.Element} The rendered input area.
  */
-export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }): JSX.Element => {
+export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }): React.JSX.Element => {
   const [content, setContent] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 

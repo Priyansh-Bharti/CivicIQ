@@ -18,9 +18,9 @@ interface ChatHeaderProps {
 /**
  * Renders the header section of the chat panel.
  * @param {ChatHeaderProps} props Component properties.
- * @returns {JSX.Element} The rendered header.
+ * @returns {React.JSX.Element} The rendered header.
  */
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClear, onClose, closeBtnRef }): JSX.Element => {
+export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClear, onClose, closeBtnRef }): React.JSX.Element => {
   return (
     <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-navy text-white">
       <div>

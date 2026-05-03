@@ -13,9 +13,9 @@ import { useChatStore } from '../store/chatStore';
 
 /**
  * Renders the election process timeline page.
- * @returns {JSX.Element} The rendered timeline page.
+ * @returns {React.JSX.Element} The rendered timeline page.
  */
-export const Timeline: React.FC = (): JSX.Element => {
+export const Timeline: React.FC = (): React.JSX.Element => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const initialPhaseId = searchParams.get('phase') || undefined;

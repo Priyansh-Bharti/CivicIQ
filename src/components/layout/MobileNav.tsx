@@ -30,7 +30,7 @@ interface MobileNavProps {
 /**
  * Renders a vertically stacked navigation menu for mobile devices.
  * @param {MobileNavProps} props Component properties.
- * @returns {JSX.Element} The rendered mobile navigation.
+ * @returns {React.JSX.Element} The rendered mobile navigation.
  */
 export const MobileNav: React.FC<MobileNavProps> = ({ 
   isOpen, 
@@ -40,7 +40,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   onSignOut, 
   onOpenChat,
   onClose
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <AnimatePresence>
       {isOpen && (

@@ -10,9 +10,9 @@ import { ELECTION_PHASES } from '../../constants';
 
 /**
  * Renders a mini-timeline strip highlighting the user's election journey.
- * @returns {JSX.Element} The rendered journey section.
+ * @returns {React.JSX.Element} The rendered journey section.
  */
-export const JourneySection: React.FC = (): JSX.Element => {
+export const JourneySection: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   return (

@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 
 /**
  * Renders the application's footer section.
- * @returns {JSX.Element} The rendered footer.
+ * @returns {React.JSX.Element} The rendered footer.
  */
-export const Footer: React.FC = (): JSX.Element => {
+export const Footer: React.FC = (): React.JSX.Element => {
   return (
     <footer className="bg-navy text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

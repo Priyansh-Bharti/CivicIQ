@@ -30,9 +30,9 @@ interface ChecklistItemProps {
 /**
  * Renders a stylized checkbox and description for a checklist item.
  * @param {ChecklistItemProps} props Component properties.
- * @returns {JSX.Element} The rendered checklist item.
+ * @returns {React.JSX.Element} The rendered checklist item.
  */
-export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }): JSX.Element => {
+export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }): React.JSX.Element => {
   return (
     <div 
       className={cn(

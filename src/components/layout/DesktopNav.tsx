@@ -26,7 +26,7 @@ interface DesktopNavProps {
 /**
  * Renders the horizontal navigation bar for large screens.
  * @param {DesktopNavProps} props Component properties.
- * @returns {JSX.Element} The rendered desktop navigation.
+ * @returns {React.JSX.Element} The rendered desktop navigation.
  */
 export const DesktopNav: React.FC<DesktopNavProps> = ({ 
   isAuthenticated, 
@@ -34,7 +34,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
   onSignIn, 
   onSignOut, 
   onOpenChat 
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <div className="hidden md:flex items-center gap-8">
       <LanguageSwitcher />

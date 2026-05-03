@@ -27,9 +27,9 @@ const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 /**
  * Renders a dropdown menu with user profile actions.
  * @param {ProfileMenuProps} props Component properties.
- * @returns {JSX.Element} The rendered profile menu.
+ * @returns {React.JSX.Element} The rendered profile menu.
  */
-export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): JSX.Element => {
+export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): React.JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

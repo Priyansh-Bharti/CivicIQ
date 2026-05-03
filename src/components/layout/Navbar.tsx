@@ -15,7 +15,7 @@ import { MobileNav } from './MobileNav';
 /**
  * Renders the application logo.
  */
-const Logo: React.FC = (): JSX.Element => (
+const Logo: React.FC = (): React.JSX.Element => (
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
     <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M9 7L15 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -27,9 +27,9 @@ const Logo: React.FC = (): JSX.Element => (
 
 /**
  * Main Navbar component with responsive behaviors.
- * @returns {JSX.Element} The rendered navbar.
+ * @returns {React.JSX.Element} The rendered navbar.
  */
-export const Navbar: React.FC = (): JSX.Element => {
+export const Navbar: React.FC = (): React.JSX.Element => {
   const { user, signInWithGoogle, signOut, isAuthenticated } = useAuth();
   const { setIsOpen } = useChatStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

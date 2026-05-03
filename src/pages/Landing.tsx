@@ -29,9 +29,9 @@ const containerVariants = {
 
 /**
  * Main Landing page component.
- * @returns {JSX.Element} The rendered landing page.
+ * @returns {React.JSX.Element} The rendered landing page.
  */
-export const Landing: React.FC = (): JSX.Element => {
+export const Landing: React.FC = (): React.JSX.Element => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />

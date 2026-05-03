@@ -20,9 +20,9 @@ interface TimelinePanelProps {
 /**
  * Renders a side-by-side view of the timeline nodes and the active phase's details.
  * @param {TimelinePanelProps} props Component properties.
- * @returns {JSX.Element} The rendered timeline panel.
+ * @returns {React.JSX.Element} The rendered timeline panel.
  */
-export const TimelinePanel: React.FC<TimelinePanelProps> = ({ onAskCivicIQ, initialPhaseId }): JSX.Element => {
+export const TimelinePanel: React.FC<TimelinePanelProps> = ({ onAskCivicIQ, initialPhaseId }): React.JSX.Element => {
   const { phases, activePhaseId, progress, setActivePhase } = useTimeline();
   
   useEffect(() => {

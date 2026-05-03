@@ -14,9 +14,9 @@ interface ProgressRingProps {
 /**
  * Renders an animated SVG progress ring.
  * @param {ProgressRingProps} props Component properties.
- * @returns {JSX.Element} The rendered progress ring.
+ * @returns {React.JSX.Element} The rendered progress ring.
  */
-export const ProgressRing: React.FC<ProgressRingProps> = ({ percentage }): JSX.Element => {
+export const ProgressRing: React.FC<ProgressRingProps> = ({ percentage, size = 120, strokeWidth = 8 }): React.JSX.Element => {
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;

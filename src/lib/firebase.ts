@@ -3,7 +3,7 @@
  * Configures the Firebase SDK and provides standardized auth utilities.
  */
 
-import { initializeApp, FirebaseApp } from 'firebase/app';
+import { initializeApp, FirebaseApp, FirebaseError } from 'firebase/app';
 import { 
   getAuth, 
   GoogleAuthProvider, 
@@ -14,8 +14,7 @@ import {
   onAuthStateChanged, 
   User,
   Auth,
-  UserCredential,
-  FirebaseError
+  UserCredential
 } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { logger } from '../utils/logger';

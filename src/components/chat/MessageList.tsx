@@ -22,14 +22,14 @@ interface MessageListProps {
 /**
  * Renders the list of messages or an empty state placeholder.
  * @param {MessageListProps} props Component properties.
- * @returns {JSX.Element} The rendered message list.
+ * @returns {React.JSX.Element} The rendered message list.
  */
 export const MessageList: React.FC<MessageListProps> = ({ 
   messages, 
   isLoading, 
   error, 
   scrollRef 
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <div 
       ref={scrollRef}

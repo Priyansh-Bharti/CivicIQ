@@ -40,9 +40,9 @@ const CivicIQLogo: React.FC = (): JSX.Element => (
 /**
  * Renders an individual chat message bubble.
  * @param {ChatMessageProps} props Component properties.
- * @returns {JSX.Element} The rendered message.
+ * @returns {React.JSX.Element} The rendered message.
  */
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): JSX.Element => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): React.JSX.Element => {
   const { user } = useAuth();
   const isAI = message.role === 'model';
 

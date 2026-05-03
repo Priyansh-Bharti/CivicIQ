@@ -26,9 +26,9 @@ const itemVariants = {
 
 /**
  * Renders the main hero area of the landing page.
- * @returns {JSX.Element} The rendered hero section.
+ * @returns {React.JSX.Element} The rendered hero section.
  */
-export const HeroSection: React.FC = (): JSX.Element => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onStartJourney }): React.JSX.Element => {
   const navigate = useNavigate();
 
   return (

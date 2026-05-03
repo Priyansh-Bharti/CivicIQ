@@ -27,11 +27,15 @@ const itemVariants = {
 /**
  * Renders a stylized feature card with hover animations.
  * @param {FeatureCardProps} props Component properties.
- * @returns {JSX.Element} The rendered feature card.
+ * @returns {React.JSX.Element} The rendered feature card.
  */
-export const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }): JSX.Element => (
+export const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon, delay = 0 }): React.JSX.Element => (
   <motion.div 
     variants={itemVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    custom={delay}
     className="bg-white p-10 rounded-lg border border-gray-100 shadow-sm hover:shadow-xl transition-all group"
   >
     <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">

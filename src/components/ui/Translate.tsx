@@ -14,9 +14,9 @@ interface TranslateProps {
 /**
  * Renders a translated string, handling potential HTML entities from the translation service.
  * @param {TranslateProps} props Component properties.
- * @returns {JSX.Element} The rendered translation.
+ * @returns {React.JSX.Element} The rendered translation fragment.
  */
-export const Translate: React.FC<TranslateProps> = ({ text }): JSX.Element => {
+export const Translate: React.FC<TranslateProps> = ({ text }): React.JSX.Element => {
   const translated = useTranslation(text);
   
   // Using dangerouslySetInnerHTML because Cloud Translate might return HTML entities (e.g. &#39;)
