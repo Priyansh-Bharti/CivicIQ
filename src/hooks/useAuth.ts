@@ -4,7 +4,7 @@
  */
 
 import { useEffect } from 'react';
-import { auth, db, onAuthStateChanged, signInWithGoogle as firebaseSignIn, signOut as firebaseSignOut, handleRedirectResult, User } from '../lib/firebase';
+import { auth, db, onAuthStateChanged, signInWithGoogle as firebaseSignIn, signOut as firebaseSignOut, User } from '../lib/firebase';
 import { useAuthStore } from '../store/authStore';
 import { useRateLimit } from './useSecurity';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
