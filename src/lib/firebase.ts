@@ -63,31 +63,15 @@ export const signInWithGoogle = async (): Promise<User | undefined> => {
     const result: UserCredential = await signInWithPopup(auth, googleProvider);
     return result.user;
   } catch (error) {
-    if (error instanceof FirebaseError) {
-      if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-        logger.info('Popup blocked, falling back to redirect...');
-        await signInWithRedirect(auth, googleProvider);
-        return undefined;
-      }
-    }
     logger.error('Error signing in with Google:', error);
+    if (error instanceof FirebaseError && error.code === 'auth/popup-blocked') {
+      throw new Error('Sign-in popup was blocked by your browser. Please enable popups and try again.');
+    }
     throw new Error('Authentication failed. Please try again.');
   }
 };
 
-/**
- * Handles the result of a Google sign-in redirect.
- * @returns {Promise<User | null | undefined>} The authenticated user or null.
- */
-export const handleRedirectResult = async (): Promise<User | null | undefined> => {
-  try {
-    const result = await getRedirectResult(auth);
-    return result?.user;
-  } catch (error) {
-    logger.error('Error handling redirect result:', error);
-    return null;
-  }
-};
+
 
 /**
  * Signs out the current user.

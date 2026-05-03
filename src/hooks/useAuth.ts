@@ -32,18 +32,6 @@ export const useAuth = (): AuthHookResult => {
   const { checkLimit } = useRateLimit();
 
   useEffect(() => {
-    /**
-     * Handles authentication redirect results on component mount.
-     */
-    const handleRedirect = async (): Promise<void> => {
-      try {
-        await handleRedirectResult();
-      } catch (error) {
-        logger.error('Redirect result error:', error);
-      }
-    };
-    void handleRedirect();
-
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
