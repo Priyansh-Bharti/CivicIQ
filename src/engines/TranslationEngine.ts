@@ -79,7 +79,7 @@ export class TranslationEngine {
   public static t(key: string, lang: LanguageCode): string {
     return (
       TranslationEngine.translations[key]?.[lang] ||
-      TranslationEngine.translations[key]?.['en'] ||
+      TranslationEngine.translations[key]?.en ||
       key
     );
   }
@@ -91,6 +91,6 @@ export class TranslationEngine {
    */
   public static getDirection(lang: LanguageCode): 'rtl' | 'ltr' {
     const language = SUPPORTED_LANGUAGES.find(l => l.code === lang);
-    return (language?.dir as 'rtl' | 'ltr') || 'ltr';
+    return language?.dir! || 'ltr';
   }
 }
