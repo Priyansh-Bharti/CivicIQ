@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { expect, afterEach, vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
 // Runs a cleanup after each test case (e.g. clearing jsdom)
@@ -12,7 +12,7 @@ afterEach(() => {
 class IntersectionObserverMock {
   root = null;
   rootMargin = '';
-  thresholds = [];
+  thresholds: number[] = [];
   disconnect = vi.fn();
   observe = vi.fn();
   takeRecords = vi.fn();
@@ -28,7 +28,7 @@ vi.mock('framer-motion', async () => {
     {},
     {
       get: (_target, key) => {
-        return ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => 
+        return ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) =>
           React.createElement(key as string, props, children);
       },
     }
@@ -37,7 +37,7 @@ vi.mock('framer-motion', async () => {
   return {
     ...actual,
     motion: customMotion,
-    AnimatePresence: ({ children }: { children?: React.ReactNode }) => 
+    AnimatePresence: ({ children }: { children?: React.ReactNode }) =>
       React.createElement(React.Fragment, null, children),
   };
 });
@@ -54,18 +54,54 @@ vi.mock('firebase/firestore', () => ({
   doc: vi.fn(),
   setDoc: vi.fn(),
   where: vi.fn(),
+  onSnapshot: vi.fn(() => () => {}),
 }));
 
-// Global mock for Firebase Auth
+// Global mock for Firebase App
+vi.mock('firebase/app', () => ({
+  initializeApp: vi.fn(() => ({})),
+  getApps: vi.fn(() => []),
+  getApp: vi.fn(() => ({})),
+}));
+
+// Global mock for Firebase Auth - auth object MUST have currentUser
+const mockAuth = { currentUser: null };
+
 vi.mock('firebase/auth', () => ({
-  getAuth: vi.fn(),
+  getAuth: vi.fn(() => mockAuth),
   signInWithPopup: vi.fn(),
   signOut: vi.fn(),
-  onAuthStateChanged: vi.fn((auth, cb) => {
+  onAuthStateChanged: vi.fn((_auth, cb) => {
     cb(null);
     return () => {};
   }),
-  GoogleAuthProvider: class {},
+  GoogleAuthProvider: class {
+    setCustomParameters = vi.fn();
+  },
+}));
+
+// Global mock for @google/generative-ai including required enums
+vi.mock('@google/generative-ai', () => ({
+  GoogleGenerativeAI: vi.fn(() => ({
+    getGenerativeModel: vi.fn(() => ({
+      startChat: vi.fn(() => ({
+        sendMessageStream: vi.fn().mockResolvedValue({
+          stream: (async function* () {
+            yield { text: () => 'Mocked response' };
+          })()
+        })
+      })),
+    }))
+  })),
+  HarmCategory: {
+    HARM_CATEGORY_HARASSMENT: 'HARM_CATEGORY_HARASSMENT',
+    HARM_CATEGORY_HATE_SPEECH: 'HARM_CATEGORY_HATE_SPEECH',
+    HARM_CATEGORY_SEXUALLY_EXPLICIT: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+    HARM_CATEGORY_DANGEROUS_CONTENT: 'HARM_CATEGORY_DANGEROUS_CONTENT'
+  },
+  HarmBlockThreshold: {
+    BLOCK_MEDIUM_AND_ABOVE: 'BLOCK_MEDIUM_AND_ABOVE'
+  }
 }));
 
 // Global mock for useTranslation

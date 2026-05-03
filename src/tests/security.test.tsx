@@ -64,8 +64,15 @@ vi.mock('@google/generative-ai', () => {
     GoogleGenerativeAI: vi.fn().mockImplementation(() => ({
       getGenerativeModel: mGetGenerativeModel
     })),
-    // Export these so we can access them in tests if needed, 
-    // but we can also just use vi.mocked on the imported module.
+    HarmCategory: {
+      HARM_CATEGORY_HARASSMENT: 'HARM_CATEGORY_HARASSMENT',
+      HARM_CATEGORY_HATE_SPEECH: 'HARM_CATEGORY_HATE_SPEECH',
+      HARM_CATEGORY_SEXUALLY_EXPLICIT: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+      HARM_CATEGORY_DANGEROUS_CONTENT: 'HARM_CATEGORY_DANGEROUS_CONTENT'
+    },
+    HarmBlockThreshold: {
+      BLOCK_ONLY_HIGH: 'BLOCK_ONLY_HIGH'
+    }
   };
 });
 

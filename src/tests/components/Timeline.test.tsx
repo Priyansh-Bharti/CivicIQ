@@ -1,13 +1,15 @@
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Timeline } from '../../../src/pages/Timeline';
-import { TimelinePanel } from '../../../src/components/timeline/TimelinePanel';
+import { Timeline } from '../../pages/Timeline';
+import { TimelinePanel } from '../../components/timeline/TimelinePanel';
 import { MemoryRouter } from 'react-router-dom';
 
-vi.mock('../../../src/components/layout/Navbar', () => ({ Navbar: () => <div data-testid="navbar" /> }));
-vi.mock('../../../src/components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
-vi.mock('../../../src/hooks/useTranslation', () => ({ useTranslation: (text: string) => text }));
-vi.mock('../../../src/lib/analytics', () => ({ trackEvent: vi.fn() }));
+vi.mock('../../components/layout/Navbar', () => ({ Navbar: () => <div data-testid="navbar" /> }));
+vi.mock('../../components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
+vi.mock('../../hooks/useTranslation', () => ({
+  useTranslation: () => ({ t: (key: string) => key, lang: 'en', changeLanguage: vi.fn(), dir: 'ltr' })
+}));
+vi.mock('../../lib/analytics', () => ({ trackEvent: vi.fn() }));
 
 describe('Timeline Component', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Logger } from '../../utils/logger';
+import { logger } from '../../utils/logger';
 
 describe('Logger Utility', () => {
   beforeEach(() => {
@@ -10,13 +10,13 @@ describe('Logger Utility', () => {
   });
 
   it('should mask emails in logs', () => {
-    Logger.info('Test', 'User email is test@example.com');
-    expect(console.info).toHaveBeenCalledWith(expect.stringContaining('[Test]'), 'User email is [REDACTED_EMAIL]');
+    logger.info('Test', 'User email is test@example.com');
+    expect(console.log).toHaveBeenCalledWith('[INFO] Test', 'User email is ***@***.***');
   });
 
   it('should format errors correctly', () => {
     const err = new Error('Test Error');
-    Logger.error('Test', 'Something failed', err);
+    logger.error('Test', 'Something failed', err);
     expect(console.error).toHaveBeenCalled();
   });
 });

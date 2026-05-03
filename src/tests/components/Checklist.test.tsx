@@ -1,17 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ChecklistItem as ChecklistItemComponent } from '../../../src/components/checklist/ChecklistItem';
-import { ProgressRing } from '../../../src/components/checklist/ProgressRing';
-import { Checklist } from '../../../src/pages/Checklist';
-import { CIVIC_CHECKLIST } from '../../../src/lib/constants';
-import { ChecklistItem } from '../../../src/types/election';
+import { ChecklistItem as ChecklistItemComponent } from '../../components/checklist/ChecklistItem';
+import { ProgressRing } from '../../components/checklist/ProgressRing';
+import { Checklist } from '../../pages/Checklist';
+import { CIVIC_CHECKLIST } from '../../lib/constants';
+import { ChecklistItem } from '../../types/election';
 import { MemoryRouter } from 'react-router-dom';
 
 // ─── Mocks ───────────────────────────────────────────────────────────────────
-vi.mock('../../../src/components/layout/Navbar', () => ({ Navbar: () => <div data-testid="navbar" /> }));
-vi.mock('../../../src/components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
-vi.mock('../../../src/lib/analytics', () => ({ trackEvent: vi.fn() }));
-vi.mock('../../../src/components/ui/Translate', () => ({
+vi.mock('../../components/layout/Navbar', () => ({ Navbar: () => <div data-testid="navbar" /> }));
+vi.mock('../../components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
+vi.mock('../../lib/analytics', () => ({ trackEvent: vi.fn() }));
+vi.mock('../../components/ui/Translate', () => ({
   Translate: ({ text }: { text: string }) => <span>{text}</span>,
 }));
 
@@ -19,7 +19,7 @@ vi.mock('../../../src/components/ui/Translate', () => ({
 const mockToggleItem = vi.fn();
 let mockItems: ChecklistItem[] = [];
 
-vi.mock('../../../src/hooks/useChecklist', () => ({
+vi.mock('../../hooks/useChecklist', () => ({
   useChecklist: () => {
     const completed = mockItems.filter(i => i.completed).length;
     const pct = mockItems.length === 0 ? 0 : Math.round((completed / mockItems.length) * 100);

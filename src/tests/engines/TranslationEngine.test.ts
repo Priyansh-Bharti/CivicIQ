@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TranslationEngine } from '../../../src/engines/TranslationEngine';
+import { TranslationEngine } from '../../engines/TranslationEngine';
 
 describe('TranslationEngine', () => {
   it('should translate keys correctly for English', () => {

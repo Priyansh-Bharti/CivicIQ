@@ -17,8 +17,10 @@ export class TimelineEngine {
     progress: Record<string, boolean>
   ): number {
     if (!phases.length) return 0;
-    const completedCount = Object.values(progress).filter(Boolean).length;
-    return Math.round((completedCount / phases.length) * 100);
+    const validProgressKeys = Object.keys(progress).filter(key => 
+      progress[key] && phases.some(p => p.id === key)
+    );
+    return Math.round((validProgressKeys.length / phases.length) * 100);
   }
 
   /**

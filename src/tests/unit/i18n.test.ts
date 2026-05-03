@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { TranslationEngine } from '../../../src/engines/TranslationEngine';
-import { SUPPORTED_LANGUAGES } from '../../../src/constants';
+import { TranslationEngine } from '../../engines/TranslationEngine';
+import { SUPPORTED_LANGUAGES } from '../../constants';
 
 describe('Global i18n Coverage', () => {
   SUPPORTED_LANGUAGES.forEach(lang => {

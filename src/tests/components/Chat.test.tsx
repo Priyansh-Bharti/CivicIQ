@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ChatPanel } from '../../../src/components/chat/ChatPanel';
-import { useChatStore } from '../../../src/store/chatStore';
+import { ChatPanel } from '../../components/chat/ChatPanel';
+import { useChatStore } from '../../store/chatStore';
 
 // ─── Browser stub ─────────────────────────────────────────────────────────────
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
@@ -12,7 +12,7 @@ const mockClearChat = vi.fn(() => {
   useChatStore.getState().clearMessages();
 });
 
-vi.mock('../../../src/hooks/useGemini', () => ({
+vi.mock('../../hooks/useGemini', () => ({
   useGemini: () => ({
     messages: useChatStore.getState().messages,
     sendMessage: mockSendMessage,
@@ -22,7 +22,7 @@ vi.mock('../../../src/hooks/useGemini', () => ({
   }),
 }));
 
-vi.mock('../../../src/hooks/useTranslation', () => ({
+vi.mock('../../hooks/useTranslation', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
     lang: 'en',

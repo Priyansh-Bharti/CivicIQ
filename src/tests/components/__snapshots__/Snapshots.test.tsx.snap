@@ -1,0 +1,310 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Component Snapshots > Footer matches snapshot 1`] = `
+<DocumentFragment>
+  <footer
+    class="bg-navy text-white py-16"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    >
+      <div
+        class="grid md:grid-cols-2 gap-12 items-center"
+      >
+        <div>
+          <div
+            class="flex items-center gap-3 mb-4"
+          >
+            <div
+              class="w-8 h-8 bg-amber rounded-sm flex items-center justify-center font-bold text-navy"
+            >
+              C
+            </div>
+            <span
+              class="text-2xl font-hero font-bold"
+            >
+              CivicIQ
+            </span>
+          </div>
+          <p
+            class="text-white/60 max-w-md font-body"
+          >
+            CivicIQ is an educational platform dedicated to making the democratic process accessible to every citizen.
+          </p>
+        </div>
+        <div
+          class="md:text-right"
+        >
+          <div
+            class="flex md:justify-end gap-8 mb-8"
+          >
+            <a
+              class="text-white/80 hover:text-white"
+              data-discover="true"
+              href="/timeline"
+            >
+              Timeline
+            </a>
+            <a
+              class="text-white/80 hover:text-white"
+              data-discover="true"
+              href="/checklist"
+            >
+              Checklist
+            </a>
+            <a
+              class="text-white/80 hover:text-white"
+              data-discover="true"
+              href="/about"
+            >
+              About
+            </a>
+          </div>
+          <p
+            class="text-sm text-white/40"
+          >
+            Built for the Hack2Skill PromptWars Competition
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Component Snapshots > LanguageSwitcher matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="relative"
+  >
+    <button
+      aria-label="Select language"
+      class="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-globe w-5 h-5"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+        />
+        <path
+          d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+        />
+        <path
+          d="M2 12h20"
+        />
+      </svg>
+      <span
+        aria-live="polite"
+        class="hidden sm:inline font-medium"
+      >
+        🇬🇧
+      </span>
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Component Snapshots > Navbar matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    animate="[object Object]"
+    aria-label="Main Navigation"
+    class="sticky top-0 z-50 bg-navy shadow-md"
+    initial="[object Object]"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    >
+      <div
+        class="flex justify-between h-16 items-center"
+      >
+        <a
+          class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-amber rounded-md px-2"
+          data-discover="true"
+          href="/"
+        >
+          <svg
+            class="text-white"
+            fill="none"
+            height="32"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+            <path
+              d="M9 7L15 7"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+            <path
+              d="M9 11L15 11"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+            <path
+              d="M12 17V17.01"
+              stroke="#F59E0B"
+              stroke-linecap="round"
+              stroke-width="3"
+            />
+            <path
+              d="M12 14C12.5523 14 13 13.5523 13 13C13 12.4477 12.5523 12 12 12C11.4477 12 11 12.4477 11 13C11 13.5523 11.4477 14 12 14Z"
+              fill="#F59E0B"
+            />
+          </svg>
+          <span
+            class="text-white font-hero text-xl font-bold tracking-tight"
+          >
+            CivicIQ
+          </span>
+        </a>
+        <div
+          class="hidden md:flex items-center gap-8"
+        >
+          <div
+            class="relative"
+          >
+            <button
+              aria-label="Select language"
+              class="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-globe w-5 h-5"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <path
+                  d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+                />
+                <path
+                  d="M2 12h20"
+                />
+              </svg>
+              <span
+                aria-live="polite"
+                class="hidden sm:inline font-medium"
+              >
+                🇬🇧
+              </span>
+            </button>
+          </div>
+          <button
+            class="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
+          >
+            nav.timeline
+          </button>
+          <button
+            class="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
+          >
+            nav.checklist
+          </button>
+          <a
+            class="text-white/80 hover:text-white transition-colors font-medium"
+            data-discover="true"
+            href="/about"
+          >
+            About
+          </a>
+          <button
+            class="flex items-center gap-2 bg-amber text-navy px-4 py-2 rounded-lg font-bold hover:scale-105 transition-transform"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-message-square w-4 h-4"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
+              />
+            </svg>
+            Ask CivicIQ
+          </button>
+          <button
+            class="border border-white text-white hover:bg-white/10 px-5 py-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-amber"
+          >
+            Sign in with Google
+          </button>
+        </div>
+        <div
+          class="md:hidden flex items-center"
+        >
+          <button
+            aria-expanded="false"
+            aria-label="Toggle navigation menu"
+            class="text-white p-2 focus:outline-none focus:ring-2 focus:ring-amber rounded-md"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-menu"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 5h16"
+              />
+              <path
+                d="M4 12h16"
+              />
+              <path
+                d="M4 19h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

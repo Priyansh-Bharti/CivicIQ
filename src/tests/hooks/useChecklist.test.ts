@@ -1,15 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useChecklist } from '../../../src/hooks/useChecklist';
-import { useChecklistStore } from '../../../src/store/checklistStore';
-import { CIVIC_CHECKLIST } from '../../../src/lib/constants';
+import { useChecklist } from '../../hooks/useChecklist';
+import { useChecklistStore } from '../../store/checklistStore';
+import { CIVIC_CHECKLIST } from '../../lib/constants';
 
 // Mock dependencies
-vi.mock('../../../src/hooks/useAuth', () => ({
+vi.mock('../../hooks/useAuth', () => ({
   useAuth: vi.fn(() => ({ user: null }))
 }));
 
-vi.mock('../../../src/lib/analytics', () => ({
+vi.mock('../../lib/analytics', () => ({
   trackEvent: vi.fn()
 }));
 

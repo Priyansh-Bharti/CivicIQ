@@ -38,7 +38,7 @@ export const ChatPanel: React.FC = (): React.JSX.Element => {
    */
   useEffect(() => {
     if (isOpen && closeBtnRef.current) {
-      setTimeout(() => { closeBtnRef.current.focus(); }, 100);
+      setTimeout(() => { closeBtnRef.current?.focus(); }, 100);
     }
   }, [isOpen]);
 

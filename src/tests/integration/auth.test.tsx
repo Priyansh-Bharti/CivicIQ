@@ -1,10 +1,10 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useAuth } from '../../../src/hooks/useAuth';
-import { Navbar } from '../../../src/components/layout/Navbar';
+import { useAuth } from '../../hooks/useAuth';
+import { Navbar } from '../../components/layout/Navbar';
 import { MemoryRouter } from 'react-router-dom';
 
-vi.mock('../../../src/lib/firebase', () => ({
+vi.mock('../../lib/firebase', () => ({
   auth: { currentUser: null },
   db: {},
   app: {},
@@ -35,12 +35,12 @@ vi.mock('../../../src/lib/firebase', () => ({
   where: vi.fn(),
 }))
 
-vi.mock('../../../src/hooks/useTranslation', () => ({
-  useTranslation: (text: string) => text
+vi.mock('../../hooks/useTranslation', () => ({
+  useTranslation: () => ({ t: (key: string) => key, lang: 'en', changeLanguage: vi.fn(), dir: 'ltr' })
 }));
 
 // Mock the hook to control auth state
-vi.mock('../../../src/hooks/useAuth', () => ({
+vi.mock('../../hooks/useAuth', () => ({
   useAuth: vi.fn()
 }));
 

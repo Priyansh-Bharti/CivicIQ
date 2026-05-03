@@ -4,16 +4,16 @@ import { MemoryRouter } from 'react-router-dom';
 import { axe, toHaveNoViolations } from 'jest-axe';
 
 expect.extend(toHaveNoViolations);
-import { Landing } from '../../../src/pages/Landing';
-import { Timeline } from '../../../src/pages/Timeline';
-import { Checklist } from '../../../src/pages/Checklist';
-import { ProgressRing } from '../../../src/components/checklist/ProgressRing';
-import { useChecklistStore } from '../../../src/store/checklistStore';
-import { useChatStore } from '../../../src/store/chatStore';
-import { CIVIC_CHECKLIST } from '../../../src/lib/constants';
+import { Landing } from '../../pages/Landing';
+import { Timeline } from '../../pages/Timeline';
+import { Checklist } from '../../pages/Checklist';
+import { ProgressRing } from '../../components/checklist/ProgressRing';
+import { useChecklistStore } from '../../store/checklistStore';
+import { useChatStore } from '../../store/chatStore';
+import { CIVIC_CHECKLIST } from '../../lib/constants';
 
 // ─── Module mocks ───────────────────────────────────────────────────────────
-vi.mock('../../../src/lib/firebase', () => ({
+vi.mock('../../lib/firebase', () => ({
   auth: { currentUser: null },
   db: {},
   app: {},
@@ -44,11 +44,13 @@ vi.mock('../../../src/lib/firebase', () => ({
   where: vi.fn(),
 }))
 
-vi.mock('../../../src/components/layout/Navbar', () => ({ Navbar: () => <nav data-testid="navbar" /> }));
-vi.mock('../../../src/components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
-vi.mock('../../../src/lib/analytics', () => ({ trackEvent: vi.fn() }));
-vi.mock('../../../src/hooks/useTranslation', () => ({ useTranslation: (t: string) => t }));
-vi.mock('../../../src/components/ui/Translate', () => ({ Translate: ({ text }: { text: string }) => <span>{text}</span> }));
+vi.mock('../../components/layout/Navbar', () => ({ Navbar: () => <nav data-testid="navbar" /> }));
+vi.mock('../../components/chat/ChatPanel', () => ({ ChatPanel: () => <div data-testid="chatpanel" /> }));
+vi.mock('../../lib/analytics', () => ({ trackEvent: vi.fn() }));
+vi.mock('../../hooks/useTranslation', () => ({
+  useTranslation: () => ({ t: (key: string) => key, lang: 'en', changeLanguage: vi.fn(), dir: 'ltr' })
+}));
+vi.mock('../../components/ui/Translate', () => ({ Translate: ({ text }: { text: string }) => <span>{text}</span> }));
 
 // ─── Browser API stubs ───────────────────────────────────────────────────────
 window.HTMLElement.prototype.scrollIntoView = vi.fn();

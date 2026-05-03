@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { SecurityEngine, BucketState } from '../../../src/engines/SecurityEngine';
-import { SECURITY_LIMITS } from '../../../src/constants';
+import { SecurityEngine, BucketState } from '../../engines/SecurityEngine';
+import { SECURITY_LIMITS } from '../../constants';
 
 describe('SecurityEngine', () => {
   const now = 1000000;

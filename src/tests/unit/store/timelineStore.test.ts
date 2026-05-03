@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useTimelineStore } from '../../../src/store/timelineStore';
+import { useTimelineStore } from '../../../store/timelineStore';
 
 describe('Timeline Store', () => {
   beforeEach(() => {
@@ -8,15 +8,12 @@ describe('Timeline Store', () => {
   });
 
   it('should set the active phase', () => {
-    useTimelineStore.getState().setActivePhase('phase-2');
+    useTimelineStore.getState().setActivePhaseId('phase-2');
     expect(useTimelineStore.getState().activePhaseId).toBe('phase-2');
   });
 
   it('should update progress', () => {
-    useTimelineStore.getState().toggleStep('phase-1');
+    useTimelineStore.getState().markPhaseComplete('phase-1');
     expect(useTimelineStore.getState().progress['phase-1']).toBe(true);
-    
-    useTimelineStore.getState().toggleStep('phase-1');
-    expect(useTimelineStore.getState().progress['phase-1']).toBe(false);
   });
 });

@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
-import { Landing } from '../../../src/pages/Landing';
-import { useAuth } from '../../../src/hooks/useAuth';
+import { Landing } from '../../pages/Landing';
+import { useAuth } from '../../hooks/useAuth';
 
 // Mock useAuth
-vi.mock('../../../src/hooks/useAuth', () => ({
+vi.mock('../../hooks/useAuth', () => ({
   useAuth: vi.fn()
 }));
 

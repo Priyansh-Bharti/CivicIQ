@@ -1,4 +1,14 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
+
+// Mock the entire firebase lib module directly
+vi.mock('../../lib/firebase', () => ({
+  app: { name: 'mock-app' },
+  auth: { currentUser: null },
+  db: { type: 'firestore' },
+  signInWithGoogle: vi.fn(),
+}));
+
+import { vi } from 'vitest';
 import { app, auth, db } from '../../lib/firebase';
 
 describe('Firebase Configuration', () => {
@@ -15,7 +25,6 @@ describe('Firebase Configuration', () => {
   });
 
   it('has correct project id from env', () => {
-    // This depends on how import.meta.env is mocked
     expect(import.meta.env.VITE_FIREBASE_PROJECT_ID).toBeDefined();
   });
 

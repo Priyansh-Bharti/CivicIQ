@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useChecklistStore } from '../../store/checklistStore';
+import { useChecklistStore } from '../../../store/checklistStore';
 
 describe('checklistStore', () => {
   beforeEach(() => {
@@ -7,8 +7,8 @@ describe('checklistStore', () => {
   });
 
   it('should toggle an item', () => {
-    useChecklistStore.setState({ items: [{ id: '1', label: 'Item 1', checked: false, required: true }] });
+    useChecklistStore.setState({ items: [{ id: '1', title: 'Item 1', description: 'test', completed: false, required: true }] });
     useChecklistStore.getState().toggleItem('1');
-    expect(useChecklistStore.getState().items[0].checked).toBe(true);
+    expect(useChecklistStore.getState().items[0].completed).toBe(true);
   });
 });
