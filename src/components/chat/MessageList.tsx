@@ -63,7 +63,7 @@ export const MessageList: React.FC<MessageListProps> = ({
       )}
       
       {isLoading && messages[messages.length - 1]?.content === '' && (
-        <MessageComponent message={{ id: 'loading', role: 'model', content: '...', timestamp: Date.now() }} />
+        <MessageComponent message={{ id: 'loading', role: 'model', content: '...', timestamp: 0 }} />
       )}
 
       {error && (
