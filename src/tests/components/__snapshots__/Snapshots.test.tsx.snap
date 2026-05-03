@@ -120,10 +120,8 @@ exports[`Component Snapshots > LanguageSwitcher matches snapshot 1`] = `
 exports[`Component Snapshots > Navbar matches snapshot 1`] = `
 <DocumentFragment>
   <nav
-    animate="[object Object]"
     aria-label="Main Navigation"
     class="sticky top-0 z-50 bg-navy shadow-md"
-    initial="[object Object]"
   >
     <div
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
