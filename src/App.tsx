@@ -27,27 +27,29 @@ const NotFound: React.FC = (): React.JSX.Element => (
  */
 function App(): React.JSX.Element {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route 
-        path="/timeline" 
-        element={
-          <ProtectedRoute>
-            <Timeline />
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/checklist" 
-        element={
-          <ProtectedRoute>
-            <Checklist />
-          </ProtectedRoute>
-        } 
-      />
-      <Route path="/about" element={<About />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <main id="main-content">
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route 
+          path="/timeline" 
+          element={
+            <ProtectedRoute>
+              <Timeline />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/checklist" 
+          element={
+            <ProtectedRoute>
+              <Checklist />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
   );
 }
 

@@ -13,7 +13,13 @@ CivicIQ is committed to ensuring digital accessibility for all citizens, regardl
   - Custom keyboard shortcuts (Arrow Keys) are implemented for the Election Timeline.
 - **Focus Management**: 
   - Focus is automatically managed when opening/closing the Chat Panel.
-  - A "Skip to Content" link is provided at the top of every page.
+  - A **Skip to Main Content** link is available as the first interactive element. It uses a CSS-driven transform animation (`translateY`) to remain hidden until focused, ensuring it doesn't clutter the visual layout while remaining fully accessible to keyboard users.
+  - The skip link points to `id="main-content"`, which wraps all primary application routes in `App.tsx`.
+- **Dynamic Content**:
+  - `aria-live="polite"` is used for AI chat responses, phase transitions, and language changes to ensure screen readers announce updates without interrupting the user.
+- **Imagery & Iconography**:
+  - All decorative icons (Lucide icons) are marked with `aria-hidden="true"` to reduce screen reader noise.
+  - Meaningful images, such as user profile photos, use descriptive `alt` text containing the user's name or purpose.
 - **Visual Design**:
   - Color contrast ratios exceed WCAG AA requirements (minimum 4.5:1 for text).
   - Support for `prefers-reduced-motion` is implemented for all animations.

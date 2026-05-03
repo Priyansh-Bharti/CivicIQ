@@ -48,8 +48,8 @@ export const LanguageSwitcher: React.FC = (): React.JSX.Element => {
         aria-label="Select language"
         className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
       >
-        <Globe className="w-5 h-5" />
-        <span className="hidden sm:inline font-medium">{current.flag}</span>
+        <Globe className="w-5 h-5" aria-hidden="true" />
+        <span className="hidden sm:inline font-medium" aria-live="polite">{current.flag}</span>
       </button>
 
       <AnimatePresence>

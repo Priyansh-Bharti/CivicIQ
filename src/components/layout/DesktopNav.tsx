@@ -45,7 +45,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
         onClick={onOpenChat}
         className="flex items-center gap-2 bg-amber text-navy px-4 py-2 rounded-lg font-bold hover:scale-105 transition-transform"
       >
-        <MessageSquare className="w-4 h-4" />
+        <MessageSquare className="w-4 h-4" aria-hidden="true" />
         Ask CivicIQ
       </button>
       

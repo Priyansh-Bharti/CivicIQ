@@ -82,7 +82,7 @@ export const TimelineNode: React.FC<TimelineNodeProps> = ({
         )}
       >
         {isCompleted ? (
-          <Check className="w-6 h-6" />
+          <Check className="w-6 h-6" aria-hidden="true" />
         ) : isActive ? (
           <>
             <motion.div

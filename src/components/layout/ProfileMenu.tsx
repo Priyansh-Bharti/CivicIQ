@@ -40,7 +40,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): Re
         aria-label="User menu"
         className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber"
       >
-        <img src={user?.photoURL || undefined} alt="" className="w-8 h-8 rounded-full border border-white/20" />
+        <img src={user?.photoURL || undefined} alt={user?.displayName || "User profile"} className="w-8 h-8 rounded-full border border-white/20" />
         <span className="font-medium">{user?.displayName?.split(' ')[0]}</span>
         <ChevronDown aria-hidden="true" className={cn("w-4 h-4 transition-transform", isOpen && "rotate-180")} />
       </button>
@@ -54,13 +54,13 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ user, onSignOut }): Re
             className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden"
           >
             <button className="w-full flex items-center gap-3 px-4 py-3 text-on-surface hover:bg-gray-50 transition-colors">
-              <UserIcon className="w-4 h-4" /> Profile
+              <UserIcon className="w-4 h-4" aria-hidden="true" /> Profile
             </button>
             <button 
               onClick={onSignOut}
               className="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-error/5 transition-colors border-t border-gray-100"
             >
-              <LogOut className="w-4 h-4" /> Sign out
+              <LogOut className="w-4 h-4" aria-hidden="true" /> Sign out
             </button>
           </motion.div>
         )}
