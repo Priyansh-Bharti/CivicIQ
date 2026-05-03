@@ -32,11 +32,18 @@ export const useAuth = (): AuthHookResult => {
   const { checkLimit } = useRateLimit();
 
   useEffect(() => {
+    /**
+     * Set up the Firebase Auth state listener.
+     * This listener synchronizes the local Zustand store with the Firebase User.
+     * It also ensures a user document exists in Firestore for progress persistence.
+     */
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        // Update global auth state
         setUser(firebaseUser);
         
         try {
+          // Initialize user profile in Firestore if it's their first time signing in
           const userRef = doc(db, 'users', firebaseUser.uid);
           const userSnap = await getDoc(userRef);
 
@@ -46,18 +53,22 @@ export const useAuth = (): AuthHookResult => {
               email: firebaseUser.email,
               photoURL: firebaseUser.photoURL,
               createdAt: serverTimestamp(),
-              progress: {},
+              progress: {}, // Stores election phase checklist completion
             });
           }
         } catch (error) {
-          logger.error('Firestore sync error:', error);
+          logger.error('Firestore user profile sync error:', error);
         }
       } else {
+        // User is signed out, clear local state
         clearUser();
       }
+      
+      // Stop the global loading spinner once auth state is determined
       setLoading(false);
     });
 
+    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [setUser, clearUser, setLoading]);
 

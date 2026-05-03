@@ -3,7 +3,7 @@
  * Responsible for communicating with Gemini 2.0 Flash and handling chat persistence.
  */
 
-import { GoogleGenerativeAI, Content, GenerativeModel } from '@google/generative-ai';
+import { GoogleGenerativeAI, Content, GenerativeModel, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { ChatMessage } from '../types/election';
 import { db } from './firebase';
 import { collection, addDoc, query, orderBy, getDocs, deleteDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
@@ -13,13 +13,25 @@ import { logger } from '../utils/logger';
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 /**
- * Retrieves the pre-configured Gemini model with system instructions.
- * @returns {GenerativeModel} The configured generative model.
+ * Configure standard safety settings for the AI.
+ */
+const SAFETY_SETTINGS = [
+  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+];
+
+/**
+ * Retrieves the pre-configured Gemini model.
+ * Injects non-partisan system instructions and safety filters.
+ * @returns {GenerativeModel} The configured generative model instance.
  */
 const getModel = (): GenerativeModel => {
   return genAI.getGenerativeModel({ 
     model: AI_CONFIG.MODEL_NAME, 
-    systemInstruction: SYSTEM_PROMPT 
+    systemInstruction: SYSTEM_PROMPT,
+    safetySettings: SAFETY_SETTINGS,
   });
 };
 

@@ -50,6 +50,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): React.JSX.
     <motion.div
       initial={{ opacity: 0, x: isAI ? -20 : 20 }}
       animate={{ opacity: 1, x: 0 }}
+      role="listitem"
       className={cn(
         "flex gap-3 mb-6",
         !isAI && "flex-row-reverse"
@@ -60,7 +61,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): React.JSX.
       ) : (
         <img 
           src={user?.photoURL || undefined} 
-          alt="" 
+          alt={user?.displayName || 'User'} 
           className="w-8 h-8 rounded-full border border-gray-200 shrink-0" 
         />
       )}
@@ -69,14 +70,18 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): React.JSX.
         "max-w-[80%] flex flex-col",
         !isAI && "items-end"
       )}>
-        <div className={cn(
-          "px-4 py-3 rounded-2xl text-sm leading-relaxed",
-          isAI 
-            ? "bg-gray-100 text-on-surface rounded-tl-none" 
-            : "bg-indigo text-white rounded-tr-none shadow-md"
-        )}>
+        <div 
+          role="log"
+          aria-label={isAI ? "CivicIQ message" : "Your message"}
+          className={cn(
+            "px-4 py-3 rounded-2xl text-sm leading-relaxed",
+            isAI 
+              ? "bg-gray-100 text-on-surface rounded-tl-none" 
+              : "bg-indigo text-white rounded-tr-none shadow-md"
+          )}
+        >
           {message.content === '...' ? (
-            <div className="flex gap-1 py-1">
+            <div className="flex gap-1 py-1" aria-label="Thinking...">
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]" />
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]" />

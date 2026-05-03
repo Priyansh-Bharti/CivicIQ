@@ -48,7 +48,8 @@ export const useGemini = (): GeminiHookResult => {
   useEffect(() => {
     if (user) {
       /**
-       * Loads the user's chat history from Firestore on initialization.
+       * Initialization: Load chat history.
+       * Synchronizes the local session with persistent Firestore storage.
        */
       const fetchHistory = async (): Promise<void> => {
         try {
@@ -63,10 +64,16 @@ export const useGemini = (): GeminiHookResult => {
   }, [user, setMessages]);
 
   /**
-   * Sends a user message to the AI and processes the streamed response.
-   * @param {string} content The message text to send.
+   * AI Orchestration: sendMessage
+   * 
+   * Handles the complete lifecycle of an AI interaction:
+   * 1. Rate limiting & Safety validation
+   * 2. Message state management (Local & Firestore)
+   * 3. Streaming response processing
+   * 4. Error handling & Tracking
    */
   const sendMessage = async (content: string): Promise<void> => {
+    // 1. Security Check: Enforce AI-specific and General rate limits
     const aiLimit = checkLimit('AI');
     if (!aiLimit.allowed) {
       setError(`You've reached your AI message limit. Please try again in 15 minutes.`);
@@ -79,12 +86,14 @@ export const useGemini = (): GeminiHookResult => {
       return;
     }
 
+    // 2. Safety Check: Verify prompt against blocked terms
     const validation = validatePrompt(content);
     if (!validation.safe) {
       setError(validation.reason || 'Invalid prompt');
       return;
     }
 
+    // 3. Analytics: Track the interaction
     trackEvent('question_asked', {
       phase_id: activeContext || 'none',
       question_length: content.length,
@@ -93,6 +102,7 @@ export const useGemini = (): GeminiHookResult => {
     setError(null);
     setIsLoading(true);
 
+    // 4. Local State: Immediate feedback with the user's message
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
@@ -104,6 +114,7 @@ export const useGemini = (): GeminiHookResult => {
     addMessage(userMessage);
     if (user) void saveMessageToFirestore(user.uid, userMessage);
 
+    // 5. AI State: Create a placeholder for the incoming stream
     const aiMessageId = (Date.now() + 1).toString();
     const initialAiMessage: ChatMessage = {
       id: aiMessageId,
@@ -115,21 +126,24 @@ export const useGemini = (): GeminiHookResult => {
 
     try {
       let fullResponse = '';
+      // We pass the history (excluding the current user/empty-ai messages) to give the AI context
       const currentMessages = useChatStore.getState().messages.slice(0, -2);
       const stream = streamCivicAnswer(content, currentMessages, activeContext || undefined);
       
+      // 6. Streaming: Progressively update the UI as chunks arrive
       for await (const chunk of stream) {
         fullResponse += chunk;
         updateLastMessage(fullResponse);
       }
 
+      // 7. Persistence: Save the final complete AI response
       if (user) {
         const finalAiMessage: ChatMessage = { ...initialAiMessage, content: fullResponse };
         void saveMessageToFirestore(user.uid, finalAiMessage);
       }
     } catch (err) {
       setError('Sorry, I encountered an error. Please try again.');
-      logger.error('Stream error:', err);
+      logger.error('Gemini stream error:', err);
     } finally {
       setIsLoading(false);
     }
