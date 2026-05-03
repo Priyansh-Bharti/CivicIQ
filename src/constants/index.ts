@@ -183,20 +183,32 @@ export type LanguageDir = 'ltr' | 'rtl';
  * Used to filter out partisan or inappropriate queries.
  */
 export const BLOCKED_TERMS = [
+  // Partisan / political figures
   'republican', 'democrat', 'bjp', 'congress', 'tory', 'labour',
   'trump', 'biden', 'modi', 'rahul', 'harris', 'obama',
-  'vote for', 'endorse', 'fuck', 'shit', 'asshole',
-  'abortion', 'climate change', 'weather', 'cake', 'bake',
-  'ignore previous', 'system prompt'
+  // Partisan language
+  'vote for', 'endorse', 'support candidate',
+  // Profanity
+  'fuck', 'shit', 'asshole', 'bastard', 'cunt', 'bitch',
+  // Off-topic
+  'abortion', 'climate change', 'weather', 'cake', 'bake', 'recipe',
+  // Prompt injection
+  'ignore previous', 'ignore prior', 'system prompt', 'ignore all',
+  'disregard instructions', 'new instructions', 'forget previous',
+  'act as', 'pretend to be', 'you are now', 'jailbreak', 'dan mode',
+  'override safety', 'bypass filter',
 ];
 
 /**
  * Security limits for client-side rate limiting.
  */
 export const SECURITY_LIMITS = {
+  /** General requests: 100 per 15 minutes. */
   GENERAL: { MAX: 100, WINDOW: 15 * 60 * 1000 },
-  AUTH: { MAX: 20, WINDOW: 15 * 60 * 1000 },
-  AI: { MAX: 30, WINDOW: 15 * 60 * 1000 }
+  /** Auth requests: 10 per 15 minutes (hardened from 20). */
+  AUTH:    { MAX: 10,  WINDOW: 15 * 60 * 1000 },
+  /** AI requests: 20 per 15 minutes (hardened from 30). */
+  AI:      { MAX: 20,  WINDOW: 15 * 60 * 1000 }
 };
 
 /**

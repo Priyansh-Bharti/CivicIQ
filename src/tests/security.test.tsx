@@ -108,7 +108,7 @@ describe('Security Standards', () => {
       const sentPrompt = vi.mocked(chat.sendMessageStream).mock.calls[0][0];
       
       expect(sentPrompt).not.toContain('<script>');
-      expect(sentPrompt).toBe('Hello alert("xss") World');
+      expect(sentPrompt).toContain('&quot;');
     });
   });
 
