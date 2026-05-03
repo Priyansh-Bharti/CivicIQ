@@ -1,0 +1,410 @@
+﻿
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\App.tsx
+  11:7   error  Unsafe assignment of an error typed value         @typescript-eslint/no-unsafe-assignment
+  11:17  error  Unsafe call of a type that could not be resolved  @typescript-eslint/no-unsafe-call
+  12:7   error  Unsafe assignment of an error typed value         @typescript-eslint/no-unsafe-assignment
+  12:18  error  Unsafe call of a type that could not be resolved  @typescript-eslint/no-unsafe-call
+  13:7   error  Unsafe assignment of an error typed value         @typescript-eslint/no-unsafe-assignment
+  13:19  error  Unsafe call of a type that could not be resolved  @typescript-eslint/no-unsafe-call
+  14:7   error  Unsafe assignment of an error typed value         @typescript-eslint/no-unsafe-assignment
+  14:15  error  Unsafe call of a type that could not be resolved  @typescript-eslint/no-unsafe-call
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\chat\ChatInput.tsx
+  39:75  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+  55:45  error  Invalid type "number" of template literal expression                                                                @typescript-eslint/restrict-template-expressions
+  65:34  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  69:22  error  Unsafe assignment of an error typed value                                                                           @typescript-eslint/no-unsafe-assignment
+  69:38  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+  78:46  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+  80:47  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+  92:90  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+  93:95  error  Unsafe member access .PROMPT_LIMIT on a type that cannot be resolved                                                @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\chat\ChatMessage.tsx
+  65:31  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\chat\ChatPanel.tsx
+   47:32  error    void is not valid as a constituent in a union type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-invalid-void-type
+   69:26  error    Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-confusing-void-expression
+   71:6   warning  React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react-hooks/exhaustive-deps
+   85:31  error    Promise-returning function provided to attribute where a void return was expected                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-misused-promises
+  112:96  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\chat\ChatPanel.tsx:112:96
+  110 |             
+  111 |             {isLoading && messages[messages.length - 1]?.content === '' && (
+> 112 |               <ChatMessage message={{ id: 'loading', role: 'model', content: '...', timestamp: Date.now() }} />
+      |                                                                                                ^^^^^^^^^^ Cannot call impure function
+  113 |             )}
+  114 |
+  115 |             {error && (  react-hooks/purity
+  126:38  error    Promise-returning function provided to attribute where a void return was expected                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-misused-promises
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\checklist\ChecklistItem.tsx
+   42:28  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+   58:33  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+   89:33  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  107:33  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\checklist\ProgressRing.tsx
+  32:39  error  Invalid type "number" of template literal expression  @typescript-eslint/restrict-template-expressions
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\layout\MobileMenu.tsx
+  35:22  error  'Element' is an 'error' type that acts as 'any' and overrides all other types in this union type           @typescript-eslint/no-redundant-type-constituents
+  63:42  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\layout\Navbar.tsx
+   59:36  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+   69:40  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+   73:44  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator           @typescript-eslint/prefer-nullish-coalescing
+   90:33  error  Promise-returning function provided to attribute where a void return was expected                                   @typescript-eslint/no-misused-promises
+  101:25  error  Promise-returning function provided to attribute where a void return was expected                                   @typescript-eslint/no-misused-promises
+  111:36  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  127:34  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  130:37  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\timeline\PhaseDetail.tsx
+   44:16  error  Unnecessary conditional, value is always truthy                                                                     @typescript-eslint/no-unnecessary-condition
+  114:34  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\timeline\TimelineNode.tsx
+  56:28  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  64:28  error  Invalid type "number" of template literal expression                                                                @typescript-eslint/restrict-template-expressions
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\timeline\TimelinePanel.tsx
+  37:52  error    Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator           @typescript-eslint/prefer-nullish-coalescing
+  37:68  error    Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator           @typescript-eslint/prefer-nullish-coalescing
+  40:9   error    Unnecessary conditional, value is always truthy                                                                     @typescript-eslint/no-unnecessary-condition
+  46:6   warning  React Hook useEffect has a missing dependency: 'selectedPhase'. Either include it or remove the dependency array    react-hooks/exhaustive-deps
+  46:20  error    Unnecessary optional chain on a non-nullish value                                                                   @typescript-eslint/no-unnecessary-condition
+  46:39  error    Unnecessary optional chain on a non-nullish value                                                                   @typescript-eslint/no-unnecessary-condition
+  72:26  error    Using !! on a boolean does not change the type or value of the boolean                                              @typescript-eslint/no-unnecessary-type-conversion
+  74:37  error    Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\components\ui\LanguageSwitcher.tsx
+  44:78  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator           @typescript-eslint/prefer-nullish-coalescing
+  54:30  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\hooks\useAuth.ts
+  50:50  error  Promise returned in function argument where a void return was expected                                              @typescript-eslint/no-misused-promises
+  78:24  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  98:7   error  There is no `cause` attached to the symptom error being thrown                                                      preserve-caught-error
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\hooks\useGemini.ts
+   81:34  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+   86:31  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+   99:35  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  119:80  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\hooks\useTimeline.ts
+  38:32  error  void is not valid as a constituent in a union type                                                                  @typescript-eslint/no-invalid-void-type
+  55:24  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\hooks\useTranslation.ts
+  25:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\hooks\useTranslation.ts:25:7
+  23 |     
+  24 |     if (currentLanguage === 'en' || !text) {
+> 25 |       setTranslated(text);
+     |       ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |       return (): void => { isMounted = false; };
+  27 |     }
+  28 |  react-hooks/set-state-in-effect
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\lib\analytics.ts
+  19:42  error  Unnecessary conditional, value is always truthy  @typescript-eslint/no-unnecessary-condition
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\lib\firebase.ts
+  22:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  23:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  23:57  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  23:63  error  Invalid type "any" of template literal expression                                                          @typescript-eslint/restrict-template-expressions
+  24:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  25:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  26:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  27:3   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  32:13  error  '_' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\lib\gemini.ts
+   10:66  error  'DocumentData' is defined but never used                                @typescript-eslint/no-unused-vars
+   14:38  error  Unsafe argument of type `any` assigned to a parameter of type `string`  @typescript-eslint/no-unsafe-argument
+  116:5   error  There is no `cause` attached to the symptom error being thrown          preserve-caught-error
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\lib\timelineEngine.ts
+  8:50  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\lib\translate.ts
+  23:9   error  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  23:66  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\pages\Checklist.tsx
+  61:26  error  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\pages\Timeline.tsx
+  22:52  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  66:21  error  Promise-returning function provided to attribute where a void return was expected                          @typescript-eslint/no-misused-promises
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\store\authStore.ts
+  28:28  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  29:34  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  30:26  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\store\chatStore.ts
+  38:34  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  41:41  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  48:36  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  49:32  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  50:40  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  51:30  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\store\checklistStore.ts
+  23:30  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  24:29  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\store\languageStore.ts
+  21:64  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\store\timelineStore.ts
+  35:32  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  36:35  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  37:36  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  38:36  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\ai-fallback.test.ts
+  17:20  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  19:43  error  Unsafe argument of type `any[]` assigned to a parameter of type `ChatMessage[]`  @typescript-eslint/no-unsafe-argument
+  23:21  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  24:20  error  Unsafe member access .message on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+  30:20  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  32:43  error  Unsafe argument of type `any[]` assigned to a parameter of type `ChatMessage[]`  @typescript-eslint/no-unsafe-argument
+  36:21  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  37:20  error  Unsafe member access .message on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\auth-flow.test.ts
+  11:30  error  'auth' is defined but never used                                                  @typescript-eslint/no-unused-vars
+  11:36  error  'cb' is defined but never used                                                    @typescript-eslint/no-unused-vars
+  13:18  error  Unexpected empty arrow function                                                   @typescript-eslint/no-empty-function
+  35:37  error  Unsafe argument of type `any` assigned to a parameter of type `User | undefined`  @typescript-eslint/no-unsafe-argument
+  35:91  error  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  45:39  error  Unsafe argument of type `any` assigned to a parameter of type `User | null`       @typescript-eslint/no-unsafe-argument
+  45:83  error  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  57:39  error  Unsafe argument of type `any` assigned to a parameter of type `User | null`       @typescript-eslint/no-unsafe-argument
+  57:57  error  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\components\Chat.test.tsx
+   1:46  error  'act' is defined but never used                                                                                     @typescript-eslint/no-unused-vars
+  64:25  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  78:25  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\components\Checklist.test.tsx
+  144:64  error  Unexpected empty arrow function  @typescript-eslint/no-empty-function
+  151:64  error  Unexpected empty arrow function  @typescript-eslint/no-empty-function
+  158:64  error  Unexpected empty arrow function  @typescript-eslint/no-empty-function
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\components\Landing.test.tsx
+   1:26  error  'fireEvent' is defined but never used                    @typescript-eslint/no-unused-vars
+  14:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  14:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  14:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\components\Navbar.test.tsx
+  13:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  13:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  13:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  29:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  29:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  29:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  45:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  45:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  45:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  51:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  51:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  51:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  57:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  57:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  57:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  64:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  64:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  64:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  79:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  79:17  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  79:22  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\hooks\useAuth.test.ts
+   37:5   error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   37:37  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   37:42  error  Unsafe member access .mockImplementation on an `any` value  @typescript-eslint/no-unsafe-member-access
+   37:68  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   37:83  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   38:24  error  Unsafe return of a value of type `any`                      @typescript-eslint/no-unsafe-return
+   38:24  error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   42:5   error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   42:16  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   42:21  error  Unsafe member access .mockResolvedValue on an `any` value   @typescript-eslint/no-unsafe-member-access
+   54:5   error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   54:37  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   54:42  error  Unsafe member access .mockImplementation on an `any` value  @typescript-eslint/no-unsafe-member-access
+   54:68  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   54:83  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   55:24  error  Unsafe return of a value of type `any`                      @typescript-eslint/no-unsafe-return
+   55:24  error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   59:5   error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   59:16  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   59:21  error  Unsafe member access .mockResolvedValue on an `any` value   @typescript-eslint/no-unsafe-member-access
+   69:29  error  Unsafe assignment of an `any` value                         @typescript-eslint/no-unsafe-assignment
+   69:53  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   71:5   error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+   71:37  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   71:42  error  Unsafe member access .mockImplementation on an `any` value  @typescript-eslint/no-unsafe-member-access
+   71:68  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   71:83  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+   72:24  error  Unsafe return of a value of type `any`                      @typescript-eslint/no-unsafe-return
+   72:24  error  Unsafe call of an `any` typed value                         @typescript-eslint/no-unsafe-call
+  104:29  error  Unsafe assignment of an `any` value                         @typescript-eslint/no-unsafe-assignment
+  104:53  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\hooks\useChecklist.test.ts
+  60:7  error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  61:7  error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  62:7  error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  76:7  error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  93:7  error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\hooks\useTimeline.test.ts
+   1:27  error  'waitFor' is defined but never used                      @typescript-eslint/no-unused-vars
+  28:23  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  28:28  error  Unsafe member access .currentUser on an `any` value      @typescript-eslint/no-unsafe-member-access
+  38:23  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  38:28  error  Unsafe member access .currentUser on an `any` value      @typescript-eslint/no-unsafe-member-access
+  40:5   error  Unsafe call of an `any` typed value                      @typescript-eslint/no-unsafe-call
+  40:20  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  40:25  error  Unsafe member access .mockReturnValue on an `any` value  @typescript-eslint/no-unsafe-member-access
+  47:73  error  Async arrow function has no 'await' expression           @typescript-eslint/require-await
+  59:23  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  59:28  error  Unsafe member access .currentUser on an `any` value      @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\integration\auth.test.tsx
+   74:7    error  Unsafe assignment of an `any` value                                                                                 @typescript-eslint/no-unsafe-assignment
+   74:122  error  Unexpected any. Specify a different type                                                                            @typescript-eslint/no-explicit-any
+   89:7    error  Unsafe assignment of an `any` value                                                                                 @typescript-eslint/no-unsafe-assignment
+   89:56   error  Unexpected any. Specify a different type                                                                            @typescript-eslint/no-explicit-any
+  100:15   error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  103:15   error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  121:15   error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\integration\userJourney.test.tsx
+    1:37  error  'waitFor' is defined but never used             @typescript-eslint/no-unused-vars
+  154:57  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+  164:69  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\security.test.ts
+   2:10  error  'validatePrompt' is defined but never used                                       @typescript-eslint/no-unused-vars
+   3:10  error  'GoogleGenerativeAI' is defined but never used                                   @typescript-eslint/no-unused-vars
+  15:14  error  Async generator function has no 'await' expression                               @typescript-eslint/require-await
+  43:22  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  45:54  error  Unsafe argument of type `any[]` assigned to a parameter of type `ChatMessage[]`  @typescript-eslint/no-unsafe-argument
+  55:13  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+  55:25  error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+  55:26  error  Unsafe construction of an `any` typed value                                      @typescript-eslint/no-unsafe-call
+  55:44  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  55:52  error  Unsafe member access .getGenerativeModel on an `any` value                       @typescript-eslint/no-unsafe-member-access
+  56:7   error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+  56:27  error  Unsafe member access .startChat on an `any` value                                @typescript-eslint/no-unsafe-member-access
+  56:38  error  Unsafe member access .mockImplementationOnce on an `any` value                   @typescript-eslint/no-unsafe-member-access
+  63:23  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  64:22  error  Unsafe member access .message on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+  65:22  error  Unsafe member access .message on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\setup.ts
+   2:10  error  'expect' is defined but never used                                  @typescript-eslint/no-unused-vars
+  15:3   error  Unsafe assignment of an error typed value                           @typescript-eslint/no-unsafe-assignment
+  15:16  error  Unsafe call of a type that could not be resolved                    @typescript-eslint/no-unsafe-call
+  15:19  error  Unsafe member access .fn on a type that cannot be resolved          @typescript-eslint/no-unsafe-member-access
+  16:3   error  Unsafe assignment of an error typed value                           @typescript-eslint/no-unsafe-assignment
+  16:13  error  Unsafe call of a type that could not be resolved                    @typescript-eslint/no-unsafe-call
+  16:16  error  Unsafe member access .fn on a type that cannot be resolved          @typescript-eslint/no-unsafe-member-access
+  17:3   error  Unsafe assignment of an error typed value                           @typescript-eslint/no-unsafe-assignment
+  17:17  error  Unsafe call of a type that could not be resolved                    @typescript-eslint/no-unsafe-call
+  17:20  error  Unsafe member access .fn on a type that cannot be resolved          @typescript-eslint/no-unsafe-member-access
+  18:3   error  Unsafe assignment of an error typed value                           @typescript-eslint/no-unsafe-assignment
+  18:15  error  Unsafe call of a type that could not be resolved                    @typescript-eslint/no-unsafe-call
+  18:18  error  Unsafe member access .fn on a type that cannot be resolved          @typescript-eslint/no-unsafe-member-access
+  21:1   error  Unsafe call of a type that could not be resolved                    @typescript-eslint/no-unsafe-call
+  21:4   error  Unsafe member access .stubGlobal on a type that cannot be resolved  @typescript-eslint/no-unsafe-member-access
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\unit\analytics.test.ts
+  20:79  error  Unexpected empty arrow function                                                                                     @typescript-eslint/no-empty-function
+  22:18  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  85:81  error  Unexpected empty arrow function                                                                                     @typescript-eslint/no-empty-function
+  86:18  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\unit\firebase.test.ts
+  1:32  error  'vi' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\unit\gemini.test.ts
+  20:20  error  Async generator function has no 'await' expression  @typescript-eslint/require-await
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\unit\timelineEngine.test.ts
+   23:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   24:12  error  Unsafe member access [2] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+   25:27  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+   29:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   30:5   error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+   30:12  error  Unsafe member access .forEach on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+   30:24  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+   30:34  error  Unsafe member access .status on an `any` value                                   @typescript-eslint/no-unsafe-member-access
+   31:27  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+   35:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   36:5   error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+   36:12  error  Unsafe member access .forEach on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+   36:24  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+   36:34  error  Unsafe member access .status on an `any` value                                   @typescript-eslint/no-unsafe-member-access
+   37:29  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+   41:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   42:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   42:23  error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+   42:30  error  Unsafe member access .map on an `any` value                                      @typescript-eslint/no-unsafe-member-access
+   42:38  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+   42:47  error  Unsafe return of a value of type `any`                                           @typescript-eslint/no-unsafe-return
+   43:29  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+   47:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+   48:5   error  Unsafe call of an `any` typed value                                              @typescript-eslint/no-unsafe-call
+   48:12  error  Unsafe member access .forEach on an `any` value                                  @typescript-eslint/no-unsafe-member-access
+   48:24  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+   48:34  error  Unsafe member access .status on an `any` value                                   @typescript-eslint/no-unsafe-member-access
+   49:12  error  Unsafe member access [0] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+   50:12  error  Unsafe member access [1] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+   51:12  error  Unsafe member access [2] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+   52:29  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+  104:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+  105:12  error  Unsafe member access [0] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+  107:29  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+  111:11  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+  112:12  error  Unsafe member access [0] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+  113:12  error  Unsafe member access [1] on an `any` value                                       @typescript-eslint/no-unsafe-member-access
+  114:27  error  Unsafe argument of type `any` assigned to a parameter of type `ElectionPhase[]`  @typescript-eslint/no-unsafe-argument
+  118:44  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+  118:67  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  123:44  error  Unsafe assignment of an `any` value                                              @typescript-eslint/no-unsafe-assignment
+  123:65  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  136:25  error  Unsafe argument of type `any` assigned to a parameter of type `string`           @typescript-eslint/no-unsafe-argument
+  136:38  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+
+C:\Users\Owner\Desktop\CivicIQ\civiciq\src\tests\unit\translate.test.ts
+  15:5   error  Unsafe call of an `any` typed value                            @typescript-eslint/no-unsafe-call
+  15:22  error  Unexpected any. Specify a different type                       @typescript-eslint/no-explicit-any
+  15:27  error  Unsafe member access .mockResolvedValueOnce on an `any` value  @typescript-eslint/no-unsafe-member-access
+  20:81  error  Unexpected empty arrow function                                @typescript-eslint/no-empty-function
+
+Γ£û 288 problems (286 errors, 2 warnings)
+  39 errors and 0 warnings potentially fixable with the `--fix` option.
+

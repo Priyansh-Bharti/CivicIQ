@@ -1,18 +1,37 @@
+/**
+ * Progress Ring Component
+ * Renders a circular progress indicator for visualizing the user's completion percentage.
+ */
+
+import React from 'react';
 import { motion } from 'framer-motion';
 
 interface ProgressRingProps {
+  /** The completion percentage (0-100). */
   percentage: number;
 }
 
-export const ProgressRing = ({ percentage }: ProgressRingProps) => {
+/**
+ * Renders an animated SVG progress ring.
+ * @param {ProgressRingProps} props Component properties.
+ * @returns {JSX.Element} The rendered progress ring.
+ */
+export const ProgressRing: React.FC<ProgressRingProps> = ({ percentage }): JSX.Element => {
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
+  /**
+   * Determines the stroke color based on the current percentage.
+   */
   let color = 'text-gray-200'; // 0%
-  if (percentage > 0 && percentage < 50) color = 'text-indigo';
-  else if (percentage >= 50 && percentage < 100) color = 'text-amber';
-  else if (percentage === 100) color = 'text-emerald';
+  if (percentage > 0 && percentage < 50) {
+    color = 'text-indigo';
+  } else if (percentage >= 50 && percentage < 100) {
+    color = 'text-amber';
+  } else if (percentage === 100) {
+    color = 'text-emerald';
+  }
 
   return (
     <div

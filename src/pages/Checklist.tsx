@@ -1,4 +1,9 @@
-import { useEffect } from 'react';
+/**
+ * Checklist Page Component
+ * Renders the voter readiness checklist, allowing users to track their progress and handle missed deadlines.
+ */
+
+import React, { useEffect } from 'react';
 import { Navbar } from '../components/layout/Navbar';
 import { ChatPanel } from '../components/chat/ChatPanel';
 import { useChecklist } from '../hooks/useChecklist';
@@ -7,7 +12,11 @@ import { ChecklistItem } from '../components/checklist/ChecklistItem';
 import { ProgressRing } from '../components/checklist/ProgressRing';
 import { trackEvent } from '../lib/analytics';
 
-export const Checklist = () => {
+/**
+ * Renders the civic readiness checklist page.
+ * @returns {JSX.Element} The rendered checklist page.
+ */
+export const Checklist: React.FC = (): JSX.Element => {
   const { items, toggleItem, completionPercentage, completedCount, totalCount } = useChecklist();
 
   useEffect(() => {
@@ -49,11 +58,10 @@ export const Checklist = () => {
           </div>
         </div>
 
-        {/* Missed Deadline Feature */}
         <section className="bg-amber/5 border border-amber/20 rounded-2xl p-8 mb-12">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="bg-amber/10 p-4 rounded-xl">
-              <span className="text-3xl">⚠️</span>
+              <span className="text-3xl" role="img" aria-label="Warning">⚠️</span>
             </div>
             <div className="flex-grow">
               <h2 className="text-2xl font-hero text-navy mb-2">Missed a deadline?</h2>

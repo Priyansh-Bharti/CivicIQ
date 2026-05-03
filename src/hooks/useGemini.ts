@@ -1,3 +1,8 @@
+/**
+ * Gemini AI Integration Hook
+ * Handles chat state, AI streaming, and integration with Firestore for persistence.
+ */
+
 import { useState, useEffect } from 'react';
 import { 
   validatePrompt, 
@@ -11,8 +16,21 @@ import { useAuth } from './useAuth';
 import { useRateLimit } from './useSecurity';
 import { ChatMessage } from '../types/election';
 import { trackEvent } from '../lib/analytics';
+import { logger } from '../utils/logger';
 
-export const useGemini = () => {
+interface GeminiHookResult {
+  messages: ChatMessage[];
+  isLoading: boolean;
+  error: string | null;
+  sendMessage: (content: string) => Promise<void>;
+  clearChat: () => Promise<void>;
+}
+
+/**
+ * Custom hook for managing the Gemini AI chat interface.
+ * @returns {GeminiHookResult} The chat state and control methods.
+ */
+export const useGemini = (): GeminiHookResult => {
   const { user } = useAuth();
   const { checkLimit } = useRateLimit();
   const { 
@@ -29,23 +47,33 @@ export const useGemini = () => {
 
   useEffect(() => {
     if (user) {
-      const fetchHistory = async () => {
-        const history = await loadChatHistory(user.uid);
-        setMessages(history);
+      /**
+       * Loads the user's chat history from Firestore on initialization.
+       */
+      const fetchHistory = async (): Promise<void> => {
+        try {
+          const history = await loadChatHistory(user.uid);
+          setMessages(history);
+        } catch (err) {
+          logger.error('Failed to load chat history:', err);
+        }
       };
       void fetchHistory();
     }
   }, [user, setMessages]);
 
-  const sendMessage = async (content: string) => {
-    // Security: Check Rate Limits (3-tier)
-    const aiLimit = checkLimit('ai');
+  /**
+   * Sends a user message to the AI and processes the streamed response.
+   * @param {string} content The message text to send.
+   */
+  const sendMessage = async (content: string): Promise<void> => {
+    const aiLimit = checkLimit('AI');
     if (!aiLimit.allowed) {
       setError(`You've reached your AI message limit. Please try again in 15 minutes.`);
       return;
     }
 
-    const generalLimit = checkLimit('general');
+    const generalLimit = checkLimit('GENERAL');
     if (!generalLimit.allowed) {
       setError(`System is busy. Please try again later.`);
       return;
@@ -60,7 +88,6 @@ export const useGemini = () => {
     trackEvent('question_asked', {
       phase_id: activeContext || 'none',
       question_length: content.length,
-      has_phase_context: !!activeContext
     });
 
     setError(null);
@@ -88,8 +115,7 @@ export const useGemini = () => {
 
     try {
       let fullResponse = '';
-      // Use fresh state from store to avoid stale closures
-      const currentMessages = useChatStore.getState().messages.slice(0, -2); // Exclude current user message and empty AI message
+      const currentMessages = useChatStore.getState().messages.slice(0, -2);
       const stream = streamCivicAnswer(content, currentMessages, activeContext || undefined);
       
       for await (const chunk of stream) {
@@ -98,30 +124,24 @@ export const useGemini = () => {
       }
 
       if (user) {
-        const finalAiMessage: ChatMessage = {
-          ...initialAiMessage,
-          content: fullResponse
-        };
+        const finalAiMessage: ChatMessage = { ...initialAiMessage, content: fullResponse };
         void saveMessageToFirestore(user.uid, finalAiMessage);
       }
     } catch (err) {
       setError('Sorry, I encountered an error. Please try again.');
-      console.error(err);
+      logger.error('Stream error:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const clearChat = async () => {
+  /**
+   * Clears the current chat session and persistent history.
+   */
+  const clearChat = async (): Promise<void> => {
     clearMessages();
     if (user) await clearChatHistory(user.uid);
   };
 
-  return {
-    messages,
-    isLoading,
-    error,
-    sendMessage,
-    clearChat
-  };
+  return { messages, isLoading, error, sendMessage, clearChat };
 };

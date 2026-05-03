@@ -1,23 +1,52 @@
+/**
+ * Timeline Node Component
+ * Renders an individual node in the election process timeline, reflecting its current state (active, completed, or pending).
+ */
+
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { ElectionPhase } from '../../types/election';
-import { clsx, type ClassValue } from 'clsx';
+import { clsx, ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-function cn(...inputs: ClassValue[]) {
+/**
+ * Utility for merging Tailwind CSS classes efficiently.
+ * @param {...ClassValue[]} inputs Array of class values.
+ * @returns {string} Merged class string.
+ */
+function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
 interface TimelineNodeProps {
+  /** The election phase data. */
   phase: ElectionPhase;
+  /** The sequential index of the phase. */
   index: number;
+  /** Indicates if this phase is currently selected. */
   isActive: boolean;
+  /** Indicates if the user has completed this phase. */
   isCompleted: boolean;
+  /** Callback to handle phase selection. */
   onClick: (id: string) => void;
+  /** Optional keyboard event handler for navigation. */
   onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
-export const TimelineNode = ({ phase, index, isActive, isCompleted, onClick, onKeyDown }: TimelineNodeProps) => {
+/**
+ * Renders a stylized indicator and label for a timeline phase.
+ * @param {TimelineNodeProps} props Component properties.
+ * @returns {JSX.Element} The rendered timeline node.
+ */
+export const TimelineNode: React.FC<TimelineNodeProps> = ({ 
+  phase, 
+  index, 
+  isActive, 
+  isCompleted, 
+  onClick, 
+  onKeyDown 
+}): JSX.Element => {
   return (
     <div 
       id={`node-${phase.id}`}
@@ -30,7 +59,9 @@ export const TimelineNode = ({ phase, index, isActive, isCompleted, onClick, onK
           e.preventDefault();
           onClick(phase.id);
         }
-        if (onKeyDown) onKeyDown(e);
+        if (onKeyDown) {
+          onKeyDown(e);
+        }
       }}
       aria-label={`Phase ${index + 1}: ${phase.name}, ${isCompleted ? 'Completed' : isActive ? 'Active' : 'Pending'}`}
       aria-current={isActive ? 'step' : undefined}

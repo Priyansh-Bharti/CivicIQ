@@ -1,4 +1,9 @@
-import { useEffect } from 'react';
+/**
+ * Timeline Page Component
+ * Renders the interactive election process guide, including phase descriptions and AI chat integration.
+ */
+
+import React from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Share2, ArrowLeft } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
@@ -6,16 +11,24 @@ import { TimelinePanel } from '../components/timeline/TimelinePanel';
 import { ChatPanel } from '../components/chat/ChatPanel';
 import { useChatStore } from '../store/chatStore';
 
-export const Timeline = () => {
+/**
+ * Renders the election process timeline page.
+ * @returns {JSX.Element} The rendered timeline page.
+ */
+export const Timeline: React.FC = (): JSX.Element => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const initialPhaseId = searchParams.get('phase') || undefined;
   const { setIsOpen, setActiveContext } = useChatStore();
 
-  const handleShare = () => {
+  /**
+   * Copies the current page URL to the clipboard for sharing.
+   */
+  const handleShare = (): void => {
     const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    alert('Link copied to clipboard!');
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Link copied to clipboard!'))
+      .catch((err) => console.error('Failed to copy: ', err));
   };
 
   return (
@@ -52,7 +65,6 @@ export const Timeline = () => {
           </button>
         </div>
 
-        {/* Accessibility Announcement */}
         <div className="sr-only" aria-live="polite">
           Timeline updated. Current phase is active.
         </div>

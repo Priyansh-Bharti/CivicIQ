@@ -1,9 +1,17 @@
-import { useState, useEffect } from 'react';
+/**
+ * Language Switcher Component
+ * Provides a dropdown interface for users to select their preferred language from a grouped list.
+ */
+
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageStore } from '../../store/languageStore';
 import { Globe } from 'lucide-react';
-import { SUPPORTED_LANGUAGES } from '../../lib/constants';
+import { SUPPORTED_LANGUAGES, LanguageCode } from '../../constants';
 
+/**
+ * Language region groups for better organization in the UI.
+ */
 const GROUPS = [
   { label: "South Asia", codes: ['hi', 'bn', 'ur', 'pa', 'te', 'ta', 'mr'] },
   { label: "Europe", codes: ['en', 'es', 'fr', 'de', 'pt', 'ru', 'tr', 'it'] },
@@ -11,14 +19,22 @@ const GROUPS = [
   { label: "Middle East & Africa", codes: ['ar', 'sw'] },
 ];
 
-export const LanguageSwitcher = () => {
+/**
+ * Renders a stylized language selection dropdown.
+ * @returns {JSX.Element} The rendered switcher.
+ */
+export const LanguageSwitcher: React.FC = (): JSX.Element => {
   const { currentLanguage, setLanguage } = useLanguageStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const current = SUPPORTED_LANGUAGES.find(l => l.code === currentLanguage) || SUPPORTED_LANGUAGES[0];
 
   useEffect(() => {
-    const applyLanguage = (lang: typeof SUPPORTED_LANGUAGES[number]) => {
+    /**
+     * Applies language and text direction attributes to the document root.
+     * @param {typeof SUPPORTED_LANGUAGES[number]} lang The language configuration.
+     */
+    const applyLanguage = (lang: typeof SUPPORTED_LANGUAGES[number]): void => {
       document.documentElement.setAttribute('lang', lang.code);
       document.documentElement.setAttribute('dir', lang.dir);
     };
@@ -57,7 +73,7 @@ export const LanguageSwitcher = () => {
                     <button
                       key={lang.code}
                       onClick={() => {
-                        setLanguage(lang.code);
+                        setLanguage(lang.code as LanguageCode);
                         setIsOpen(false);
                       }}
                       className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors ${

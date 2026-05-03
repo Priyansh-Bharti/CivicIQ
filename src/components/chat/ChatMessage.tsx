@@ -1,19 +1,33 @@
+/**
+ * Chat Message Component
+ * Renders individual messages within the chat history, distinguishing between user and AI roles.
+ */
+
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ChatMessage as ChatMessageType } from '../../types/election';
 import { useAuth } from '../../hooks/useAuth';
-import { clsx } from 'clsx';
+import { clsx, ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-function cn(...inputs: any[]) {
+/**
+ * Utility for merging Tailwind CSS classes efficiently.
+ * @param {...ClassValue[]} inputs Array of class values.
+ * @returns {string} Merged class string.
+ */
+function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
 interface ChatMessageProps {
+  /** The message data to render. */
   message: ChatMessageType;
-  isLast?: boolean;
 }
 
-const CivicIQLogo = () => (
+/**
+ * Renders a stylized icon for the CivicIQ assistant.
+ */
+const CivicIQLogo: React.FC = (): JSX.Element => (
   <div className="w-8 h-8 bg-navy rounded-full flex items-center justify-center text-amber shrink-0">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 17V17.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
@@ -23,7 +37,12 @@ const CivicIQLogo = () => (
   </div>
 );
 
-export const ChatMessage = ({ message }: ChatMessageProps) => {
+/**
+ * Renders an individual chat message bubble.
+ * @param {ChatMessageProps} props Component properties.
+ * @returns {JSX.Element} The rendered message.
+ */
+export const ChatMessage: React.FC<ChatMessageProps> = ({ message }): JSX.Element => {
   const { user } = useAuth();
   const isAI = message.role === 'model';
 

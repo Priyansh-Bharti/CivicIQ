@@ -1,15 +1,25 @@
+/**
+ * About Page Component
+ * Renders the mission statement, platform standards (ECI/WCAG), and organizational values.
+ */
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
+import { Footer } from '../components/layout/Footer';
 import { Translate } from '../components/ui/Translate';
 import { Shield, Users, Lightbulb, CheckCircle } from 'lucide-react';
 
-export const About = () => {
+/**
+ * Renders the application's about page.
+ * @returns {JSX.Element} The rendered about page.
+ */
+export const About: React.FC = (): JSX.Element => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main>
+      <main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-navy py-20 px-4 text-center">
           <motion.div
@@ -108,11 +118,7 @@ export const About = () => {
         </section>
       </main>
 
-      <footer className="bg-navy py-12 px-4 border-t border-white/10 mt-auto">
-        <div className="max-w-7xl mx-auto text-center text-white/60">
-          <p>© 2026 CivicIQ. <Translate text="Not an official government website. Verified for educational purposes only." /></p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

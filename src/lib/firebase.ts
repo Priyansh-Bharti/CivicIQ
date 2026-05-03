@@ -1,4 +1,9 @@
-import { initializeApp } from 'firebase/app';
+/**
+ * Firebase Initialization and Authentication Module
+ * Configures the Firebase SDK and provides standardized auth utilities.
+ */
+
+import { initializeApp, FirebaseApp } from 'firebase/app';
 import { 
   getAuth, 
   GoogleAuthProvider, 
@@ -7,9 +12,13 @@ import {
   getRedirectResult,
   signOut as firebaseSignOut, 
   onAuthStateChanged, 
-  User 
+  User,
+  Auth,
+  UserCredential,
+  FirebaseError
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, Firestore } from 'firebase/firestore';
+import { logger } from '../utils/logger';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -20,66 +29,78 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Log config for debugging (sanitized)
-console.log('Firebase Initializing with Project:', firebaseConfig.projectId);
-console.log('Auth Domain:', firebaseConfig.authDomain);
+/**
+ * Validates the Firebase configuration and logs missing keys.
+ * @returns {void}
+ */
+const validateConfig = (): void => {
+  const missingKeys = Object.entries(firebaseConfig)
+    .filter(([_, value]) => !value)
+    .map(([key]) => key);
 
-// Validate config
-const missingKeys = Object.entries(firebaseConfig)
-  .filter(([_, value]) => !value)
-  .map(([key]) => key);
-
-if (missingKeys.length > 0) {
-  const msg = `Firebase config is missing keys: ${missingKeys.join(', ')}. Check your .env file.`;
-  console.warn(msg);
-  if (typeof window !== 'undefined') {
-    alert(msg);
-  }
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Google Auth Provider
-const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({ prompt: 'select_account' });
-
-// Auth functions
-export const signInWithGoogle = async () => {
-  try {
-    // Try popup first
-    const result = await signInWithPopup(auth, googleProvider);
-    return result.user;
-  } catch (error: any) {
-    // Fallback to redirect if popup is blocked or fails
-    if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
-      console.log('Popup blocked, falling back to redirect...');
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      console.error('Error signing in with Google:', error);
-      throw error;
-    }
+  if (missingKeys.length > 0) {
+    logger.warn(`Firebase config is missing keys: ${missingKeys.join(', ')}. Check your .env file.`);
   }
 };
 
-export const handleRedirectResult = async () => {
+validateConfig();
+
+// Initialize Firebase services
+const app: FirebaseApp = initializeApp(firebaseConfig);
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
+
+// Configure Google Auth Provider
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+/**
+ * Signs in the user using Google OAuth via a popup, with a redirect fallback.
+ * @returns {Promise<User | undefined>} The authenticated user object.
+ * @throws {Error} If authentication fails.
+ */
+export const signInWithGoogle = async (): Promise<User | undefined> => {
+  try {
+    const result: UserCredential = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+        logger.info('Popup blocked, falling back to redirect...');
+        await signInWithRedirect(auth, googleProvider);
+        return undefined;
+      }
+    }
+    logger.error('Error signing in with Google:', error);
+    throw new Error('Authentication failed. Please try again.');
+  }
+};
+
+/**
+ * Handles the result of a Google sign-in redirect.
+ * @returns {Promise<User | null | undefined>} The authenticated user or null.
+ */
+export const handleRedirectResult = async (): Promise<User | null | undefined> => {
   try {
     const result = await getRedirectResult(auth);
     return result?.user;
   } catch (error) {
-    console.error('Error handling redirect result:', error);
+    logger.error('Error handling redirect result:', error);
     return null;
   }
 };
 
-export const signOut = async () => {
+/**
+ * Signs out the current user.
+ * @returns {Promise<void>}
+ * @throws {Error} If sign-out fails.
+ */
+export const signOut = async (): Promise<void> => {
   try {
     await firebaseSignOut(auth);
   } catch (error) {
-    console.error('Error signing out:', error);
-    throw error;
+    logger.error('Error signing out:', error);
+    throw new Error('Sign out failed. Please try again.');
   }
 };
 

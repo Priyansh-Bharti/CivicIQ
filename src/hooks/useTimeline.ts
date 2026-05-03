@@ -1,9 +1,28 @@
+/**
+ * Election Timeline Hook
+ * Manages the state and persistence of the user's progress through election phases.
+ */
+
 import { useEffect } from 'react';
 import { db, auth } from '../lib/firebase';
-import { doc, onSnapshot, updateDoc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useTimelineStore } from '../store/timelineStore';
+import { logger } from '../utils/logger';
+import { ElectionPhase } from '../types/election';
 
-export const useTimeline = () => {
+interface TimelineHookResult {
+  phases: ElectionPhase[];
+  activePhaseId: string;
+  progress: Record<string, boolean>;
+  setActivePhase: (phaseId: string) => void;
+  markPhaseViewed: (phaseId: string) => Promise<void>;
+}
+
+/**
+ * Custom hook for interacting with the election timeline.
+ * @returns {TimelineHookResult} The timeline state and methods.
+ */
+export const useTimeline = (): TimelineHookResult => {
   const { 
     phases, 
     activePhaseId, 
@@ -20,21 +39,26 @@ export const useTimeline = () => {
 
     const userRef = doc(db, 'users', user.uid);
     
-    // Subscribe to progress updates
-    const unsubscribe = onSnapshot(userRef, (doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
+    // Real-time synchronization of progress state
+    const unsubscribe = onSnapshot(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.data();
         if (data.progress) {
           setProgress(data.progress);
         }
       }
+    }, (error) => {
+      logger.error('Timeline subscription error:', error);
     });
 
     return () => unsubscribe();
   }, [user, setProgress]);
 
-  const markPhaseViewed = async (phaseId: string) => {
-    // Optimistic update
+  /**
+   * Marks a specific election phase as viewed/complete.
+   * @param {string} phaseId The identifier of the phase.
+   */
+  const markPhaseViewed = async (phaseId: string): Promise<void> => {
     markPhaseComplete(phaseId);
 
     if (user) {
@@ -44,15 +68,18 @@ export const useTimeline = () => {
           [`progress.${phaseId}`]: true
         });
       } catch (error) {
-        // If doc doesn't exist or progress field missing, handle it
-        console.error('Error updating progress:', error);
+        logger.error('Error updating progress:', error);
       }
     }
   };
 
-  const setActivePhase = (phaseId: string) => {
+  /**
+   * Updates the active phase and marks it as viewed.
+   * @param {string} phaseId The identifier of the phase to activate.
+   */
+  const setActivePhase = (phaseId: string): void => {
     setActivePhaseId(phaseId);
-    markPhaseViewed(phaseId);
+    void markPhaseViewed(phaseId);
   };
 
   return {

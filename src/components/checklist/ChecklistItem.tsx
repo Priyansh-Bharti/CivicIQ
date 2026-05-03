@@ -1,20 +1,38 @@
+/**
+ * Checklist Item Component
+ * Renders an individual task in the voter readiness checklist with a toggleable state and external resources.
+ */
+
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, ExternalLink } from 'lucide-react';
 import { ChecklistItem as ChecklistItemType } from '../../types/election';
-import { clsx } from 'clsx';
+import { clsx, ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Translate } from '../ui/Translate';
 
-function cn(...inputs: any[]) {
+/**
+ * Utility for merging Tailwind CSS classes efficiently.
+ * @param {...ClassValue[]} inputs Array of class values.
+ * @returns {string} Merged class string.
+ */
+function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
 interface ChecklistItemProps {
+  /** The checklist item data. */
   item: ChecklistItemType;
+  /** Callback to toggle the completion status. */
   onToggle: (id: string) => void;
 }
 
-export const ChecklistItem = ({ item, onToggle }: ChecklistItemProps) => {
+/**
+ * Renders a stylized checkbox and description for a checklist item.
+ * @param {ChecklistItemProps} props Component properties.
+ * @returns {JSX.Element} The rendered checklist item.
+ */
+export const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggle }): JSX.Element => {
   return (
     <div 
       className={cn(

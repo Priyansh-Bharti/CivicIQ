@@ -1,30 +1,51 @@
-import { useState, useRef, useEffect } from 'react';
+/**
+ * Chat Input Component
+ * Provides a text area for users to interact with the AI assistant, featuring auto-expansion and character limits.
+ */
+
+import React, { useState, useRef, useEffect } from 'react';
 import { Send, Mic } from 'lucide-react';
 import { clsx } from 'clsx';
 
 interface ChatInputProps {
+  /** Callback function to send the user's message. */
   onSendMessage: (content: string) => void;
+  /** Indicates if the AI is currently processing a response. */
   isLoading: boolean;
 }
 
-export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
-  const [content, setContent] = useState('');
+/**
+ * Renders an auto-expanding textarea for chat input.
+ * @param {ChatInputProps} props Component properties.
+ * @returns {JSX.Element} The rendered input area.
+ */
+export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading }): JSX.Element => {
+  const [content, setContent] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleSend = () => {
+  /**
+   * Triggers the message sending logic if the content is valid.
+   */
+  const handleSend = (): void => {
     if (content.trim() && !isLoading && content.length <= 500) {
       onSendMessage(content.trim());
       setContent('');
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  /**
+   * Handles keyboard interactions, allowing Enter (without Shift) to send the message.
+   */
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
+  /**
+   * Dynamically adjusts the textarea height based on its content.
+   */
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -57,7 +78,7 @@ export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
           </span>
           
           <div className="flex items-center gap-2">
-            <button className="p-2 text-gray-400 hover:text-indigo transition-colors">
+            <button className="p-2 text-gray-400 hover:text-indigo transition-colors" aria-label="Voice input">
               <Mic className="w-5 h-5" />
             </button>
             <button

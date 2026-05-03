@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+/**
+ * Timeline Panel Component
+ * Orchestrates the display of election phases, coordinating between the list of nodes and the detail view.
+ */
+
+import React, { useEffect } from 'react';
 import { TimelineNode } from './TimelineNode';
 import { PhaseDetail } from './PhaseDetail';
 import { useTimeline } from '../../hooks/useTimeline';
@@ -6,18 +11,25 @@ import { getPhaseById } from '../../lib/timelineEngine';
 import { trackEvent } from '../../lib/analytics';
 
 interface TimelinePanelProps {
+  /** Callback to initiate an AI chat with specific context. */
   onAskCivicIQ: (context: string) => void;
+  /** Optional ID of the phase to highlight initially. */
   initialPhaseId?: string;
 }
 
-export const TimelinePanel = ({ onAskCivicIQ, initialPhaseId }: TimelinePanelProps) => {
+/**
+ * Renders a side-by-side view of the timeline nodes and the active phase's details.
+ * @param {TimelinePanelProps} props Component properties.
+ * @returns {JSX.Element} The rendered timeline panel.
+ */
+export const TimelinePanel: React.FC<TimelinePanelProps> = ({ onAskCivicIQ, initialPhaseId }): JSX.Element => {
   const { phases, activePhaseId, progress, setActivePhase } = useTimeline();
   
   useEffect(() => {
     if (initialPhaseId) {
       setActivePhase(initialPhaseId);
     }
-  }, [initialPhaseId]);
+  }, [initialPhaseId, setActivePhase]);
 
   const selectedPhase = getPhaseById(activePhaseId || '1', phases) || phases[0];
 
@@ -28,9 +40,14 @@ export const TimelinePanel = ({ onAskCivicIQ, initialPhaseId }: TimelinePanelPro
         phase_name: selectedPhase.name 
       });
     }
-  }, [selectedPhase?.id]);
+  }, [selectedPhase?.id, selectedPhase?.name]);
 
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+  /**
+   * Manages keyboard navigation between timeline nodes.
+   * @param {React.KeyboardEvent} e The keyboard event.
+   * @param {number} index The current node index.
+   */
+  const handleKeyDown = (e: React.KeyboardEvent, index: number): void => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       const nextPhase = phases[Math.min(index + 1, phases.length - 1)];

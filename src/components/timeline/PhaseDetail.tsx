@@ -1,3 +1,9 @@
+/**
+ * Phase Detail Component
+ * Displays deep-dive information about a specific election phase, including key actors, steps, and AI assistance.
+ */
+
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   UserCheck, 
@@ -7,16 +13,22 @@ import {
   BarChart2, 
   Trophy,
   MessageSquare,
-  AlertCircle
+  AlertCircle,
+  LucideIcon
 } from 'lucide-react';
 import { ElectionPhase } from '../../types/election';
 
 interface PhaseDetailProps {
+  /** The detailed election phase data to display. */
   phase: ElectionPhase;
+  /** Callback to initiate an AI chat with this phase as context. */
   onAskCivicIQ: (context: string) => void;
 }
 
-const IconMap: Record<string, any> = {
+/**
+ * Mapping of phase IDs to their respective thematic icons.
+ */
+const IconMap: Record<string, LucideIcon> = {
   '1': UserCheck,
   '2': Users,
   '3': Megaphone,
@@ -25,7 +37,12 @@ const IconMap: Record<string, any> = {
   '6': Trophy,
 };
 
-export const PhaseDetail = ({ phase, onAskCivicIQ }: PhaseDetailProps) => {
+/**
+ * Renders a comprehensive breakdown of a single election phase.
+ * @param {PhaseDetailProps} props Component properties.
+ * @returns {JSX.Element} The rendered detail panel.
+ */
+export const PhaseDetail: React.FC<PhaseDetailProps> = ({ phase, onAskCivicIQ }): JSX.Element => {
   const Icon = IconMap[phase.id] || UserCheck;
 
   return (
