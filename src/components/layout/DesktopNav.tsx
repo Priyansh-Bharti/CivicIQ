@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MessageSquare } from 'lucide-react';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { ProfileMenu } from './ProfileMenu';
@@ -35,11 +35,30 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({
   onSignOut, 
   onOpenChat 
 }): React.JSX.Element => {
+  const navigate = useNavigate();
+  
+  const handleProtectedClick = (path: string) => {
+    if (isAuthenticated) {
+      navigate(path);
+    } else {
+      onSignIn();
+    }
+  };
   return (
     <div className="hidden md:flex items-center gap-8">
       <LanguageSwitcher />
-      <Link to="/timeline" className="text-white/80 hover:text-white transition-colors font-medium">Timeline</Link>
-      <Link to="/checklist" className="text-white/80 hover:text-white transition-colors font-medium">Checklist</Link>
+      <button 
+        onClick={() => handleProtectedClick('/timeline')}
+        className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
+      >
+        Timeline
+      </button>
+      <button 
+        onClick={() => handleProtectedClick('/checklist')}
+        className="text-white/80 hover:text-white transition-colors font-medium cursor-pointer"
+      >
+        Checklist
+      </button>
       <Link to="/about" className="text-white/80 hover:text-white transition-colors font-medium">About</Link>
       <button 
         onClick={onOpenChat}

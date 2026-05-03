@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare } from 'lucide-react';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
@@ -32,15 +32,19 @@ interface MobileNavProps {
  * @param {MobileNavProps} props Component properties.
  * @returns {React.JSX.Element} The rendered mobile navigation.
  */
-export const MobileNav: React.FC<MobileNavProps> = ({ 
-  isOpen, 
-  isAuthenticated, 
-  user, 
-  onSignIn, 
-  onSignOut, 
-  onOpenChat,
   onClose
 }): React.JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleProtectedClick = (path: string) => {
+    if (isAuthenticated) {
+      navigate(path);
+      onClose();
+    } else {
+      onSignIn();
+      onClose();
+    }
+  };
   return (
     <AnimatePresence>
       {isOpen && (
@@ -51,8 +55,18 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           className="md:hidden bg-navy border-t border-white/10 overflow-hidden"
         >
           <div className="px-4 pt-2 pb-6 space-y-4">
-            <Link to="/timeline" className="block text-white/80 py-2 text-lg" onClick={onClose}>Timeline</Link>
-            <Link to="/checklist" className="block text-white/80 py-2 text-lg" onClick={onClose}>Checklist</Link>
+            <button 
+              onClick={() => handleProtectedClick('/timeline')} 
+              className="block w-full text-left text-white/80 py-2 text-lg"
+            >
+              Timeline
+            </button>
+            <button 
+              onClick={() => handleProtectedClick('/checklist')} 
+              className="block w-full text-left text-white/80 py-2 text-lg"
+            >
+              Checklist
+            </button>
             <Link to="/about" className="block text-white/80 py-2 text-lg" onClick={onClose}>About</Link>
             <button 
               onClick={() => { onOpenChat(); onClose(); }}
