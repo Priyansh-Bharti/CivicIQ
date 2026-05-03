@@ -73,7 +73,7 @@ Accessibility is not an afterthought; it is our core architecture. CivicIQ is bu
 
 👉 **[Live Production Deployment](https://civiciq-93244820981.us-central1.run.app/)**
 
-![CivicIQ Dashboard Screenshot Placeholder]
+![CivicIQ Dashboard Mockup](./public/dashboard_mockup.png)
 
 ### How to Use:
 1.  **Sign In**: Use your Google account to create a secure, persistent profile via Firebase.
