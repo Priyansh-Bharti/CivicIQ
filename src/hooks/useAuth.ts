@@ -3,7 +3,7 @@
  * Orchestrates Firebase Authentication and Firestore user synchronization.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { auth, db, onAuthStateChanged, signInWithGoogle as firebaseSignIn, signOut as firebaseSignOut, User } from '../lib/firebase';
 import { useAuthStore } from '../store/authStore';
 import { useRateLimit } from './useSecurity';
@@ -11,109 +11,62 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { logger } from '../utils/logger';
 
 interface AuthHookResult {
-  /** The current authenticated user or null. */
   user: User | null;
-  /** Indicates if an authentication operation is in progress. */
   loading: boolean;
-  /** Initiates the Google authentication flow. */
   signInWithGoogle: () => Promise<void>;
-  /** Signs out the current user. */
   signOut: () => Promise<void>;
-  /** Convenience boolean for authentication status. */
   isAuthenticated: boolean;
 }
 
-/**
- * Custom hook for managing authentication state and actions.
- * @returns {AuthHookResult} The authentication state and methods.
- */
+const syncUserProfile = async (firebaseUser: User): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', firebaseUser.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        displayName: firebaseUser.displayName,
+        email: firebaseUser.email,
+        photoURL: firebaseUser.photoURL,
+        createdAt: serverTimestamp(),
+        progress: {},
+      });
+    }
+  } catch (error) { logger.error('Firestore user profile sync error:', error); }
+};
+
 export const useAuth = (): AuthHookResult => {
   const { user, loading, setUser, clearUser, setLoading } = useAuthStore();
   const { checkLimit } = useRateLimit();
 
   useEffect(() => {
-    /**
-     * Set up the Firebase Auth state listener.
-     * This listener synchronizes the local Zustand store with the Firebase User.
-     * It also ensures a user document exists in Firestore for progress persistence.
-     */
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Update global auth state
         setUser(firebaseUser);
-        
-        try {
-          // Initialize user profile in Firestore if it's their first time signing in
-          const userRef = doc(db, 'users', firebaseUser.uid);
-          const userSnap = await getDoc(userRef);
-
-          if (!userSnap.exists()) {
-            await setDoc(userRef, {
-              displayName: firebaseUser.displayName,
-              email: firebaseUser.email,
-              photoURL: firebaseUser.photoURL,
-              createdAt: serverTimestamp(),
-              progress: {}, // Stores election phase checklist completion
-            });
-          }
-        } catch (error) {
-          logger.error('Firestore user profile sync error:', error);
-        }
-      } else {
-        // User is signed out, clear local state
-        clearUser();
-      }
-      
-      // Stop the global loading spinner once auth state is determined
+        await syncUserProfile(firebaseUser);
+      } else { clearUser(); }
       setLoading(false);
     });
-
-    // Cleanup subscription on unmount
     return () => { unsubscribe(); };
   }, [setUser, clearUser, setLoading]);
 
-  /**
-   * Initiates Google Sign-In with rate limiting.
-   * @throws {Error} If sign-in fails.
-   */
-  const signIn = async (): Promise<void> => {
-    const limit = checkLimit('AUTH');
-    if (!limit.allowed) {
-      logger.warn('Auth rate limit exceeded');
-      return;
-    }
-
+  const signIn = useCallback(async (): Promise<void> => {
+    if (!checkLimit('AUTH').allowed) return;
     setLoading(true);
-    try {
-      await firebaseSignIn();
-    } catch (error) {
+    try { await firebaseSignIn(); } catch (error) {
       setLoading(false);
       logger.error('Sign in error:', error);
-      const message = error instanceof Error ? error.message : 'Sign-in failed. Please try again.';
-      throw new Error(message);
+      throw new Error(error instanceof Error ? error.message : 'Sign-in failed.');
     }
-  };
+  }, [checkLimit, setLoading]);
 
-  /**
-   * Signs out the current user.
-   * @throws {Error} If sign-out fails.
-   */
-  const signOut = async (): Promise<void> => {
+  const signOut = useCallback(async (): Promise<void> => {
     setLoading(true);
-    try {
-      await firebaseSignOut();
-    } catch (error) {
+    try { await firebaseSignOut(); } catch (error) {
       setLoading(false);
       logger.error('Sign out error:', error);
-      throw new Error('Sign out failed. Please try again.');
+      throw new Error('Sign out failed.');
     }
-  };
+  }, [setLoading]);
 
-  return {
-    user,
-    loading,
-    signInWithGoogle: signIn,
-    signOut,
-    isAuthenticated: !!user,
-  };
+  return { user, loading, signInWithGoogle: signIn, signOut, isAuthenticated: !!user };
 };

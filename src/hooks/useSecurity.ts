@@ -1,18 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SecurityEngine, RateLimitTier, BucketState, LimitResult } from '../engines/SecurityEngine';
+import { SecurityEngine, RateLimitTier, BucketState } from '../engines/SecurityEngine';
 
-export const useRateLimit = (): { checkLimit: (tier: RateLimitTier) => { allowed: boolean; remaining: number; resetTime: number } } => {
-  const [buckets, setBuckets] = useState<Record<RateLimitTier, BucketState>>(() => {
-    const saved = localStorage.getItem('civiciq_rate_limits');
-    if (saved) {
-      try {
-        return JSON.parse(saved) as Record<RateLimitTier, BucketState>;
-      } catch {
-        // Fallback
-      }
-    }
-    return SecurityEngine.initializeBuckets();
-  });
+const getInitialBuckets = (): Record<RateLimitTier, BucketState> => {
+  const saved = localStorage.getItem('civiciq_rate_limits');
+  if (saved) {
+    try { return JSON.parse(saved) as Record<RateLimitTier, BucketState>; }
+    catch { /* fallback */ }
+  }
+  return SecurityEngine.initializeBuckets();
+};
+
+export const useRateLimit = () => {
+  const [buckets, setBuckets] = useState<Record<RateLimitTier, BucketState>>(getInitialBuckets);
 
   useEffect(() => {
     localStorage.setItem('civiciq_rate_limits', JSON.stringify(buckets));
@@ -20,19 +19,10 @@ export const useRateLimit = (): { checkLimit: (tier: RateLimitTier) => { allowed
 
   const checkLimit = useCallback((tier: RateLimitTier) => {
     const result = SecurityEngine.checkLimit(tier, buckets[tier]);
-    
     if (result.allowed) {
-      setBuckets(prev => ({
-        ...prev,
-        [tier]: result.updatedBucket
-      }));
+      setBuckets(prev => ({ ...prev, [tier]: result.updatedBucket }));
     }
-
-    return {
-      allowed: result.allowed,
-      remaining: result.remaining,
-      resetTime: result.resetTime
-    };
+    return { allowed: result.allowed, remaining: result.remaining, resetTime: result.resetTime };
   }, [buckets]);
 
   return { checkLimit };
