@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { TimelineNode } from './TimelineNode';
 import { PhaseDetail } from './PhaseDetail';
 import { useTimeline } from '../../hooks/useTimeline';
-import { getPhaseById } from '../../lib/timelineEngine';
+import * as TimelineEngine from '../../engines/TimelineEngine';
 import { trackEvent } from '../../lib/analytics';
 
 interface TimelinePanelProps {
@@ -31,7 +31,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({ onAskCivicIQ, init
     }
   }, [initialPhaseId, setActivePhase]);
 
-  const selectedPhase = getPhaseById(activePhaseId || '1', phases) || phases[0];
+  const selectedPhase = TimelineEngine.getPhaseById(activePhaseId || '1', phases) || phases[0];
 
   useEffect(() => {
     if (selectedPhase) {

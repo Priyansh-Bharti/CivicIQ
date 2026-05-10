@@ -28,6 +28,7 @@ dist-ssr
 
 # Build Artifacts & Coverage
 test_output.txt
+test-results.json
 tsconfig.tsbuildinfo
 vite.config.js
 vite.config.d.ts

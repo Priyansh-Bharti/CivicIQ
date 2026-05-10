@@ -9,7 +9,7 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useTimelineStore } from '../store/timelineStore';
 import { logger } from '../utils/logger';
 import { ElectionPhase } from '../types/election';
-import { TimelineEngine } from '../engines/TimelineEngine';
+import * as TimelineEngine from '../engines/TimelineEngine';
 
 /**
  * Return type for the useTimeline hook.
